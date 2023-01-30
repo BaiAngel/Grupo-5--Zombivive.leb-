@@ -1,7 +1,9 @@
 package com.mygdx.game.objects;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.mygdx.game.helpers.AssetManager;
 import com.mygdx.game.utils.Settings;
 
 public class Human extends Actor {
@@ -19,22 +21,22 @@ public class Human extends Actor {
 
     public Human(float x, float y, int width, int height) {
 
-// Inicialitzem els arguments segons la crida del constructor
+        // Inicialitzem els arguments segons la crida del constructor
         this.width = width;
         this.height = height;
         position = new Vector2(x, y);
 
-// Inicialitzem Human a l'estat normal
+        // Inicialitzem Human a l'estat normal
         direction = HUMAN_IDLE;
 
     }
     public void act(float delta) {
 
-// Movem l'Spacecraft depenent de la direcció controlant que no surti de la pantalla
+        // Movem l'Spacecraft depenent de la direcció controlant que no surti de la pantalla
         switch (direction) {
             case HUMAN_UP:
-                if (this.position.y - Settings.HUMAN_VELOCITY * delta >= 0) {
-                    this.position.y -= Settings.HUMAN_VELOCITY * delta;
+                if (this.position.y + Settings.HUMAN_VELOCITY * delta >= 0) {
+                    this.position.y += Settings.HUMAN_VELOCITY * delta;
                 }
                 break;
             case HUMAN_RIGHT:
@@ -43,8 +45,8 @@ public class Human extends Actor {
                 }
                 break;
             case HUMAN_DOWN:
-                if (this.position.y + height + Settings.HUMAN_VELOCITY * delta <= Settings.GAME_HEIGHT) {
-                    this.position.y += Settings.HUMAN_VELOCITY * delta;
+                if (this.position.y - height + Settings.HUMAN_VELOCITY * delta <= Settings.GAME_HEIGHT) {
+                    this.position.y -= Settings.HUMAN_VELOCITY * delta;
                 }
                 break;
             case HUMAN_LEFT:
@@ -99,4 +101,9 @@ public class Human extends Actor {
         direction = HUMAN_IDLE;
     }
 
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+        batch.draw(AssetManager.human, position.x, position.y, width, height);
+    }
 }

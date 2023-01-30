@@ -6,7 +6,7 @@ public class Settings {
     public static final int GAME_HEIGHT = 1024;
 
     // Propietats de la nau
-    public static final float HUMAN_VELOCITY = 50;
+    public static final float HUMAN_VELOCITY = 250;
     public static final int HUMAN_WIDTH = 15;
     public static final int HUMAN_HEIGHT = 30;
     public static final float HUMAN_STARTX = 20;
