@@ -7,6 +7,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class AssetManager {
 
     // Sprite Sheet
+    public static Texture personajes;
+
+    // Nau i fons
+    public static TextureRegion humany;
     public static Texture human, background;
 
     public static void load() {

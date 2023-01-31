@@ -1,5 +1,9 @@
 package com.mygdx.game.screens;
 
+import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -15,6 +19,8 @@ import com.mygdx.game.objects.Human;
 import com.mygdx.game.utils.Settings;
 
 public class GameScreen implements Screen {
+        TiledMap map;
+
 
         private Stage stage;
         private Human human;
@@ -38,7 +44,7 @@ public class GameScreen implements Screen {
                 camera.setToOrtho(false);
 
                 // Creem el viewport amb les mateixes dimensions que la càmera
-                StretchViewport viewport = new StretchViewport(Settings.GAME_WIDTH, Settings.GAME_HEIGHT , camera);
+                StretchViewport viewport = new StretchViewport(Settings.GAME_WIDTH/2, Settings.GAME_HEIGHT/2 , camera);
 
                 // Creem l'stage i assignem el viewport
                 stage = new Stage(viewport);
@@ -67,6 +73,8 @@ public class GameScreen implements Screen {
 
         @Override
         public void render(float delta) {
+                Gdx.gl.glClearColor( 0, 0, 0.5f, 1);
+                Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
                 // Dibuixem i actualitzem tots els actors de l'stage
                 stage.draw();
                 camera.position.set(human.getX(), human.getY(), 0);
