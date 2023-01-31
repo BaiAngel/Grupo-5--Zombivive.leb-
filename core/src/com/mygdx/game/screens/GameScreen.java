@@ -18,6 +18,7 @@ public class GameScreen implements Screen {
 
         private Stage stage;
         private Human human;
+        private OrthographicCamera camera;
         private Background background;
         // Representació de figures geomètriques
         private ShapeRenderer shapeRenderer;
@@ -31,7 +32,7 @@ public class GameScreen implements Screen {
                 shapeRenderer = new ShapeRenderer();
 
                 // Creem la càmera de les dimensions del joc
-                OrthographicCamera camera = new OrthographicCamera(Settings.GAME_WIDTH, Settings.GAME_HEIGHT);
+                camera = new OrthographicCamera(Settings.GAME_WIDTH, Settings.GAME_HEIGHT);
                 // Posant el paràmetre a true configurem la càmera perquè
                 // faci servir el sistema de coordenades Y-Down
                 camera.setToOrtho(false);
@@ -68,6 +69,8 @@ public class GameScreen implements Screen {
         public void render(float delta) {
                 // Dibuixem i actualitzem tots els actors de l'stage
                 stage.draw();
+                camera.position.set(human.getX(), human.getY(), 0);
+                camera.update();
                 stage.act(delta);
 
                 //drawElements();

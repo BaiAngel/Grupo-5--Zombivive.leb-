@@ -9,7 +9,7 @@ public class Settings {
     public static final float HUMAN_VELOCITY = 250;
     public static final int HUMAN_WIDTH = 15;
     public static final int HUMAN_HEIGHT = 30;
-    public static final float HUMAN_STARTX = 20;
+    public static final float HUMAN_STARTX = GAME_WIDTH/2 - HUMAN_WIDTH/2;
     public static final float HUMAN_STARTY = GAME_HEIGHT/2 - HUMAN_HEIGHT/2;
 
 }
