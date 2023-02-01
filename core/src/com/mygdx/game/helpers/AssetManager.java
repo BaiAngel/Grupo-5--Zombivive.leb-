@@ -11,12 +11,15 @@ public class AssetManager {
 
     // Nau i fons
     public static TextureRegion humany;
-    public static Texture human, background;
+    public static Texture human, background, actor_malo;
 
     public static void load() {
         // Carreguem les textures i li apliquem el mètode d'escalat 'nearest'
         human = new Texture(Gdx.files.internal("human.png"));
         human.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
+        actor_malo = new Texture(Gdx.files.internal("actor malo.png"));
+        actor_malo.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
         // Carreguem les textures i li apliquem el mètode d'escalat 'nearest'
         background = new Texture(Gdx.files.internal("fons.jpeg"));
