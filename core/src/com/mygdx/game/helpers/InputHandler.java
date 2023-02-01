@@ -1,12 +1,14 @@
 package com.mygdx.game.helpers;
 import com.badlogic.gdx.InputProcessor;
 import com.mygdx.game.objects.Human;
+import com.mygdx.game.objects.Zombie;
 import com.mygdx.game.screens.GameScreen;
 
 public class InputHandler implements InputProcessor {
 
     // Objectes necessaris
     private Human human;
+    private Zombie zombie;
     private GameScreen screen;
 
     // Enter per a la gestió del moviment d'arrossegament
@@ -18,6 +20,7 @@ public class InputHandler implements InputProcessor {
         // Obtenim tots els elements necessaris
         this.screen = screen;
         human = screen.getHuman();
+        zombie = screen.getZombie();
 
     }
 
@@ -39,6 +42,7 @@ public class InputHandler implements InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         previousY = screenY;
+        previousX = screenX;
         return true;
     }
 
@@ -74,6 +78,7 @@ public class InputHandler implements InputProcessor {
             } else {
                 // En cas contrari cap amunt
                 human.goRight();
+                zombie.goRight();
             }
         // Guardem la posició de la Y
         previousX = screenX;

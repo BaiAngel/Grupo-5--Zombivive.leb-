@@ -1,14 +1,15 @@
 package com.mygdx.game.objects;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.helpers.AssetManager;
 import com.mygdx.game.utils.Settings;
 
-public class actor_malo extends Actor {
+public class Zombie extends Actor {
 
-    public static final int HUMAN_IDLE = 0;
+    public static final int MOB_IDLE = 0;
     public static final int MOB_UP = 1;
     public static final int MOB_RIGHT = 2;
     public static final int MOB_DOWN = 3;
@@ -19,7 +20,7 @@ public class actor_malo extends Actor {
     private int width, height;
     private int direction;
 
-    public actor_malo(float x, float y, int width, int height) {
+    public Zombie(float x, float y, int width, int height) {
 
         // Inicialitzem els arguments segons la crida del constructor
         this.width = width;
@@ -27,7 +28,7 @@ public class actor_malo extends Actor {
         position = new Vector2(x, y);
 
         // Inicialitzem Human a l'estat normal
-        direction = HUMAN_IDLE;
+        direction = MOB_IDLE;
 
     }
     public void act(float delta) {
@@ -35,26 +36,28 @@ public class actor_malo extends Actor {
         // Movem l'Spacecraft depenent de la direcció controlant que no surti de la pantalla
         switch (direction) {
             case MOB_UP:
-                if (this.position.y + Settings.HUMAN_VELOCITY * delta >= 0) {
-                    this.position.y += Settings.HUMAN_VELOCITY * delta;
+                if (this.position.y + Settings.MOB_VELOCITY * delta <= Settings.GAME_HEIGHT) {
+                    this.position.y += Settings.MOB_VELOCITY * delta;
                 }
                 break;
             case MOB_RIGHT:
-                if (this.position.x - Settings.HUMAN_VELOCITY * delta >= 0) {
-                    this.position.x -= Settings.HUMAN_VELOCITY * delta;
-                }
+                    this.position.x += Settings.MOB_VELOCITY * delta;
+
                 break;
             case MOB_DOWN:
-                if (this.position.y - height + Settings.HUMAN_VELOCITY * delta <= Settings.GAME_HEIGHT) {
-                    this.position.y -= Settings.HUMAN_VELOCITY * delta;
+                if (this.position.y - height + Settings.MOB_VELOCITY * delta >= 0) {
+                    this.position.y -= Settings.MOB_VELOCITY * delta;
                 }
                 break;
             case MOB_LEFT:
-                if (this.position.x + Settings.HUMAN_VELOCITY * delta >= 0) {
-                    this.position.x += Settings.HUMAN_VELOCITY * delta;
-                }
+                Gdx.app.log("LifeCycle", "Setting(" + Float.toString(Settings.MOB_VELOCITY) + ")");
+                Gdx.app.log("LifeCycle", "delat(" + Float.toString(delta) + ")");
+                Gdx.app.log("LifeCycle", "positio(" + Float.toString(this.position.x) + ")");
+                    this.position.x -= Settings.MOB_VELOCITY * delta;
+                Gdx.app.log("LifeCycle", "futurposition(" + Float.toString(this.position.x) + ")");
+
                 break;
-            case HUMAN_IDLE:
+            case MOB_IDLE:
                 break;
         }
     }
@@ -78,33 +81,37 @@ public class actor_malo extends Actor {
 
     // Canviem la direcció de l'Spacecraft: Puja
     public void goUp() {
+        Gdx.app.log("LifeCycle", "Up");
         direction = MOB_UP;
     }
 
     // Canviem la direcció de l'Spacecraft: Dreta
     public void goRight() {
+        Gdx.app.log("LifeCycle", "Right");
         direction = MOB_RIGHT;
     }
 
     // Canviem la direcció de l'Spacecraft: Baixa
     public void goDown() {
+        Gdx.app.log("LifeCycle", "Down");
         direction = MOB_DOWN;
     }
 
     // Canviem la direcció de l'Spacecraft: Esquerra
     public void goLeft() {
+        Gdx.app.log("LifeCycle", "Left");
         direction = MOB_LEFT;
     }
 
     // Posem l'Spacecraft al seu estat original
     public void goStraight() {
-        direction = HUMAN_IDLE;
+        direction = MOB_IDLE;
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        batch.draw(AssetManager.actor_malo, position.x, position.y, width, height);
+        batch.draw(AssetManager.human, position.x, position.y, width, height);
     }
 }
 

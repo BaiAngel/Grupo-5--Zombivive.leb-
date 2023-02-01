@@ -36,17 +36,17 @@ public class Human extends Actor {
         // Movem l'Spacecraft depenent de la direcció controlant que no surti de la pantalla
         switch (direction) {
             case HUMAN_UP:
-                if (this.position.y + Settings.HUMAN_VELOCITY * delta >= 0) {
+                if (this.position.y + Settings.HUMAN_VELOCITY * delta <= Settings.GAME_HEIGHT) {
                     this.position.y += Settings.HUMAN_VELOCITY * delta;
                 }
                 break;
             case HUMAN_RIGHT:
-                if (this.position.x - Settings.HUMAN_VELOCITY * delta >= 0) {
+                if (this.position.x - Settings.HUMAN_VELOCITY * delta <= Settings.GAME_WIDTH) {
                     this.position.x -= Settings.HUMAN_VELOCITY * delta;
                 }
                 break;
             case HUMAN_DOWN:
-                if (this.position.y - height + Settings.HUMAN_VELOCITY * delta <= Settings.GAME_HEIGHT) {
+                if (this.position.y - height + Settings.HUMAN_VELOCITY * delta >= 0) {
                     this.position.y -= Settings.HUMAN_VELOCITY * delta;
                 }
                 break;

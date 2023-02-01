@@ -1,6 +1,5 @@
 package com.mygdx.game.screens;
 
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -13,12 +12,12 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.helpers.InputHandler;
 import com.mygdx.game.objects.Background;
 import com.mygdx.game.objects.Human;
-import com.mygdx.game.objects.actor_malo;
+import com.mygdx.game.objects.Zombie;
 import com.mygdx.game.utils.Settings;
 
 public class GameScreen implements Screen {
 
-        private com.mygdx.game.objects.actor_malo actor_malo;
+        private Zombie zombie;
         private Stage stage;
         private Human human;
         private OrthographicCamera camera;
@@ -51,7 +50,7 @@ public class GameScreen implements Screen {
                 // Creem la persona
                 human = new Human(Settings.HUMAN_STARTX, Settings.HUMAN_STARTY, Settings.HUMAN_WIDTH, Settings.HUMAN_HEIGHT);
 
-                actor_malo = new actor_malo(Settings.MOB_STARTX, Settings.MOB_STARTY, Settings.MOB_WIDTH, Settings.MOB_HEIGHT);
+                zombie = new Zombie(Settings.MOB_STARTX, Settings.MOB_STARTY, Settings.MOB_WIDTH, Settings.MOB_HEIGHT);
 
                 // Creem el fons
                 background = new Background(0,0, Settings.GAME_WIDTH, Settings.GAME_HEIGHT);
@@ -59,7 +58,7 @@ public class GameScreen implements Screen {
                 // Afegim els actors a l'stage
                 stage.addActor(background);
                 stage.addActor(human);
-                stage.addActor(actor_malo);
+                stage.addActor(zombie);
                 // Donem nom a l'Actor
                 human.setName("human");
                 // Assignem com a gestor d'entrada la classe InputHandler
@@ -86,17 +85,25 @@ public class GameScreen implements Screen {
         }
 
         private void traking() {
-                float resx = human.getX() - actor_malo.getX();
-                float resy = human.getY() - actor_malo.getY();
+                float resx = human.getX() - zombie.getX();
+                float resy = human.getY() - zombie.getY();
+                Gdx.app.log("LifeCycle", "Xzombie(" + Float.toString(zombie.getX()) + ")");
+                Gdx.app.log("LifeCycle", "Xhuman(" + Float.toString(human.getX()) + ")");
                 if (resx>0){
-                        actor_malo.goRight();
-                } else{
-                        actor_malo.goLeft();
+                        zombie.goRight();
+                } else if (resx < 0){
+                        zombie.goLeft();
                 }
-                 if (resy<0){
-                        actor_malo.goDown();
-                }else{
-                        actor_malo.goUp();
+                else {
+                        zombie.goStraight();
+                }
+                if (resy<0){
+                        zombie.goDown();
+                }else if (resy > 0){
+                        zombie.goUp();
+                }
+                else {
+                        zombie.goStraight();
                 }
         }
 
@@ -151,8 +158,8 @@ public class GameScreen implements Screen {
         public Stage getStage() {
                 return stage;
         }
-
         public Human getHuman() {
                 return human;
         }
+        public Zombie getZombie() { return zombie; }
 }
