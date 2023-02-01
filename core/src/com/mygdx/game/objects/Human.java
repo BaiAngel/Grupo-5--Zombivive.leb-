@@ -1,6 +1,7 @@
 package com.mygdx.game.objects;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.helpers.AssetManager;
@@ -59,6 +60,26 @@ public class Human extends Actor {
         }
     }
 
+    // Obtenim el TextureRegion depenent de la posició de l'spacecraft
+    public TextureRegion getHumanTexture() {
+
+        switch (direction) {
+
+            case HUMAN_IDLE:
+                return AssetManager.humanIdle;
+            case HUMAN_UP:
+                return AssetManager.humanUp;
+            case HUMAN_RIGHT:
+                return AssetManager.humanLeft;
+            case HUMAN_DOWN:
+                return AssetManager.humanDown;
+            case HUMAN_LEFT:
+                return AssetManager.humanRight;
+            default:
+                return AssetManager.humanIdle;
+        }
+    }
+
     // Getters dels atributs principals
     public float getX() {
         return position.x;
@@ -104,6 +125,6 @@ public class Human extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        batch.draw(AssetManager.human, position.x, position.y, width, height);
+        batch.draw(getHumanTexture(), position.x, position.y, width, height);
     }
 }

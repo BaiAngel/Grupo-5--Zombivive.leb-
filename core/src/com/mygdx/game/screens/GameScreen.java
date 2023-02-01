@@ -19,8 +19,6 @@ import com.mygdx.game.objects.Human;
 import com.mygdx.game.utils.Settings;
 
 public class GameScreen implements Screen {
-        TiledMap map;
-
 
         private Stage stage;
         private Human human;
