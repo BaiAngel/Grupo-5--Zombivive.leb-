@@ -2,6 +2,8 @@ package com.mygdx.game.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.helpers.AssetManager;
@@ -19,6 +21,7 @@ public class Zombie extends Actor {
     private Vector2 position;
     private int width, height;
     private int direction;
+    private Rectangle collisionRect;
 
     public Zombie(float x, float y, int width, int height) {
 
@@ -29,6 +32,7 @@ public class Zombie extends Actor {
 
         // Inicialitzem Human a l'estat normal
         direction = MOB_IDLE;
+        collisionRect = new Rectangle();
 
     }
     public void act(float delta) {
@@ -40,26 +44,35 @@ public class Zombie extends Actor {
                     this.position.y += Settings.MOB_VELOCITY * delta;
                 }
                 break;
-            case MOB_RIGHT:
-                    this.position.x += Settings.MOB_VELOCITY * delta;
-
+            case MOB_LEFT:
+                if (this.position.x - Settings.MOB_VELOCITY * delta <= Settings.GAME_WIDTH) {
+                    this.position.x -= Settings.MOB_VELOCITY * delta;
+                }
                 break;
             case MOB_DOWN:
                 if (this.position.y - height + Settings.MOB_VELOCITY * delta >= 0) {
                     this.position.y -= Settings.MOB_VELOCITY * delta;
                 }
                 break;
-            case MOB_LEFT:
-                Gdx.app.log("LifeCycle", "Setting(" + Float.toString(Settings.MOB_VELOCITY) + ")");
-                Gdx.app.log("LifeCycle", "delat(" + Float.toString(delta) + ")");
-                Gdx.app.log("LifeCycle", "positio(" + Float.toString(this.position.x) + ")");
-                    this.position.x -= Settings.MOB_VELOCITY * delta;
-                Gdx.app.log("LifeCycle", "futurposition(" + Float.toString(this.position.x) + ")");
-
+            case MOB_RIGHT:
+                if (this.position.x + Settings.MOB_VELOCITY * delta >= 0) {
+                    this.position.x += Settings.MOB_VELOCITY * delta;
+                }
                 break;
             case MOB_IDLE:
                 break;
         }
+        collisionRect.set(position.x+11, position.y + 7, (float) (width/1.5), (float) (height/1.5));
+
+    }
+
+    public boolean collides(Human human) {
+
+        if (position.x <= human.getX() + human.getWidth()) {
+            // Comprovem si han col·lisionat sempre que l'asteroide es trobi a la mateixa alçada que l'spacecraft
+            return (Intersector.overlaps(collisionRect, human.getCollisionRect()));
+        }
+        return false;
     }
 
     // Getters dels atributs principals
@@ -81,25 +94,21 @@ public class Zombie extends Actor {
 
     // Canviem la direcció de l'Spacecraft: Puja
     public void goUp() {
-        Gdx.app.log("LifeCycle", "Up");
         direction = MOB_UP;
     }
 
     // Canviem la direcció de l'Spacecraft: Dreta
     public void goRight() {
-        Gdx.app.log("LifeCycle", "Right");
         direction = MOB_RIGHT;
     }
 
     // Canviem la direcció de l'Spacecraft: Baixa
     public void goDown() {
-        Gdx.app.log("LifeCycle", "Down");
         direction = MOB_DOWN;
     }
 
     // Canviem la direcció de l'Spacecraft: Esquerra
     public void goLeft() {
-        Gdx.app.log("LifeCycle", "Left");
         direction = MOB_LEFT;
     }
 

@@ -2,6 +2,7 @@ package com.mygdx.game.objects;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.helpers.AssetManager;
@@ -19,6 +20,7 @@ public class Human extends Actor {
     private Vector2 position;
     private int width, height;
     private int direction;
+    private Rectangle collisionRect;
 
     public Human(float x, float y, int width, int height) {
 
@@ -29,7 +31,8 @@ public class Human extends Actor {
 
         // Inicialitzem Human a l'estat normal
         direction = HUMAN_IDLE;
-
+        // Creem el rectangle de col·lisions
+        collisionRect = new Rectangle();
     }
     public void act(float delta) {
 
@@ -58,6 +61,7 @@ public class Human extends Actor {
             case HUMAN_IDLE:
                 break;
         }
+        collisionRect.set(position.x+4, position.y + 4, width/2, height/2);
     }
 
     // Obtenim el TextureRegion depenent de la posició de l'spacecraft
@@ -95,6 +99,10 @@ public class Human extends Actor {
 
     public float getHeight() {
         return height;
+    }
+
+    public Rectangle getCollisionRect() {
+        return collisionRect;
     }
 
     // Canviem la direcció de l'Spacecraft: Puja

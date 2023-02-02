@@ -79,28 +79,46 @@ public class GameScreen implements Screen {
                 camera.position.set(human.getX(), human.getY(), 0);
                 camera.update();
                 stage.act(delta);
-
-                traking();
-                //drawElements();
+                if (zombie.collides(human)) {
+                        // La nau explota i desapareix
+                        Gdx.app.log("App", "Ñam");
+                }
+                checkMovement();
+                drawElements();
         }
 
-        private void traking() {
-                float resx = human.getX() - zombie.getX();
+        private void checkMovement() {
                 float resy = human.getY() - zombie.getY();
-                Gdx.app.log("LifeCycle", "Xzombie(" + Float.toString(zombie.getX()) + ")");
-                Gdx.app.log("LifeCycle", "Xhuman(" + Float.toString(human.getX()) + ")");
-                if (resx>0){
-                        zombie.goRight();
-                } else if (resx < 0){
-                        zombie.goLeft();
+                float resx = human.getX() - zombie.getX();
+                if (Math.abs(resx) > Math.abs(resy)) {
+                        trakingX();
                 }
-                else {
+                else if((Math.abs(resx) < Math.abs(resy))){
+                        trakingY();
+                }
+                else{
                         zombie.goStraight();
                 }
+        }
+
+        private void trakingY() {
+                float resy = human.getY() - zombie.getY();
                 if (resy<0){
                         zombie.goDown();
                 }else if (resy > 0){
                         zombie.goUp();
+                }
+                else {
+                        zombie.goStraight();
+                }
+        }
+
+        private void trakingX() {
+                float resx = human.getX() - zombie.getX();
+                if (resx<0){
+                        zombie.goLeft();
+                } else if (resx > 0){
+                        zombie.goRight();
                 }
                 else {
                         zombie.goStraight();
@@ -118,14 +136,16 @@ public class GameScreen implements Screen {
                 // Recollim les propietats del Batch de l'Stage
                 shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
                 // Inicialitzem el shaperenderer
-                shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+                shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
 
                 /* 3 */
                 // Definim el color (verd)
                 shapeRenderer.setColor(new Color(0, 1, 0, 1));
-                // Pintem la nau
-                shapeRenderer.rect(human.getX(), human.getY(), human.getWidth(), human.getHeight());
 
+                // Pintem la nau
+                shapeRenderer.rect(human.getX()+4, human.getY()+4, human.getWidth()/2, human.getHeight()/2);
+                shapeRenderer.setColor(new Color(1, 0, 0, 1));
+                shapeRenderer.rect(zombie.getX()+11, zombie.getY()+7, (float) (zombie.getWidth()/1.5), (float) (zombie.getHeight()/1.5));
                 /* 4 */
                 shapeRenderer.end();
         }
