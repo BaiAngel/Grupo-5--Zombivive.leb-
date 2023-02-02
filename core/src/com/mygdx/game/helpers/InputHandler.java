@@ -20,7 +20,6 @@ public class InputHandler implements InputProcessor {
         // Obtenim tots els elements necessaris
         this.screen = screen;
         human = screen.getHuman();
-        zombie = screen.getZombie();
 
     }
 
@@ -78,7 +77,6 @@ public class InputHandler implements InputProcessor {
             } else {
                 // En cas contrari cap amunt
                 human.goRight();
-                zombie.goRight();
             }
         // Guardem la posició de la Y
         previousX = screenX;

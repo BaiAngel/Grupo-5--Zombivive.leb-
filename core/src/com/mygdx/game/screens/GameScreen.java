@@ -15,9 +15,12 @@ import com.mygdx.game.objects.Human;
 import com.mygdx.game.objects.Zombie;
 import com.mygdx.game.utils.Settings;
 
+import java.util.LinkedList;
+import java.util.ListIterator;
+
 public class GameScreen implements Screen {
 
-        private Zombie zombie;
+        private LinkedList<Zombie> zombieList;
         private Stage stage;
         private Human human;
         private OrthographicCamera camera;
@@ -26,6 +29,8 @@ public class GameScreen implements Screen {
         private ShapeRenderer shapeRenderer;
         // Per obtenir el batch de l'stage
         private Batch batch;
+        private int timeBetweenEnemySpawns = 500;
+        private int enemySpawnTimer = 0;
 
 
         public GameScreen() {
@@ -49,8 +54,7 @@ public class GameScreen implements Screen {
 
                 // Creem la persona
                 human = new Human(Settings.HUMAN_STARTX, Settings.HUMAN_STARTY, Settings.HUMAN_WIDTH, Settings.HUMAN_HEIGHT);
-
-                zombie = new Zombie(Settings.MOB_STARTX, Settings.MOB_STARTY, Settings.MOB_WIDTH, Settings.MOB_HEIGHT);
+                zombieList = new LinkedList<>();
 
                 // Creem el fons
                 background = new Background(0,0, Settings.GAME_WIDTH, Settings.GAME_HEIGHT);
@@ -58,7 +62,11 @@ public class GameScreen implements Screen {
                 // Afegim els actors a l'stage
                 stage.addActor(background);
                 stage.addActor(human);
-                stage.addActor(zombie);
+                ListIterator<Zombie> zombieListIterator = zombieList.listIterator();
+                while (zombieListIterator.hasNext()) {
+                        Zombie zombie = zombieListIterator.next();
+                        stage.addActor(zombie);
+                }
                 // Donem nom a l'Actor
                 human.setName("human");
                 // Assignem com a gestor d'entrada la classe InputHandler
@@ -79,49 +87,78 @@ public class GameScreen implements Screen {
                 camera.position.set(human.getX(), human.getY(), 0);
                 camera.update();
                 stage.act(delta);
-                if (zombie.collides(human)) {
-                        // La nau explota i desapareix
-                        Gdx.app.log("App", "Ñam");
+                spawnZombies();
+                ListIterator<Zombie> zombieListIterator = zombieList.listIterator();
+                while (zombieListIterator.hasNext()) {
+                        Zombie zombie = zombieListIterator.next();
+                        checkColision(zombie);
+                        checkMovement(zombie);
                 }
-                checkMovement();
                 drawElements();
         }
 
-        private void checkMovement() {
-                float resy = human.getY() - zombie.getY();
-                float resx = human.getX() - zombie.getX();
+        private void spawnZombies() {
+                enemySpawnTimer = enemySpawnTimer + 1;
+                Gdx.app.log("Timer", "delta: " + enemySpawnTimer);
+
+                if (enemySpawnTimer > timeBetweenEnemySpawns){
+                        zombieList.add(
+                                new Zombie(Settings.MOB_STARTX, Settings.MOB_STARTY, Settings.MOB_WIDTH, Settings.MOB_HEIGHT)
+
+                        );
+                        ListIterator<Zombie> zombieListIterator = zombieList.listIterator();
+                        while (zombieListIterator.hasNext()) {
+                                Zombie zombie = zombieListIterator.next();
+                                stage.addActor(zombie);
+                        }
+                        enemySpawnTimer = 0;
+                }
+        }
+
+        private void checkColision(Zombie mob) {
+                if (mob.collides(human)) {
+                        // La nau explota i desapareix
+                        if (mob.attackCooldown() == true) {
+                                Gdx.app.log("App", "Ñam");
+                        }
+                }
+        }
+
+        private void checkMovement(Zombie mob) {
+                float resy = human.getY() - mob.getY();
+                float resx = human.getX() - mob.getX();
                 if (Math.abs(resx) > Math.abs(resy)) {
-                        trakingX();
+                        trakingX(mob);
                 }
                 else if((Math.abs(resx) < Math.abs(resy))){
-                        trakingY();
+                        trakingY(mob);
                 }
                 else{
-                        zombie.goStraight();
+                        mob.goStraight();
                 }
         }
 
-        private void trakingY() {
-                float resy = human.getY() - zombie.getY();
+        private void trakingY(Zombie mob) {
+                float resy = human.getY() - mob.getY();
                 if (resy<0){
-                        zombie.goDown();
+                        mob.goDown();
                 }else if (resy > 0){
-                        zombie.goUp();
+                        mob.goUp();
                 }
                 else {
-                        zombie.goStraight();
+                        mob.goStraight();
                 }
         }
 
-        private void trakingX() {
-                float resx = human.getX() - zombie.getX();
+        private void trakingX(Zombie mob) {
+                float resx = human.getX() - mob.getX();
                 if (resx<0){
-                        zombie.goLeft();
+                        mob.goLeft();
                 } else if (resx > 0){
-                        zombie.goRight();
+                        mob.goRight();
                 }
                 else {
-                        zombie.goStraight();
+                        mob.goStraight();
                 }
         }
 
@@ -145,7 +182,11 @@ public class GameScreen implements Screen {
                 // Pintem la nau
                 shapeRenderer.rect(human.getX()+4, human.getY()+4, human.getWidth()/2, human.getHeight()/2);
                 shapeRenderer.setColor(new Color(1, 0, 0, 1));
-                shapeRenderer.rect(zombie.getX()+11, zombie.getY()+7, (float) (zombie.getWidth()/1.5), (float) (zombie.getHeight()/1.5));
+                ListIterator<Zombie> zombieListIterator = zombieList.listIterator();
+                while (zombieListIterator.hasNext()) {
+                        Zombie zombie = zombieListIterator.next();
+                        shapeRenderer.rect(zombie.getX()+11, zombie.getY()+7, (float) (zombie.getWidth()/1.5), (float) (zombie.getHeight()/1.5));
+                }
                 /* 4 */
                 shapeRenderer.end();
         }
@@ -181,5 +222,4 @@ public class GameScreen implements Screen {
         public Human getHuman() {
                 return human;
         }
-        public Zombie getZombie() { return zombie; }
 }

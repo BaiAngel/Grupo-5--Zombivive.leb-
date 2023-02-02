@@ -22,6 +22,10 @@ public class Zombie extends Actor {
     private int width, height;
     private int direction;
     private Rectangle collisionRect;
+    private float COOLDOWN_TIME = 2f;
+
+    private float cooldown = 0;
+
 
     public Zombie(float x, float y, int width, int height) {
 
@@ -63,7 +67,9 @@ public class Zombie extends Actor {
                 break;
         }
         collisionRect.set(position.x+11, position.y + 7, (float) (width/1.5), (float) (height/1.5));
-
+        if(cooldown > 0) {
+            cooldown -= delta;
+        }
     }
 
     public boolean collides(Human human) {
@@ -73,6 +79,18 @@ public class Zombie extends Actor {
             return (Intersector.overlaps(collisionRect, human.getCollisionRect()));
         }
         return false;
+    }
+
+    public boolean attackCooldown()
+    {
+        if(cooldown <= 0)
+        {
+            cooldown = COOLDOWN_TIME;
+            return true;
+        }else{
+            return false;
+        }
+
     }
 
     // Getters dels atributs principals
