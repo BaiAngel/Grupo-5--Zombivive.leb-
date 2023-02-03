@@ -144,7 +144,8 @@ public class Human extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         tiempoAnim += Gdx.graphics.getDeltaTime(); //es el tiempo que paso desde el ultimo render
-        frameActual = (TextureRegion) AssetManager.animation.getKeyFrame(tiempoAnim,true);
+        Animation frameDir = getHumanTexture();
+        frameActual = (TextureRegion) frameDir.getKeyFrame(tiempoAnim,true);
         batch.draw(frameActual,getX(),getY());
     }
 }

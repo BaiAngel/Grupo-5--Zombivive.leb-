@@ -16,11 +16,13 @@ public class AssetManager {
     public static Texture human, background, actor_malo;
     public static int x;
      //try
-     public static Animation animation;
     public static float tiempoAnim;
     public static TextureRegion [] regionsMovimiento;
     private static Texture imagen;
     public static TextureRegion frameActual;
+    //Necesito
+    private static String path;
+    private static int divideIn;
 
     public static void load() {
         // Carreguem les textures i li apliquem el mètode d'escalat 'nearest'
@@ -35,59 +37,25 @@ public class AssetManager {
         personajes.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
         //humanIdle
-        //humanIdle = new TextureRegion(personajes, 80, 142, 16, 18);
-        humanIdle = new TextureRegion[2];
-        x = 80;
-        for (int i = 0; i < humanIdle.length; i++) {
-
-            humanIdle[i] = new TextureRegion(personajes, x + 16, 142, 16, 18);
-        }
-        aHumanIdle = new Animation(0.05f, humanIdle);
-        aHumanIdle.setPlayMode(Animation.PlayMode.LOOP);
+        path = "humanIdle.png";
+        divideIn = 1;
+        aHumanIdle = crearAnimacion(path, divideIn);
         //HumanUp
-        //humanUp = new TextureRegion(personajes, 176, 142, 16, 18);
-        humanUp = new TextureRegion[3];
-        x = 80;
-        for (int i = 0; i < humanUp.length; i++) {
-
-            humanUp[i] = new TextureRegion(personajes, x + 16, 142, 16, 18);
-        }
-        aHumanUp = new Animation<TextureRegion>(0.05f, humanUp);
-        aHumanUp.setPlayMode(Animation.PlayMode.LOOP);
+        path = "humanUp.png";
+        divideIn = 3;
+        aHumanUp = crearAnimacion(path, divideIn);
         //HumanRight
-        //humanRight = new TextureRegion(personajes, 128, 142, 16, 18);
-        humanRight = new TextureRegion[3];
-        x = 128;
-        for (int i = 0; i < humanRight.length; i++) {
-
-            humanRight[i] = new TextureRegion(personajes, x + 16, 142, 16, 18);
-        }
-        aHumanRight = new Animation(0.05f, humanRight);
-        aHumanRight.setPlayMode(Animation.PlayMode.LOOP);
+        path = "humanRight.png";
+        divideIn = 3;
+        aHumanRight = crearAnimacion(path, divideIn);
         //HumanDown
-        //humanDown = new TextureRegion(personajes, 96, 142, 16, 18);
-        humanDown = new TextureRegion[2];
-        x = 96;
-        for (int i = 0; i < humanDown.length; i++) {
-
-            humanDown[i] = new TextureRegion(personajes, x + 16, 142, 16, 18);
-        }
-        aHumanDown = new Animation(0.05f, humanDown);
-        aHumanDown.setPlayMode(Animation.PlayMode.LOOP);
+        path = "humanDown.png";
+        divideIn = 2;
+        aHumanDown = crearAnimacion(path, divideIn);
         //HumanLeft
-        String path = "humanLeft.png";
-        int divideIn = 6;
+        path = "humanLeft.png";
+        divideIn = 3;
         aHumanLeft = crearAnimacion(path, divideIn);
-        /*
-        humanLeft = new TextureRegion(personajes, 224, 142, 16, 18);
-        x = 224;
-        humanLeft = new TextureRegion[3];
-        for (int i = 0; i < humanLeft.length; i++) {
-            humanLeft[i] = new TextureRegion(personajes, x + 16, 142, 16, 18);
-        }
-        aHumanLeft = new Animation(0.05f, humanLeft);
-        aHumanLeft.setPlayMode(Animation.PlayMode.LOOP_REVERSED);
-         */
         // Carreguem les textures i li apliquem el mètode d'escalat 'nearest'
         background = new Texture(Gdx.files.internal("fons.jpeg"));
         background.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
@@ -100,7 +68,7 @@ public class AssetManager {
 
         regionsMovimiento = new TextureRegion[divideIn];
         for (int i = 0; i < divideIn; i++) regionsMovimiento[i] = tmp[0][i];
-        Animation createAnimation = new Animation(1 / 10f, regionsMovimiento);
+        Animation createAnimation = new Animation(1 / 3f, regionsMovimiento);
         tiempoAnim = 0f;
         return createAnimation;
     }
