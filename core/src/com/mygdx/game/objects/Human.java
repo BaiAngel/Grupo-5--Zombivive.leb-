@@ -1,11 +1,18 @@
 package com.mygdx.game.objects;
 
+import static com.mygdx.game.helpers.AssetManager.frameActual;
+import static com.mygdx.game.helpers.AssetManager.tiempoAnim;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.helpers.AssetManager;
+import com.mygdx.game.utils.Methods;
 import com.mygdx.game.utils.Settings;
 
 public class Human extends Actor {
@@ -22,6 +29,8 @@ public class Human extends Actor {
     private int direction;
     private Rectangle collisionRect;
 
+
+
     public Human(float x, float y, int width, int height) {
 
         // Inicialitzem els arguments segons la crida del constructor
@@ -33,6 +42,9 @@ public class Human extends Actor {
         direction = HUMAN_IDLE;
         // Creem el rectangle de col·lisions
         collisionRect = new Rectangle();
+
+
+
     }
     public void act(float delta) {
 
@@ -65,22 +77,20 @@ public class Human extends Actor {
     }
 
     // Obtenim el TextureRegion depenent de la posició de l'spacecraft
-    public TextureRegion getHumanTexture() {
+    public Animation getHumanTexture() {
 
         switch (direction) {
 
-            case HUMAN_IDLE:
-                return AssetManager.humanIdle;
             case HUMAN_UP:
-                return AssetManager.humanUp;
+                return AssetManager.aHumanUp;
             case HUMAN_RIGHT:
-                return AssetManager.humanLeft;
+                return AssetManager.aHumanLeft;
             case HUMAN_DOWN:
-                return AssetManager.humanDown;
+                return AssetManager.aHumanDown;
             case HUMAN_LEFT:
-                return AssetManager.humanRight;
+                return AssetManager.aHumanRight;
             default:
-                return AssetManager.humanIdle;
+                return AssetManager.aHumanIdle;
         }
     }
 
@@ -133,6 +143,8 @@ public class Human extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        batch.draw(getHumanTexture(), position.x, position.y, width, height);
+        tiempoAnim += Gdx.graphics.getDeltaTime(); //es el tiempo que paso desde el ultimo render
+        frameActual = (TextureRegion) AssetManager.animation.getKeyFrame(tiempoAnim,true);
+        batch.draw(frameActual,getX(),getY());
     }
 }

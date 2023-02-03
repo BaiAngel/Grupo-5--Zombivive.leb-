@@ -1,14 +1,20 @@
 package com.mygdx.game.screens;
 
+import static com.mygdx.game.helpers.AssetManager.frameActual;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.mygdx.game.helpers.AssetManager;
 import com.mygdx.game.helpers.InputHandler;
 import com.mygdx.game.objects.Background;
 import com.mygdx.game.objects.Human;
@@ -31,6 +37,8 @@ public class GameScreen implements Screen {
         private Batch batch;
         private int timeBetweenEnemySpawns = 500;
         private int enemySpawnTimer = 0;
+
+
 
 
         public GameScreen() {
@@ -88,18 +96,25 @@ public class GameScreen implements Screen {
                 camera.update();
                 stage.act(delta);
                 spawnZombies();
+                updateZombie();
+                //animateHuman();
+                drawElements();
+        }
+
+
+
+        private void updateZombie() {
                 ListIterator<Zombie> zombieListIterator = zombieList.listIterator();
                 while (zombieListIterator.hasNext()) {
                         Zombie zombie = zombieListIterator.next();
                         checkColision(zombie);
                         checkMovement(zombie);
                 }
-                drawElements();
         }
 
         private void spawnZombies() {
                 enemySpawnTimer = enemySpawnTimer + 1;
-                Gdx.app.log("Timer", "delta: " + enemySpawnTimer);
+                Gdx.app.log("Timer", "SpawnTimer: " + enemySpawnTimer);
 
                 if (enemySpawnTimer > timeBetweenEnemySpawns){
                         zombieList.add(
