@@ -200,7 +200,7 @@ public class GameScreen implements Screen {
                 ListIterator<Zombie> zombieListIterator = zombieList.listIterator();
                 while (zombieListIterator.hasNext()) {
                         Zombie zombie = zombieListIterator.next();
-                        shapeRenderer.rect(zombie.getX()+11, zombie.getY()+7, (float) (zombie.getWidth()/1.5), (float) (zombie.getHeight()/1.5));
+                        shapeRenderer.rect(zombie.getX()+4, zombie.getY()+4, (float) (zombie.getWidth()/2), (float) (zombie.getHeight()/2));
                 }
                 /* 4 */
                 shapeRenderer.end();

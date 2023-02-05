@@ -1,4 +1,5 @@
 package com.mygdx.game.helpers;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.mygdx.game.objects.Human;
 import com.mygdx.game.objects.Zombie;
@@ -8,7 +9,6 @@ public class InputHandler implements InputProcessor {
 
     // Objectes necessaris
     private Human human;
-    private Zombie zombie;
     private GameScreen screen;
 
     // Enter per a la gestió del moviment d'arrossegament
@@ -30,12 +30,25 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
-        return false;
+        human.goStraight();
+        return true;
     }
 
     @Override
     public boolean keyTyped(char character) {
-        return false;
+        if (character == 'w') {
+            human.goUp();
+        }
+        else if (character == 'd') {
+            human.goLeft();
+        }
+        else if (character == 'a') {
+            human.goRight();
+        }
+        else if (character == 's') {
+            human.goDown();
+        }
+        return true;
     }
 
     @Override
