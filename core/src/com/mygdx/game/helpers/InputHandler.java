@@ -2,7 +2,6 @@ package com.mygdx.game.helpers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.mygdx.game.objects.Human;
-import com.mygdx.game.objects.Zombie;
 import com.mygdx.game.screens.GameScreen;
 
 public class InputHandler implements InputProcessor {
@@ -55,6 +54,7 @@ public class InputHandler implements InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         previousY = screenY;
         previousX = screenX;
+        Gdx.app.log("Mouse", "Mousex: " + screenX + " Mousey: "+ screenY);
         return true;
     }
 

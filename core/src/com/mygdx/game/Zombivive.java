@@ -11,6 +11,7 @@ import com.mygdx.game.screens.GameScreen;
 
 public class Zombivive extends Game {
 
+
 	@Override
 	public void create() {
 		// A l'iniciar el joc carreguem els recursos

@@ -1,46 +1,46 @@
 package com.mygdx.game.helpers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class AssetManager {
 
-    // Sprite Sheet
-    public static Texture personajes;
-
-    // Nau i fons
+    // Animacions
     public static Animation aHumanIdle, aHumanUp, aHumanRight, aHumanLeft, aHumanDown;
     public static Animation aSkeletonIdle, aSkeletonUp, aSkeletonRight, aSkeletonLeft, aSkeletonDown;
-    public static Texture human, background, actor_malo;
-    public static int x;
-     //try
+    public static Texture background;
+    // Try
     public static float tiempoAnim;
     public static TextureRegion [] regionsMovimiento;
     private static Texture imagen;
     public static TextureRegion frameActual;
-    //Necesito
+    // Necesito
     private static String path;
     private static int divideIn;
+    // Sons
+    public static Sound hitSound;
+    public static Music music;
 
     public static void load() {
-        // Carreguem les textures i li apliquem el mètode d'escalat 'nearest'
-        human = new Texture(Gdx.files.internal("human.png"));
-        human.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-
-        actor_malo = new Texture(Gdx.files.internal("actor malo.png"));
-        actor_malo.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-
-
-        personajes = new Texture(Gdx.files.internal("personajes.png"));
-        personajes.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         //Crear human
         createHumanTexture();
         //Crear skeleton
         createSkeletonTexture();
+        //Sounds
+        //Hit
+        hitSound = Gdx.audio.newSound(Gdx.files.internal("sounds/bite.mp3"));
+        //Música del joc
+        music = Gdx.audio.newMusic(Gdx.files.internal("sounds/music.mp3"));
+        music.setVolume(0.2f);
+        music.setLooping(true);
         // Carreguem les textures i li apliquem el mètode d'escalat 'nearest'
-        background = new Texture(Gdx.files.internal("fons.jpeg"));
+        background = new Texture(Gdx.files.internal("fons.png"));
         background.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
     }
 
@@ -103,9 +103,7 @@ public class AssetManager {
     }
 
     public static void dispose() {
-        human.dispose();
         background.dispose();
-        personajes.dispose();
     }
 
 }
