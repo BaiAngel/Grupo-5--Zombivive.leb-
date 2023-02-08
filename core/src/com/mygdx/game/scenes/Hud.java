@@ -42,7 +42,7 @@ public class Hud implements Disposable{
 
         //setup the HUD viewport using a new camera seperate from our gamecam
         //define our stage using that viewport and our games spritebatch
-        viewport = new FitViewport(Settings.GAME_WIDTH/2, Settings.GAME_HEIGHT/2, new OrthographicCamera());
+        viewport = new FitViewport(Settings.GAME_WIDTH, Settings.GAME_HEIGHT, new OrthographicCamera(Settings.GAME_WIDTH, Settings.GAME_HEIGHT));
         stage = new Stage(viewport, sb);
 
         //define a table used to organize our hud's labels

@@ -1,9 +1,11 @@
 package com.mygdx.game.utils;
 
+import com.badlogic.gdx.Gdx;
+
 public class Settings {
     // Mida del joc, s'escalarà segons la necessitat
-    public static final int GAME_WIDTH = 1024;
-    public static final int GAME_HEIGHT = 1024;
+    public static final int GAME_WIDTH = Gdx.graphics.getWidth();//1024
+    public static final int GAME_HEIGHT = Gdx.graphics.getHeight();//1024
 
     // Propietats de la nau
     public static final float HUMAN_VELOCITY = 50;

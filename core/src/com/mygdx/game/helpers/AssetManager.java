@@ -16,7 +16,6 @@ public class AssetManager {
     public static Animation aSkeletonIdle, aSkeletonUp, aSkeletonRight, aSkeletonLeft, aSkeletonDown;
     public static Texture background;
     // Try
-    public static float tiempoAnim;
     public static TextureRegion [] regionsMovimiento;
     private static Texture imagen;
     public static TextureRegion frameActual;
@@ -90,15 +89,18 @@ public class AssetManager {
         aHumanLeft = crearAnimacion(path, divideIn);
     }
 
-    private static Animation crearAnimacion(String path, int divideIn) {
+    private static Animation<TextureRegion> crearAnimacion(String path, int divideIn) {
         imagen = new Texture(Gdx.files.internal(path));
         TextureRegion [][] tmp = TextureRegion.split(imagen,
                 imagen.getWidth()/divideIn,imagen.getHeight());
 
         regionsMovimiento = new TextureRegion[divideIn];
-        for (int i = 0; i < divideIn; i++) regionsMovimiento[i] = tmp[0][i];
-        Animation createAnimation = new Animation(1 / 3f, regionsMovimiento);
-        tiempoAnim = 0f;
+        for (int i = 0; i < divideIn; i++){
+            regionsMovimiento[i] = tmp[0][i];
+        }
+
+
+        Animation<TextureRegion> createAnimation = new Animation<TextureRegion>(0.3f, regionsMovimiento);
         return createAnimation;
     }
 

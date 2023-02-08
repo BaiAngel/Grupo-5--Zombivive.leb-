@@ -1,7 +1,6 @@
 package com.mygdx.game.objects;
 
 import static com.mygdx.game.helpers.AssetManager.frameActual;
-import static com.mygdx.game.helpers.AssetManager.tiempoAnim;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -28,6 +27,8 @@ public class Human extends Actor {
     private int width, height;
     private int direction;
     private Rectangle collisionRect;
+    private float tiempoAnim = 0f;
+
 
 
 
@@ -144,8 +145,13 @@ public class Human extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         tiempoAnim += Gdx.graphics.getDeltaTime(); //es el tiempo que paso desde el ultimo render
+
         Animation frameDir = getHumanTexture();
+        Gdx.app.log("AnimationTime", "Time: "+tiempoAnim);
         frameActual = (TextureRegion) frameDir.getKeyFrame(tiempoAnim,true);
         batch.draw(frameActual,getX(),getY());
     }
+
+
+
 }

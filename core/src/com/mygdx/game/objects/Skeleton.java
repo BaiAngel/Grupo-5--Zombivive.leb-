@@ -1,7 +1,6 @@
 package com.mygdx.game.objects;
 
 import static com.mygdx.game.helpers.AssetManager.frameActual;
-import static com.mygdx.game.helpers.AssetManager.tiempoAnim;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -28,7 +27,7 @@ public class Skeleton extends Actor {
     private int direction;
     private Rectangle collisionRect;
     private float COOLDOWN_TIME = 2f;
-
+    private float tiempoAnim = 0f;
     private float cooldown = 0;
 
 
