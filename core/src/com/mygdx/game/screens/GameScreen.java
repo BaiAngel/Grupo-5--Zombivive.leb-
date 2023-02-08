@@ -97,7 +97,7 @@ public class GameScreen implements Screen {
                 Gdx.gl.glClearColor( 0, 0, 0.5f, 1);
                 Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
                 // Dibuixem i actualitzem tots els actors de l'stage
-                batch.setProjectionMatrix(hud.stage.getCamera().combined);
+                //batch.setProjectionMatrix(hud.stage.getCamera().combined);
                 stage.draw();
                 camera.position.set(human.getX(), human.getY(), 0);
                 camera.update();
@@ -105,6 +105,10 @@ public class GameScreen implements Screen {
                 spawnZombies();
                 updateZombie();
                 drawElements();
+                //Set our batch to now draw what the Hud camera sees.
+                batch.setProjectionMatrix(hud.stage.getCamera().combined);
+                hud.stage.draw();
+                hud.act(delta);
         }
 
 
