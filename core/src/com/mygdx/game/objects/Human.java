@@ -16,11 +16,11 @@ import com.mygdx.game.utils.Settings;
 
 public class Human extends Actor {
     // Diferents posicions de Human: recta, pujant i baixant
-    public static final int HUMAN_IDLE = 0;
-    public static final int HUMAN_UP = 1;
-    public static final int HUMAN_RIGHT = 2;
-    public static final int HUMAN_DOWN = 3;
-    public static final int HUMAN_LEFT = 4;
+    public static final int HUMAN_IDLE = Settings.IDLE;
+    public static final int HUMAN_UP = Settings.UP;
+    public static final int HUMAN_RIGHT = Settings.RIGHT;
+    public static final int HUMAN_DOWN = Settings.DOWN;
+    public static final int HUMAN_LEFT = Settings.LEFT;
 
     // Paràmetres de Human
     private Vector2 position;
@@ -28,6 +28,7 @@ public class Human extends Actor {
     private int direction;
     private Rectangle collisionRect;
     private float tiempoAnim = 0f;
+    public static int humanFacing = Settings.IDLE;
 
 
 
@@ -52,26 +53,31 @@ public class Human extends Actor {
         // Movem l'Spacecraft depenent de la direcció controlant que no surti de la pantalla
         switch (direction) {
             case HUMAN_UP:
+                humanFacing = Settings.UP;
                 if (this.position.y + Settings.HUMAN_VELOCITY * delta <= Settings.GAME_HEIGHT) {
                     this.position.y += Settings.HUMAN_VELOCITY * delta;
                 }
                 break;
             case HUMAN_RIGHT:
+                humanFacing = Settings.RIGHT;
                 if (this.position.x - Settings.HUMAN_VELOCITY * delta <= Settings.GAME_WIDTH) {
                     this.position.x -= Settings.HUMAN_VELOCITY * delta;
                 }
                 break;
             case HUMAN_DOWN:
+                humanFacing = Settings.DOWN;
                 if (this.position.y - height + Settings.HUMAN_VELOCITY * delta >= 0) {
                     this.position.y -= Settings.HUMAN_VELOCITY * delta;
                 }
                 break;
             case HUMAN_LEFT:
+                humanFacing = Settings.LEFT;
                 if (this.position.x + Settings.HUMAN_VELOCITY * delta >= 0) {
                     this.position.x += Settings.HUMAN_VELOCITY * delta;
                 }
                 break;
             case HUMAN_IDLE:
+                humanFacing = Settings.DOWN;
                 break;
         }
         collisionRect.set(position.x+4, position.y + 4, width/2, height/2);
@@ -147,7 +153,6 @@ public class Human extends Actor {
         tiempoAnim += Gdx.graphics.getDeltaTime(); //es el tiempo que paso desde el ultimo render
 
         Animation frameDir = getHumanTexture();
-        Gdx.app.log("AnimationTime", "Time: "+tiempoAnim);
         frameActual = (TextureRegion) frameDir.getKeyFrame(tiempoAnim,true);
         batch.draw(frameActual,getX(),getY());
     }

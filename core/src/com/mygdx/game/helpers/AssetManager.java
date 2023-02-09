@@ -14,7 +14,7 @@ public class AssetManager {
     // Animacions
     public static Animation aHumanIdle, aHumanUp, aHumanRight, aHumanLeft, aHumanDown;
     public static Animation aSkeletonIdle, aSkeletonUp, aSkeletonRight, aSkeletonLeft, aSkeletonDown;
-    public static Texture background;
+    public static Texture background,bullet;
     // Try
     public static TextureRegion [] regionsMovimiento;
     private static Texture imagen;
@@ -41,6 +41,9 @@ public class AssetManager {
         // Carreguem les textures i li apliquem el mètode d'escalat 'nearest'
         background = new Texture(Gdx.files.internal("fons.png"));
         background.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        // Carreguem les textures i li apliquem el mètode d'escalat 'nearest'
+        bullet = new Texture(Gdx.files.internal("bullets/bullet.png"));
+        bullet.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
     }
 
     private static void createSkeletonTexture() {
@@ -100,7 +103,7 @@ public class AssetManager {
         }
 
 
-        Animation<TextureRegion> createAnimation = new Animation<TextureRegion>(0.3f, regionsMovimiento);
+        Animation createAnimation = new Animation(0.3f, regionsMovimiento);
         return createAnimation;
     }
 

@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -14,6 +13,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.helpers.AssetManager;
 import com.mygdx.game.helpers.InputHandler;
 import com.mygdx.game.objects.Background;
+import com.mygdx.game.objects.Bullet;
 import com.mygdx.game.objects.Human;
 import com.mygdx.game.objects.Skeleton;
 import com.mygdx.game.scenes.Hud;
@@ -24,7 +24,8 @@ import java.util.ListIterator;
 
 public class GameScreen implements Screen {
 
-        private LinkedList<Skeleton> zombieList;
+        private LinkedList<Skeleton> skeletonList;
+        private LinkedList<Bullet> bulletList;
         private Stage stage;
         private Human human;
         private OrthographicCamera camera;
@@ -35,9 +36,10 @@ public class GameScreen implements Screen {
         private Batch batch;
         private int timeBetweenEnemySpawns = 500;
         private int enemySpawnTimer = 0;
+        private int timeBetweenBulletSpawns = 100;
+        private int bulletSpawnTimer = 0;
         private Hud hud;
         private SpriteBatch spriteBatch;
-
 
 
 
@@ -68,7 +70,8 @@ public class GameScreen implements Screen {
                 hud = new Hud(spriteBatch);
                 // Creem la persona
                 human = new Human(Settings.HUMAN_STARTX, Settings.HUMAN_STARTY, Settings.HUMAN_WIDTH, Settings.HUMAN_HEIGHT);
-                zombieList = new LinkedList<>();
+                skeletonList = new LinkedList<>();
+                bulletList = new LinkedList<>();
 
                 // Creem el fons
                 background = new Background(0,0, Settings.GAME_WIDTH, Settings.GAME_HEIGHT);
@@ -76,11 +79,6 @@ public class GameScreen implements Screen {
                 // Afegim els actors a l'stage
                 stage.addActor(background);
                 stage.addActor(human);
-                ListIterator<Skeleton> zombieListIterator = zombieList.listIterator();
-                while (zombieListIterator.hasNext()) {
-                        Skeleton zombie = zombieListIterator.next();
-                        stage.addActor(zombie);
-                }
                 // Donem nom a l'Actor
                 human.setName("human");
                 // Assignem com a gestor d'entrada la classe InputHandler
@@ -96,15 +94,26 @@ public class GameScreen implements Screen {
         public void render(float delta) {
                 Gdx.gl.glClearColor( 0, 0, 0.5f, 1);
                 Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-                // Dibuixem i actualitzem tots els actors de l'stage
-                //batch.setProjectionMatrix(hud.stage.getCamera().combined);
                 stage.draw();
+                drawElements();
+                drawHud(delta);
                 camera.position.set(human.getX(), human.getY(), 0);
                 camera.update();
                 stage.act(delta);
-                spawnZombies();
-                updateZombie();
-                drawElements();
+                updateGame();
+        }
+
+        @SuppressWarnings("SuspiciousIndentation")
+        private void updateGame() {
+                spawnSkeleton();
+                spawnBullet();
+                if (skeletonList != null)
+                updateSkeleton();
+                if (bulletList != null)
+                updateBullet();
+        }
+
+        private void drawHud(float delta) {
                 //Set our batch to now draw what the Hud camera sees.
                 batch.setProjectionMatrix(hud.stage.getCamera().combined);
                 hud.stage.draw();
@@ -112,31 +121,56 @@ public class GameScreen implements Screen {
         }
 
 
-
-        private void updateZombie() {
-                ListIterator<Skeleton> zombieListIterator = zombieList.listIterator();
-                while (zombieListIterator.hasNext()) {
-                        Skeleton zombie = zombieListIterator.next();
-                        checkColision(zombie);
-                        checkMovement(zombie);
+        private void updateSkeleton() {
+                ListIterator<Skeleton> skeletonListIterator = skeletonList.listIterator();
+                while (skeletonListIterator.hasNext()) {
+                        Skeleton skeleton = skeletonListIterator.next();
+                        checkColision(skeleton);
+                        checkMovement(skeleton);
                 }
         }
 
-        private void spawnZombies() {
+        private void updateBullet() {
+                ListIterator<Bullet> bulletListIterator = bulletList.listIterator();
+                while (bulletListIterator.hasNext()) {
+                        Bullet bullet = bulletListIterator.next();
+                        checkColision(bullet);
+                }
+        }
+
+        private void spawnSkeleton() {
                 enemySpawnTimer = enemySpawnTimer + 1;
                 //Gdx.app.log("Timer", "SpawnTimer: " + enemySpawnTimer);
 
                 if (enemySpawnTimer > timeBetweenEnemySpawns){
-                        zombieList.add(
+                        skeletonList.add(
                                 new Skeleton(Settings.MOB_STARTX, Settings.MOB_STARTY, Settings.MOB_WIDTH, Settings.MOB_HEIGHT)
 
                         );
-                        ListIterator<Skeleton> zombieListIterator = zombieList.listIterator();
-                        while (zombieListIterator.hasNext()) {
-                                Skeleton zombie = zombieListIterator.next();
-                                stage.addActor(zombie);
+                        ListIterator<Skeleton> skeletonListIterator = skeletonList.listIterator();
+                        while (skeletonListIterator.hasNext()) {
+                                Skeleton skeleton = skeletonListIterator.next();
+                                stage.addActor(skeleton);
                         }
                         enemySpawnTimer = 0;
+                }
+        }
+
+        private void spawnBullet() {
+                bulletSpawnTimer = bulletSpawnTimer + 1;
+                //Gdx.app.log("Timer", "SpawnTimer: " + enemySpawnTimer);
+
+                if (bulletSpawnTimer > timeBetweenBulletSpawns){
+                        bulletList.add(
+                                new Bullet(human.getX(), human.getY(), Settings.BULLET_WIDTH, Settings.BULLET_HEIGHT)
+
+                        );
+                        ListIterator<Bullet> bulletListIterator = bulletList.listIterator();
+                        while (bulletListIterator.hasNext()) {
+                                Bullet bullet = bulletListIterator.next();
+                                stage.addActor(bullet);
+                        }
+                        bulletSpawnTimer = 0;
                 }
         }
 
@@ -146,6 +180,18 @@ public class GameScreen implements Screen {
                         if (mob.attackCooldown() == true) {
                                 Gdx.app.log("App", "Ñam");
                                 AssetManager.hitSound.play();
+                        }
+                }
+        }
+
+        private void checkColision(Bullet bullet) {
+                ListIterator<Skeleton> skeletonListIterator = skeletonList.listIterator();
+                while (skeletonListIterator.hasNext()) {
+                        Skeleton skeleton = skeletonListIterator.next();
+                        if (bullet.collides(skeleton)) {
+                                skeleton.remove();
+                                skeletonList.remove(skeleton);
+                                hud.addScore(1);
                         }
                 }
         }
@@ -208,10 +254,10 @@ public class GameScreen implements Screen {
                 // Pintem la nau
                 shapeRenderer.rect(human.getX()+4, human.getY()+4, human.getWidth()/2, human.getHeight()/2);
                 shapeRenderer.setColor(new Color(1, 0, 0, 1));
-                ListIterator<Skeleton> zombieListIterator = zombieList.listIterator();
-                while (zombieListIterator.hasNext()) {
-                        Skeleton zombie = zombieListIterator.next();
-                        shapeRenderer.rect(zombie.getX()+4, zombie.getY()+4, (float) (zombie.getWidth()/2), (float) (zombie.getHeight()/2));
+                ListIterator<Skeleton> skeletonListIterator = skeletonList.listIterator();
+                while (skeletonListIterator.hasNext()) {
+                        Skeleton skeleton = skeletonListIterator.next();
+                        shapeRenderer.rect(skeleton.getX()+4, skeleton.getY()+4, (float) (skeleton.getWidth()/2), (float) (skeleton.getHeight()/2));
                 }
                 /* 4 */
                 shapeRenderer.end();

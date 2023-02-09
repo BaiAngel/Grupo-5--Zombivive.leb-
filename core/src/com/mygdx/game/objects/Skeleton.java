@@ -15,11 +15,11 @@ import com.mygdx.game.utils.Settings;
 
 public class Skeleton extends Actor {
 
-    public static final int SKELETON_IDLE = 0;
-    public static final int SKELETON_UP = 1;
-    public static final int SKELETON_RIGHT = 2;
-    public static final int SKELETON_DOWN = 3;
-    public static final int SKELETON_LEFT = 4;
+    public static final int SKELETON_IDLE = Settings.IDLE;
+    public static final int SKELETON_UP = Settings.UP;
+    public static final int SKELETON_RIGHT = Settings.RIGHT;
+    public static final int SKELETON_DOWN = Settings.DOWN;
+    public static final int SKELETON_LEFT = Settings.LEFT;
 
     // Paràmetres de Human
     private Vector2 position;
@@ -156,6 +156,10 @@ public class Skeleton extends Actor {
     public void goStraight() {
         direction = SKELETON_IDLE;
     }
+    public Rectangle getCollisionRect() {
+        return collisionRect;
+    }
+
 
     @Override
     public void draw(Batch batch, float parentAlpha) {

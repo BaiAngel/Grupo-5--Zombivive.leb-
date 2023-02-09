@@ -1,5 +1,6 @@
 package com.mygdx.game.helpers;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.mygdx.game.objects.Human;
 import com.mygdx.game.screens.GameScreen;
@@ -24,18 +25,8 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        human.goStraight();
-        return true;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        if (character == 'w') {
+        Input.Keys.
+        if () {
             human.goUp();
         }
         else if (character == 'd') {
@@ -48,6 +39,17 @@ public class InputHandler implements InputProcessor {
             human.goDown();
         }
         return true;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        human.goStraight();
+        return true;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
     }
 
     @Override
