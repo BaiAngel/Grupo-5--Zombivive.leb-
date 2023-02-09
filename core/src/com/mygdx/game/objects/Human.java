@@ -3,6 +3,7 @@ package com.mygdx.game.objects;
 import static com.mygdx.game.helpers.AssetManager.frameActual;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -29,6 +30,9 @@ public class Human extends Actor {
     private Rectangle collisionRect;
     private float tiempoAnim = 0f;
     public static int humanFacing = Settings.IDLE;
+    public static int MAX_HEALTH = 100;
+    public static int health = MAX_HEALTH;
+    public static int regeneration = 1;
 
 
 
@@ -49,7 +53,6 @@ public class Human extends Actor {
 
     }
     public void act(float delta) {
-
         // Movem l'Spacecraft depenent de la direcció controlant que no surti de la pantalla
         switch (direction) {
             case HUMAN_UP:
@@ -81,6 +84,12 @@ public class Human extends Actor {
                 break;
         }
         collisionRect.set(position.x+4, position.y + 4, width/2, height/2);
+    }
+
+    public void getHit(int damage) {
+
+        health = health-damage;
+
     }
 
     // Obtenim el TextureRegion depenent de la posició de l'spacecraft
@@ -145,6 +154,14 @@ public class Human extends Actor {
     // Posem l'Spacecraft al seu estat original
     public void goStraight() {
         direction = HUMAN_IDLE;
+    }
+
+    public static int getHealth() {
+        return health;
+    }
+
+    public static int getMaxHealth() {
+        return MAX_HEALTH;
     }
 
     @Override

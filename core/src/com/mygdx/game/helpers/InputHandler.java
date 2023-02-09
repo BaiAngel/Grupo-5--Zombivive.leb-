@@ -25,19 +25,19 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        Input.Keys.
-        if () {
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             human.goUp();
         }
-        else if (character == 'd') {
+        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             human.goLeft();
         }
-        else if (character == 'a') {
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             human.goRight();
         }
-        else if (character == 's') {
+        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
             human.goDown();
         }
+
         return true;
     }
 

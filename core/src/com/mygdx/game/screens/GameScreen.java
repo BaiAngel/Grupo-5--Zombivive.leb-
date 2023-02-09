@@ -5,10 +5,13 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.ColorAction;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.helpers.AssetManager;
 import com.mygdx.game.helpers.InputHandler;
@@ -24,6 +27,7 @@ import java.util.ListIterator;
 
 public class GameScreen implements Screen {
 
+        private final Texture gradient;
         private LinkedList<Skeleton> skeletonList;
         private LinkedList<Bullet> bulletList;
         private Stage stage;
@@ -40,8 +44,10 @@ public class GameScreen implements Screen {
         private int bulletSpawnTimer = 0;
         private Hud hud;
         private SpriteBatch spriteBatch;
-
-
+        private float width, totalBarWidth;
+        private int currentHealth;
+        private int totalHealth;
+        private NinePatch health;
 
         public GameScreen() {
 
@@ -81,6 +87,12 @@ public class GameScreen implements Screen {
                 stage.addActor(human);
                 // Donem nom a l'Actor
                 human.setName("human");
+                //Health
+                totalHealth = human.getMaxHealth();
+                currentHealth = human.getHealth();
+                totalBarWidth=29;
+                gradient = new Texture(Gdx.files.internal("red.png"));
+                health = new NinePatch(gradient, 0, 0, 0, 0);
                 // Assignem com a gestor d'entrada la classe InputHandler
                 Gdx.input.setInputProcessor(new InputHandler(this));
         }
@@ -94,9 +106,19 @@ public class GameScreen implements Screen {
         public void render(float delta) {
                 Gdx.gl.glClearColor( 0, 0, 0.5f, 1);
                 Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
                 stage.draw();
                 drawElements();
+
                 drawHud(delta);
+                batch.begin();
+                health = new NinePatch(gradient, 0, 0, 0, 0);
+                currentHealth = human.getHealth();
+
+                Gdx.app.log("vida","currentvida"+ totalBarWidth);
+                width = currentHealth / totalHealth * totalBarWidth;
+                health.draw(batch, 10, 10, width, gradient.getHeight());
+                batch.end();
                 camera.position.set(human.getX(), human.getY(), 0);
                 camera.update();
                 stage.act(delta);
@@ -118,6 +140,7 @@ public class GameScreen implements Screen {
                 batch.setProjectionMatrix(hud.stage.getCamera().combined);
                 hud.stage.draw();
                 hud.act(delta);
+                //drawVida
         }
 
 
@@ -179,6 +202,8 @@ public class GameScreen implements Screen {
                         // La nau explota i desapareix
                         if (mob.attackCooldown() == true) {
                                 Gdx.app.log("App", "Ñam");
+                                human.getHit(10);
+                                hud.eliminateLive();
                                 AssetManager.hitSound.play();
                         }
                 }

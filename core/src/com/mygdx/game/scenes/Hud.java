@@ -20,8 +20,10 @@ public class Hud implements Disposable{
     private Viewport viewport;
 
     //Mario score/time Tracking Variables
-    private Integer worldTimer;
+    private static Integer worldTimer;
+    private static Integer lives;
     private boolean timeUp; // true when the world timer reaches 0
+    private static boolean dead;// true when lives reaches 0
     private float timeCount;
     private static Integer score;
 
@@ -29,7 +31,7 @@ public class Hud implements Disposable{
     private Label countdownLabel;
     private static Label scoreLabel;
     private Label timeLabel;
-    private Label levelLabel;
+    private static Label livesLabel;
     private Label worldLabel;
     private Label marioLabel;
 
@@ -38,6 +40,7 @@ public class Hud implements Disposable{
         worldTimer = 300;
         timeCount = 0;
         score = 0;
+        lives=3;
 
 
         //setup the HUD viewport using a new camera seperate from our gamecam
@@ -56,9 +59,9 @@ public class Hud implements Disposable{
         countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         scoreLabel =new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        levelLabel = new Label("1-1", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        worldLabel = new Label("WORLD", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        marioLabel = new Label("MARIO", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        livesLabel = new Label(String.format("%01d", lives), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        worldLabel = new Label("LIVES", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        marioLabel = new Label("KILLS", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
         //add our labels to our table, padding the top, and giving them all equal width with expandX
         table.add(marioLabel).expandX().padTop(10);
@@ -67,7 +70,7 @@ public class Hud implements Disposable{
         //add a second row to our table
         table.row();
         table.add(scoreLabel).expandX();
-        table.add(levelLabel).expandX();
+        table.add(livesLabel).expandX();
         table.add(countdownLabel).expandX();
 
         //add our table to the stage
@@ -93,9 +96,23 @@ public class Hud implements Disposable{
         scoreLabel.setText(String.format("%06d", score));
     }
 
+    public static void eliminateLive(){
+        if (lives > 0) {
+            lives--;
+            Gdx.app.log("lives", ""+lives);
+        } else {
+            dead = true;
+            Gdx.app.log("lives", "out");
+        }
+        livesLabel.setText(String.format("%1d", lives));
+    }
+
     @Override
     public void dispose() { stage.dispose(); }
 
     public boolean isTimeUp() { return timeUp; }
+
+    public boolean isDead() { return dead; }
+
 }
 
