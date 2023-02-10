@@ -11,8 +11,8 @@ public class Settings {
     public static final float HUMAN_VELOCITY = 50;
     public static final float MOB_VELOCITY = 10;
     public static final float BULLET_VELOCITY = 70;
-    public static final int HUMAN_WIDTH = 15;
-    public static final int HUMAN_HEIGHT = 30;
+    public static final int HUMAN_WIDTH = 150;
+    public static final int HUMAN_HEIGHT = 300;
     public static final float HUMAN_STARTX = GAME_WIDTH/2 - HUMAN_WIDTH/2;
     public static final float HUMAN_STARTY = GAME_HEIGHT/2 - HUMAN_HEIGHT/2;
     public static final float MOB_STARTX = GAME_WIDTH/3;

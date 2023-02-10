@@ -43,7 +43,7 @@ public class GameScreen implements Screen {
         private Batch batch;
         private int timeBetweenEnemySpawns = 500;
         private int enemySpawnTimer = 0;
-        private int timeBetweenBulletSpawns = 10000;
+        private int timeBetweenBulletSpawns = 10;
         private int bulletSpawnTimer = 0;
         private Hud hud;
         private SpriteBatch spriteBatch;
@@ -203,7 +203,7 @@ public class GameScreen implements Screen {
 
                 if (bulletSpawnTimer > timeBetweenBulletSpawns){
                         bulletList.add(
-                                new Bullet(human.getX(), human.getY(), Settings.BULLET_WIDTH, Settings.BULLET_HEIGHT)
+                                new Bullet(human.getCentreX(), human.getCentreY(), Settings.BULLET_WIDTH, Settings.BULLET_HEIGHT)
 
                         );
                         ListIterator<Bullet> bulletListIterator = bulletList.listIterator();
@@ -295,7 +295,7 @@ public class GameScreen implements Screen {
                 shapeRenderer.setColor(new Color(0, 1, 0, 1));
 
                 // Pintem la nau
-                shapeRenderer.rect(human.getX()+4, human.getY()+4, human.getWidth()/2, human.getHeight()/2);
+                shapeRenderer.rect(human.getX(), human.getY(), human.getWidth(), human.getHeight());
                 shapeRenderer.setColor(new Color(1, 0, 0, 1));
                 ListIterator<Skeleton> skeletonListIterator = skeletonList.listIterator();
                 while (skeletonListIterator.hasNext()) {

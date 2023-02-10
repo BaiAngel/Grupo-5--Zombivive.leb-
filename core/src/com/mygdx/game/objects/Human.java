@@ -35,7 +35,7 @@ public class Human extends Actor {
     public static int regeneration = 1;
     private float timer = 0;
     private float TIMER_VELOCITY = 2f;
-
+    private float centreHumanX, centreHumanY;
 
 
 
@@ -50,8 +50,8 @@ public class Human extends Actor {
         direction = HUMAN_IDLE;
         // Creem el rectangle de col·lisions
         collisionRect = new Rectangle();
-
-
+        centreHumanX = x - width/2;
+        centreHumanY = y - height/2;
 
     }
     public void act(float delta) {
@@ -61,31 +61,35 @@ public class Human extends Actor {
                 humanFacing = Settings.UP;
                 if (this.position.y + Settings.HUMAN_VELOCITY * delta <= Settings.GAME_HEIGHT) {
                     this.position.y += Settings.HUMAN_VELOCITY * delta;
+                    this.centreHumanY += Settings.HUMAN_VELOCITY * delta;
                 }
                 break;
             case HUMAN_RIGHT:
                 humanFacing = Settings.RIGHT;
                 if (this.position.x - Settings.HUMAN_VELOCITY * delta <= Settings.GAME_WIDTH) {
                     this.position.x -= Settings.HUMAN_VELOCITY * delta;
+                    this.centreHumanX -= Settings.HUMAN_VELOCITY * delta;
                 }
                 break;
             case HUMAN_DOWN:
                 humanFacing = Settings.DOWN;
                 if (this.position.y - height + Settings.HUMAN_VELOCITY * delta >= 0) {
                     this.position.y -= Settings.HUMAN_VELOCITY * delta;
+                    this.centreHumanY -= Settings.HUMAN_VELOCITY * delta;
                 }
                 break;
             case HUMAN_LEFT:
                 humanFacing = Settings.LEFT;
                 if (this.position.x + Settings.HUMAN_VELOCITY * delta >= 0) {
                     this.position.x += Settings.HUMAN_VELOCITY * delta;
+                    this.centreHumanX += Settings.HUMAN_VELOCITY * delta;
                 }
                 break;
             case HUMAN_IDLE:
                 humanFacing = Settings.DOWN;
                 break;
         }
-        collisionRect.set(position.x+4, position.y + 4, width/2, height/2);
+        collisionRect.set(position.x, position.y, width, height);
         if(timer > 0) {
             timer -= delta;
         }
@@ -177,11 +181,18 @@ public class Human extends Actor {
         return MAX_HEALTH;
     }
 
+    public float getCentreX() {
+        return centreHumanX;
+    }
+
+    public float getCentreY() {
+        return centreHumanY;
+    }
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         tiempoAnim += Gdx.graphics.getDeltaTime(); //es el tiempo que paso desde el ultimo render
-
         Animation frameDir = getHumanTexture();
         frameActual = (TextureRegion) frameDir.getKeyFrame(tiempoAnim,true);
         batch.draw(frameActual,getX(),getY());
