@@ -50,8 +50,8 @@ public class Human extends Actor {
         direction = HUMAN_IDLE;
         // Creem el rectangle de col·lisions
         collisionRect = new Rectangle();
-        centreHumanX = x - width/2;
-        centreHumanY = y - height/2;
+        centreHumanX = x+5;
+        centreHumanY = y+5;
 
     }
     public void act(float delta) {
@@ -89,7 +89,7 @@ public class Human extends Actor {
                 humanFacing = Settings.DOWN;
                 break;
         }
-        collisionRect.set(position.x, position.y, width, height);
+        collisionRect.set(position.x+4, position.y, width/2, height/2);
         if(timer > 0) {
             timer -= delta;
         }

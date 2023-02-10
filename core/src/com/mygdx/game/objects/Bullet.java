@@ -66,7 +66,7 @@ public class Bullet extends Actor {
             case BULLET_IDLE:
                 break;
         }
-        collisionRect.set(position.x+11, position.y + 7, (float) (width/1.5), (float) (height/1.5));
+        collisionRect.set(position.x+2, position.y + 1, (float) (width/2), (float) (height/2));
     }
 
     public boolean collides(Skeleton skeleton) {

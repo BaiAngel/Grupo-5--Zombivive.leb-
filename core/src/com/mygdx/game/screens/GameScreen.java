@@ -199,7 +199,7 @@ public class GameScreen implements Screen {
 
         private void spawnBullet() {
                 bulletSpawnTimer = bulletSpawnTimer + 1;
-                //Gdx.app.log("Timer", "SpawnTimer: " + enemySpawnTimer);
+                //Gdx.app.log("Timer", "SpawnTimer: " + bulletSpawnTimer);
 
                 if (bulletSpawnTimer > timeBetweenBulletSpawns){
                         bulletList.add(
@@ -221,7 +221,6 @@ public class GameScreen implements Screen {
                         if (mob.attackCooldown() == true) {
                                 Gdx.app.log("App", "Ñam");
                                 human.getHit(10);
-                                hud.eliminateLive();
                                 AssetManager.hitSound.play();
                         }
                 }
@@ -295,12 +294,18 @@ public class GameScreen implements Screen {
                 shapeRenderer.setColor(new Color(0, 1, 0, 1));
 
                 // Pintem la nau
-                shapeRenderer.rect(human.getX(), human.getY(), human.getWidth(), human.getHeight());
+                shapeRenderer.rect(human.getX()+4, human.getY(), human.getWidth()/2, human.getHeight()/2);
                 shapeRenderer.setColor(new Color(1, 0, 0, 1));
                 ListIterator<Skeleton> skeletonListIterator = skeletonList.listIterator();
                 while (skeletonListIterator.hasNext()) {
                         Skeleton skeleton = skeletonListIterator.next();
-                        shapeRenderer.rect(skeleton.getX()+4, skeleton.getY()+4, (float) (skeleton.getWidth()/2), (float) (skeleton.getHeight()/2));
+                        shapeRenderer.rect(skeleton.getX()+4, skeleton.getY(), (float) (skeleton.getWidth()/2), (float) (skeleton.getHeight()/2));
+                }
+                shapeRenderer.setColor(new Color(1, 1, 0, 1));
+                ListIterator<Bullet> bulletListIterator = bulletList.listIterator();
+                while (bulletListIterator.hasNext()) {
+                        Bullet bullet = bulletListIterator.next();
+                        shapeRenderer.rect(bullet.getX()+2, bullet.getY()+1, (float) (bullet.getWidth()/2), (float) (bullet.getHeight()/2));
                 }
                 /* 4 */
                 shapeRenderer.end();

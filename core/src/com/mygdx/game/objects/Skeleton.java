@@ -70,7 +70,7 @@ public class Skeleton extends Actor {
             case SKELETON_IDLE:
                 break;
         }
-        collisionRect.set(position.x+11, position.y + 7, (float) (width/1.5), (float) (height/1.5));
+        collisionRect.set(position.x+4, position.y, width/2, height/2);
         if(cooldown > 0) {
             cooldown -= delta;
         }
