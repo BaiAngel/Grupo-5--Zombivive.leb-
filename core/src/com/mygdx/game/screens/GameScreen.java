@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -26,8 +27,10 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 
 public class GameScreen implements Screen {
+        // Per controlar el gameover
+        Boolean gameOver = false;
 
-        private final Texture gradient;
+        private final Texture red, black;
         private LinkedList<Skeleton> skeletonList;
         private LinkedList<Bullet> bulletList;
         private Stage stage;
@@ -40,14 +43,12 @@ public class GameScreen implements Screen {
         private Batch batch;
         private int timeBetweenEnemySpawns = 500;
         private int enemySpawnTimer = 0;
-        private int timeBetweenBulletSpawns = 100;
+        private int timeBetweenBulletSpawns = 10000;
         private int bulletSpawnTimer = 0;
         private Hud hud;
         private SpriteBatch spriteBatch;
-        private float width, totalBarWidth;
-        private int currentHealth;
-        private int totalHealth;
-        private NinePatch health;
+        private float width, totalBarWidth, currentHealth, totalHealth;
+        private NinePatch health, backgroundHealth;
 
         public GameScreen() {
 
@@ -90,9 +91,9 @@ public class GameScreen implements Screen {
                 //Health
                 totalHealth = human.getMaxHealth();
                 currentHealth = human.getHealth();
-                totalBarWidth=29;
-                gradient = new Texture(Gdx.files.internal("red.png"));
-                health = new NinePatch(gradient, 0, 0, 0, 0);
+                totalBarWidth=31;
+                red = new Texture(Gdx.files.internal("fons/red.png"));
+                black = new Texture(Gdx.files.internal("fons/black.png"));
                 // Assignem com a gestor d'entrada la classe InputHandler
                 Gdx.input.setInputProcessor(new InputHandler(this));
         }
@@ -106,23 +107,32 @@ public class GameScreen implements Screen {
         public void render(float delta) {
                 Gdx.gl.glClearColor( 0, 0, 0.5f, 1);
                 Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
                 stage.draw();
                 drawElements();
-
                 drawHud(delta);
-                batch.begin();
-                health = new NinePatch(gradient, 0, 0, 0, 0);
-                currentHealth = human.getHealth();
+                if (!gameOver) {
+                        camera.position.set(human.getX(), human.getY(), 0);
+                        camera.update();
+                        stage.act(delta);
+                        updateGame();
+                        calcularGameOver();
+                }else {
+                        batch.begin();
+                        // Si hi ha hagut col·lisió: reproduïm l'explosió
+                        BitmapFont font = new BitmapFont(false);
+                        font.draw(batch, "GameOver", Settings.GAME_WIDTH/3, Settings.GAME_HEIGHT/3);
+                        batch.end();
+                }
 
-                Gdx.app.log("vida","currentvida"+ totalBarWidth);
-                width = currentHealth / totalHealth * totalBarWidth;
-                health.draw(batch, 10, 10, width, gradient.getHeight());
-                batch.end();
-                camera.position.set(human.getX(), human.getY(), 0);
-                camera.update();
-                stage.act(delta);
-                updateGame();
+        }
+
+        private void calcularGameOver() {
+                if (hud.isTimeUp()) {
+                       gameOver = true;
+                }
+                else if (human.getHealth() <= 0) {
+                        gameOver = true;
+                }
         }
 
         @SuppressWarnings("SuspiciousIndentation")
@@ -141,6 +151,14 @@ public class GameScreen implements Screen {
                 hud.stage.draw();
                 hud.act(delta);
                 //drawVida
+                batch.begin();
+                health = new NinePatch(red, 0, 0, 0, 0);
+                backgroundHealth = new NinePatch(black, 0, 0, 0, 0);
+                currentHealth = human.getHealth();
+                width = currentHealth / totalHealth * totalBarWidth;
+                backgroundHealth.draw(batch, Settings.GAME_WIDTH/2, Settings.GAME_HEIGHT/2+35, totalBarWidth,10);
+                health.draw(batch, Settings.GAME_WIDTH/2, Settings.GAME_HEIGHT/2+35, width,10);
+                batch.end();
         }
 
 

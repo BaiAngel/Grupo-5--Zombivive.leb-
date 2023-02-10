@@ -39,7 +39,7 @@ public class AssetManager {
         music.setVolume(0.2f);
         music.setLooping(true);
         // Carreguem les textures i li apliquem el mètode d'escalat 'nearest'
-        background = new Texture(Gdx.files.internal("fons.png"));
+        background = new Texture(Gdx.files.internal("fons/fons.png"));
         background.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         // Carreguem les textures i li apliquem el mètode d'escalat 'nearest'
         bullet = new Texture(Gdx.files.internal("bullets/bullet.png"));

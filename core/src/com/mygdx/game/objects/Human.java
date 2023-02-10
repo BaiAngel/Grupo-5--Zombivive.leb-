@@ -33,6 +33,8 @@ public class Human extends Actor {
     public static int MAX_HEALTH = 100;
     public static int health = MAX_HEALTH;
     public static int regeneration = 1;
+    private float timer = 0;
+    private float TIMER_VELOCITY = 2f;
 
 
 
@@ -84,6 +86,17 @@ public class Human extends Actor {
                 break;
         }
         collisionRect.set(position.x+4, position.y + 4, width/2, height/2);
+        if(timer > 0) {
+            timer -= delta;
+        }
+        regenerarVida(regeneration);
+    }
+
+    private void regenerarVida(int regeneration) {
+        if (health < MAX_HEALTH && timer <= 0) {
+            health = health + regeneration;
+            timer = TIMER_VELOCITY;
+        }
     }
 
     public void getHit(int damage) {

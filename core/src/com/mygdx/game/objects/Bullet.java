@@ -36,7 +36,6 @@ public class Bullet extends Actor {
         this.height = height;
         position = new Vector2(x, y);
         direction = humanFacing;
-        Gdx.app.log("AnimationTime", "Time: "+humanFacing);
         collisionRect = new Rectangle();
 
     }
