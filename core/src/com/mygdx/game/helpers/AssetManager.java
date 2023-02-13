@@ -42,7 +42,7 @@ public class AssetManager {
         background = new Texture(Gdx.files.internal("fons/fons.png"));
         background.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         // Carreguem les textures i li apliquem el mètode d'escalat 'nearest'
-        bullet = new Texture(Gdx.files.internal("bullets/bullet.png"));
+        bullet = new Texture(Gdx.files.internal("bullets/1.png"));
         bullet.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
     }
 

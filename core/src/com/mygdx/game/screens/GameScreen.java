@@ -12,8 +12,8 @@ import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.ColorAction;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.mygdx.game.Zombivive;
 import com.mygdx.game.helpers.AssetManager;
 import com.mygdx.game.helpers.InputHandler;
 import com.mygdx.game.objects.Background;
@@ -29,7 +29,7 @@ import java.util.ListIterator;
 public class GameScreen implements Screen {
         // Per controlar el gameover
         Boolean gameOver = false;
-
+        Zombivive game;
         private final Texture red, black;
         private LinkedList<Skeleton> skeletonList;
         private LinkedList<Bullet> bulletList;
@@ -43,15 +43,15 @@ public class GameScreen implements Screen {
         private Batch batch;
         private int timeBetweenEnemySpawns = 500;
         private int enemySpawnTimer = 0;
-        private int timeBetweenBulletSpawns = 10;
+        private int timeBetweenBulletSpawns = 50;
         private int bulletSpawnTimer = 0;
         private Hud hud;
         private SpriteBatch spriteBatch;
         private float width, totalBarWidth, currentHealth, totalHealth;
         private NinePatch health, backgroundHealth;
 
-        public GameScreen() {
-
+        public GameScreen(Zombivive game) {
+                this.game = game;
                 // Iniciem la música
                 AssetManager.music.play();
 
@@ -117,6 +117,7 @@ public class GameScreen implements Screen {
                         updateGame();
                         calcularGameOver();
                 }else {
+                        game.setScreen(new GameOverScreen(game));
                         batch.begin();
                         // Si hi ha hagut col·lisió: reproduïm l'explosió
                         BitmapFont font = new BitmapFont(false);

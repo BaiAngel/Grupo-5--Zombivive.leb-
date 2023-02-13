@@ -19,8 +19,8 @@ public class Settings {
     public static final float MOB_STARTY = GAME_HEIGHT/3;
     public static final int MOB_WIDTH = 15;
     public static final int MOB_HEIGHT = 30;
-    public static final int BULLET_WIDTH = 5;
-    public static final int BULLET_HEIGHT = 5;
+    public static final int BULLET_WIDTH = 15;
+    public static final int BULLET_HEIGHT = 10;
     public static final int IDLE = 0;
     public static final int UP = 1;
     public static final int RIGHT = 2;
