@@ -17,7 +17,7 @@ import com.mygdx.game.Zombivive;
 import com.mygdx.game.helpers.AssetManager;
 import com.mygdx.game.helpers.InputHandler;
 import com.mygdx.game.objects.Background;
-import com.mygdx.game.objects.Bullet;
+import com.mygdx.game.objects.Fireball;
 import com.mygdx.game.objects.Human;
 import com.mygdx.game.objects.Skeleton;
 import com.mygdx.game.scenes.Hud;
@@ -32,7 +32,7 @@ public class GameScreen implements Screen {
         Zombivive game;
         private final Texture red, black;
         private LinkedList<Skeleton> skeletonList;
-        private LinkedList<Bullet> bulletList;
+        private LinkedList<Fireball> bulletList;
         private Stage stage;
         private Human human;
         private OrthographicCamera camera;
@@ -173,9 +173,9 @@ public class GameScreen implements Screen {
         }
 
         private void updateBullet() {
-                ListIterator<Bullet> bulletListIterator = bulletList.listIterator();
+                ListIterator<Fireball> bulletListIterator = bulletList.listIterator();
                 while (bulletListIterator.hasNext()) {
-                        Bullet bullet = bulletListIterator.next();
+                        Fireball bullet = bulletListIterator.next();
                         checkColision(bullet);
                 }
         }
@@ -204,12 +204,12 @@ public class GameScreen implements Screen {
 
                 if (bulletSpawnTimer > timeBetweenBulletSpawns){
                         bulletList.add(
-                                new Bullet(human.getCentreX(), human.getCentreY(), Settings.BULLET_WIDTH, Settings.BULLET_HEIGHT)
+                                new Fireball(human.getCentreX(), human.getCentreY(), Settings.BULLET_WIDTH, Settings.BULLET_HEIGHT)
 
                         );
-                        ListIterator<Bullet> bulletListIterator = bulletList.listIterator();
+                        ListIterator<Fireball> bulletListIterator = bulletList.listIterator();
                         while (bulletListIterator.hasNext()) {
-                                Bullet bullet = bulletListIterator.next();
+                                Fireball bullet = bulletListIterator.next();
                                 stage.addActor(bullet);
                         }
                         bulletSpawnTimer = 0;
@@ -227,7 +227,7 @@ public class GameScreen implements Screen {
                 }
         }
 
-        private void checkColision(Bullet bullet) {
+        private void checkColision(Fireball bullet) {
                 ListIterator<Skeleton> skeletonListIterator = skeletonList.listIterator();
                 while (skeletonListIterator.hasNext()) {
                         Skeleton skeleton = skeletonListIterator.next();
@@ -303,9 +303,9 @@ public class GameScreen implements Screen {
                         shapeRenderer.rect(skeleton.getX()+4, skeleton.getY(), (float) (skeleton.getWidth()/2), (float) (skeleton.getHeight()/2));
                 }
                 shapeRenderer.setColor(new Color(1, 1, 0, 1));
-                ListIterator<Bullet> bulletListIterator = bulletList.listIterator();
+                ListIterator<Fireball> bulletListIterator = bulletList.listIterator();
                 while (bulletListIterator.hasNext()) {
-                        Bullet bullet = bulletListIterator.next();
+                        Fireball bullet = bulletListIterator.next();
                         shapeRenderer.rect(bullet.getX()+2, bullet.getY()+1, (float) (bullet.getWidth()/2), (float) (bullet.getHeight()/2));
                 }
                 /* 4 */

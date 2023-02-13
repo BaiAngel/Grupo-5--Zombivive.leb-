@@ -14,7 +14,8 @@ public class AssetManager {
     // Animacions
     public static Animation aHumanIdle, aHumanUp, aHumanRight, aHumanLeft, aHumanDown;
     public static Animation aSkeletonIdle, aSkeletonUp, aSkeletonRight, aSkeletonLeft, aSkeletonDown;
-    public static Texture background,bullet;
+    public static Animation aFireballUp, aFireballRight, aFireballLeft, aFireballDown;
+    public static Texture background;
     // Try
     public static TextureRegion [] regionsMovimiento;
     private static Texture imagen;
@@ -31,6 +32,8 @@ public class AssetManager {
         createHumanTexture();
         //Crear skeleton
         createSkeletonTexture();
+        //Crear skeleton
+        createFireballTexture();
         //Sounds
         //Hit
         hitSound = Gdx.audio.newSound(Gdx.files.internal("sounds/bite.mp3"));
@@ -41,9 +44,22 @@ public class AssetManager {
         // Carreguem les textures i li apliquem el mètode d'escalat 'nearest'
         background = new Texture(Gdx.files.internal("fons/fons.png"));
         background.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        // Carreguem les textures i li apliquem el mètode d'escalat 'nearest'
-        bullet = new Texture(Gdx.files.internal("bullets/1.png"));
-        bullet.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+    }
+
+    private static void createFireballTexture() {
+        divideIn = 4;
+        //fireballUp
+        path = "bullets/fireball/up.png";
+        aFireballUp = crearAnimacion(path, divideIn);
+        //fireballRight
+        path = "bullets/fireball/right.png";
+        aFireballRight = crearAnimacion(path, divideIn);
+        //fireballDown
+        path = "bullets/fireball/down.png";
+        aFireballDown = crearAnimacion(path, divideIn);
+        //fireballLeft
+        path = "bullets/fireball/left.png";
+        aFireballLeft = crearAnimacion(path, divideIn);
     }
 
     private static void createSkeletonTexture() {

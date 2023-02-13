@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.helpers.AssetManager;
 import com.mygdx.game.utils.Settings;
 
-public class Bullet extends Actor {
+public class Fireball extends Actor {
 
     public static final int BULLET_IDLE = Settings.IDLE;
     public static final int BULLET_UP = Settings.UP;
@@ -22,6 +22,7 @@ public class Bullet extends Actor {
     public static final int BULLET_DOWN = Settings.DOWN;
     public static final int BULLET_LEFT = Settings.LEFT;
 
+    private float tiempoAnim = 0f;
     // Paràmetres de Bullet
     private Vector2 position;
     private int width, height;
@@ -29,7 +30,7 @@ public class Bullet extends Actor {
     private Rectangle collisionRect;
 
 
-    public Bullet(float x, float y, int width, int height) {
+    public Fireball(float x, float y, int width, int height) {
 
         // Inicialitzem els arguments segons la crida del constructor
         this.width = width;
@@ -78,6 +79,24 @@ public class Bullet extends Actor {
         return false;
     }
 
+    // Obtenim el TextureRegion depenent de la posició de l'spacecraft
+    public Animation getBulletTexture() {
+
+        switch (direction) {
+
+            case BULLET_UP:
+                return AssetManager.aFireballUp;
+            case BULLET_RIGHT:
+                return AssetManager.aFireballLeft;
+            case BULLET_DOWN:
+                return AssetManager.aFireballDown;
+            case BULLET_LEFT:
+                return AssetManager.aFireballRight;
+            default:
+                return AssetManager.aFireballDown;
+        }
+    }
+
     // Getters dels atributs principals
     public float getX() {
         return position.x;
@@ -98,7 +117,10 @@ public class Bullet extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        batch.draw(AssetManager.bullet, position.x, position.y, width, height);
+        tiempoAnim += Gdx.graphics.getDeltaTime(); //es el tiempo que paso desde el ultimo render
+        Animation frameDir = getBulletTexture();
+        frameActual = (TextureRegion) frameDir.getKeyFrame(tiempoAnim,true);
+        batch.draw(frameActual,getX(),getY());
     }
 }
 
