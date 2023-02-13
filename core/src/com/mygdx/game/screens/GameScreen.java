@@ -23,6 +23,7 @@ import com.mygdx.game.objects.Skeleton;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.utils.Settings;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
@@ -231,6 +232,7 @@ public class GameScreen implements Screen {
                 ListIterator<Skeleton> skeletonListIterator = skeletonList.listIterator();
                 while (skeletonListIterator.hasNext()) {
                         Skeleton skeleton = skeletonListIterator.next();
+                        Iterator<Skeleton> iterator = skeleton.iterator();
                         if (bullet.collides(skeleton)) {
                                 skeleton.remove();
                                 skeletonList.remove(skeleton);
