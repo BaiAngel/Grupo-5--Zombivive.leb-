@@ -1,11 +1,11 @@
 package com.mygdx.game.screens;
 
-
-
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -19,7 +19,8 @@ import com.mygdx.game.Zombivive;
  * Created by julienvillegas on 17/01/2017.
  */
 public class TitleScreen implements Screen {
-
+    private SpriteBatch batch;
+    private Texture texture;
     private Stage stage;
     private Game game;
 
@@ -27,13 +28,13 @@ public class TitleScreen implements Screen {
         this.game = game;
         stage = new Stage(new ScreenViewport());
 
-        Label title = new Label("Title Screen", Zombivive.gameSkin,"big-black");
+        Label title = new Label("Zombivive", Zombivive.gameSkin,"big-black");
         title.setAlignment(Align.center);
         title.setY(Gdx.graphics.getHeight()*2/3);
         title.setWidth(Gdx.graphics.getWidth());
         stage.addActor(title);
 
-        TextButton playButton = new TextButton("Play!",Zombivive.gameSkin);
+        TextButton playButton = new TextButton("Jugar",Zombivive.gameSkin);
         playButton.setWidth(Gdx.graphics.getWidth()/2);
         playButton.setPosition(Gdx.graphics.getWidth()/2-playButton.getWidth()/2,Gdx.graphics.getHeight()/2-playButton.getHeight()/2);
         playButton.addListener(new InputListener(){
@@ -48,7 +49,7 @@ public class TitleScreen implements Screen {
         });
         stage.addActor(playButton);
 
-        TextButton optionsButton = new TextButton("Options",Zombivive.gameSkin);
+        TextButton optionsButton = new TextButton("Opcions",Zombivive.gameSkin);
         optionsButton.setWidth(Gdx.graphics.getWidth()/2);
         optionsButton.setPosition(Gdx.graphics.getWidth()/2-optionsButton.getWidth()/2,Gdx.graphics.getHeight()/4-optionsButton.getHeight()/2);
         optionsButton.addListener(new InputListener(){
@@ -68,12 +69,17 @@ public class TitleScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
+        batch = new SpriteBatch();
+        texture = new Texture(Gdx.files.internal("maps/fondo.jpg"));
     }
 
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        batch.begin();
+        batch.draw(texture, 0,0, Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+        batch.end();
         stage.act();
         stage.draw();
     }
