@@ -23,7 +23,6 @@ import com.mygdx.game.objects.Skeleton;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.utils.Settings;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
@@ -42,7 +41,7 @@ public class GameScreen implements Screen {
         private ShapeRenderer shapeRenderer;
         // Per obtenir el batch de l'stage
         private Batch batch;
-        private int timeBetweenEnemySpawns = 500;
+        private int timeBetweenEnemySpawns = 50;
         private int enemySpawnTimer = 0;
         private int timeBetweenBulletSpawns = 50;
         private int bulletSpawnTimer = 0;
@@ -50,6 +49,8 @@ public class GameScreen implements Screen {
         private SpriteBatch spriteBatch;
         private float width, totalBarWidth, currentHealth, totalHealth;
         private NinePatch health, backgroundHealth;
+        private boolean isWorkingSpawn;
+        private boolean isWorkingKill;
 
         public GameScreen(Zombivive game) {
                 this.game = game;
@@ -139,11 +140,12 @@ public class GameScreen implements Screen {
 
         @SuppressWarnings("SuspiciousIndentation")
         private void updateGame() {
+                if (!isWorkingKill)
                 spawnSkeleton();
                 spawnBullet();
-                if (skeletonList != null)
+                if (!skeletonList.isEmpty())
                 updateSkeleton();
-                if (bulletList != null)
+                if (!bulletList.isEmpty() && !skeletonList.isEmpty())
                 updateBullet();
         }
 
@@ -177,7 +179,9 @@ public class GameScreen implements Screen {
                 ListIterator<Fireball> bulletListIterator = bulletList.listIterator();
                 while (bulletListIterator.hasNext()) {
                         Fireball bullet = bulletListIterator.next();
+                        isWorkingKill = changeWorking(isWorkingKill);
                         checkColision(bullet);
+                        isWorkingKill = changeWorking(isWorkingKill);
                 }
         }
 
@@ -230,12 +234,16 @@ public class GameScreen implements Screen {
 
         private void checkColision(Fireball bullet) {
                 ListIterator<Skeleton> skeletonListIterator = skeletonList.listIterator();
+                Gdx.app.log("Zombie ", "skeletonListIterator"+ skeletonListIterator);
                 while (skeletonListIterator.hasNext()) {
+                        //Gdx.app.log("Zombie ", "skeletonListIterator.hasnext"+ skeletonListIterator.hasNext());
+                        //Gdx.app.log("Zombie ", "skeletonListIterator.next"+ skeletonListIterator.next());
                         Skeleton skeleton = skeletonListIterator.next();
-                        Iterator<Skeleton> iterator = skeleton.iterator();
+
                         if (bullet.collides(skeleton)) {
-                                skeleton.remove();
                                 skeletonList.remove(skeleton);
+                                //skeleton.remove();
+                                skeleton.isDead = true;
                                 hud.addScore(1);
                         }
                 }
@@ -312,6 +320,14 @@ public class GameScreen implements Screen {
                 }
                 /* 4 */
                 shapeRenderer.end();
+        }
+
+        public boolean changeWorking(boolean work) {
+                if (work)
+                        work = false;
+                else
+                        work=true;
+                return work;
         }
 
         @Override

@@ -29,6 +29,7 @@ public class Skeleton extends Actor {
     private float COOLDOWN_TIME = 2f;
     private float tiempoAnim = 0f;
     private float cooldown = 0;
+    public boolean isDead = false;
 
 
     public Skeleton(float x, float y, int width, int height) {
@@ -74,6 +75,8 @@ public class Skeleton extends Actor {
         if(cooldown > 0) {
             cooldown -= delta;
         }
+        if (isDead)
+        remove();
     }
 
     public boolean collides(Human human) {
@@ -95,6 +98,10 @@ public class Skeleton extends Actor {
             return false;
         }
 
+    }
+
+    public boolean hitAndCheck (Fireball bullet) {
+        return true;
     }
 
     // Obtenim el TextureRegion depenent de la posició de l'spacecraft
