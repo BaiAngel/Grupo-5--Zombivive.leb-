@@ -26,5 +26,7 @@ public class Settings {
     public static final int RIGHT = 2;
     public static final int DOWN = 3;
     public static final int LEFT = 4;
+    public static int TIME_BETWEEN_FIREBALL_SPAWNS = 50;
+    public static int FIREBALL_SPAWN_TIMER = 0;
 
 }

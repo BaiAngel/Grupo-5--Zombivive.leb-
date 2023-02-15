@@ -27,7 +27,7 @@ public class Human extends Actor {
     private Vector2 position;
     private int width, height;
     private int direction;
-    private Rectangle collisionRect;
+    private Rectangle boundingBox;
     private float tiempoAnim = 0f;
     public static int humanFacing = Settings.IDLE;
     public static int MAX_HEALTH = 100;
@@ -49,12 +49,13 @@ public class Human extends Actor {
         // Inicialitzem Human a l'estat normal
         direction = HUMAN_IDLE;
         // Creem el rectangle de col·lisions
-        collisionRect = new Rectangle();
+        boundingBox = new Rectangle(position.x+4, position.y, width/2, height/2);
         centreHumanX = x+5;
         centreHumanY = y+5;
 
     }
     public void act(float delta) {
+        Settings.FIREBALL_SPAWN_TIMER += delta;
         // Movem l'Spacecraft depenent de la direcció controlant que no surti de la pantalla
         switch (direction) {
             case HUMAN_UP:
@@ -89,7 +90,6 @@ public class Human extends Actor {
                 humanFacing = Settings.DOWN;
                 break;
         }
-        collisionRect.set(position.x+4, position.y, width/2, height/2);
         if(timer > 0) {
             timer -= delta;
         }
@@ -103,10 +103,25 @@ public class Human extends Actor {
         }
     }
 
+    public boolean canFireFireball() {
+        return (Settings.FIREBALL_SPAWN_TIMER - Settings.TIME_BETWEEN_FIREBALL_SPAWNS >= 0);
+    }
+
+
     public void getHit(int damage) {
 
         health = health-damage;
 
+    }
+
+    public Fireball[] fireFireball() {
+        Fireball[] fireball = new Fireball[2];
+        fireball[0] = new Fireball(getCentreX(), getCentreY(), Settings.BULLET_WIDTH, Settings.BULLET_HEIGHT);
+        fireball[1] = new Fireball(getCentreX(), getCentreY()*0.93f, Settings.BULLET_WIDTH, Settings.BULLET_HEIGHT);
+
+        Settings.FIREBALL_SPAWN_TIMER = 0;
+
+        return fireball;
     }
 
     // Obtenim el TextureRegion depenent de la posició de l'spacecraft
@@ -145,7 +160,7 @@ public class Human extends Actor {
     }
 
     public Rectangle getCollisionRect() {
-        return collisionRect;
+        return boundingBox;
     }
 
     // Canviem la direcció de l'Spacecraft: Puja
