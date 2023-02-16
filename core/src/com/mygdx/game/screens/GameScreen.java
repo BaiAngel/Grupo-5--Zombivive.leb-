@@ -201,7 +201,7 @@ public class GameScreen implements Screen {
 
         private void spawnBullet() {
                 bulletSpawnTimer = bulletSpawnTimer + 1;
-                //Gdx.app.log("Timer", "SpawnTimer: " + bulletSpawnTimer);
+
 
                 if (bulletSpawnTimer > timeBetweenBulletSpawns){
                         bulletList.add(
@@ -232,10 +232,8 @@ public class GameScreen implements Screen {
                 ListIterator<Skeleton> skeletonListIterator = skeletonList.listIterator();
                 while (skeletonListIterator.hasNext()) {
                         Skeleton skeleton = skeletonListIterator.next();
-                        Iterator<Skeleton> iterator = skeleton.iterator();
                         if (bullet.collides(skeleton)) {
-                                skeleton.remove();
-                                skeletonList.remove(skeleton);
+                                skeleton.killed();
                                 hud.addScore(1);
                         }
                 }

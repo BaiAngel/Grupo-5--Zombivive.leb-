@@ -31,12 +31,13 @@ public class Fireball extends Actor {
 
 
     public Fireball(float x, float y, int width, int height) {
-        this.boundingBox =  new Rectangle(position.x+2, position.y + 1, (float) (width/2), (float) (height/2));
         // Inicialitzem els arguments segons la crida del constructor
         this.width = width;
         this.height = height;
         position = new Vector2(x, y);
         direction = humanFacing;
+        this.boundingBox =  new Rectangle(position.x+2, position.y + 1, (float) (width/2), (float) (height/2));
+
 
     }
     public void act(float delta) {
@@ -66,11 +67,13 @@ public class Fireball extends Actor {
             case BULLET_IDLE:
                 break;
         }
+                boundingBox.set(position.x+2, position.y + 1, (float) (width/2), (float) (height/2));
     }
 
-    public boolean collides(Skeleton skeleton) {
 
-        if (position.x <= skeleton.getX() + skeleton.getWidth()) {
+    public boolean collides(Skeleton skeleton) {
+        if (getX() <= skeleton.getX() + skeleton.getWidth()) {
+            Gdx.app.log("Timer", "namc ");
             // Comprovem si han col·lisionat sempre que l'asteroide es trobi a la mateixa alçada que l'spacecraft
             return (Intersector.overlaps(boundingBox, skeleton.getCollisionRect()));
         }

@@ -90,6 +90,7 @@ public class Human extends Actor {
                 humanFacing = Settings.DOWN;
                 break;
         }
+        boundingBox.set(position.x+4, position.y, width/2, height/2);
         if(timer > 0) {
             timer -= delta;
         }

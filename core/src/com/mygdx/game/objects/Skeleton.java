@@ -29,7 +29,7 @@ public class Skeleton extends Actor {
     private float COOLDOWN_TIME = 2f;
     private float tiempoAnim = 0f;
     private float cooldown = 0;
-
+    private boolean isDead = false;
 
     public Skeleton(float x, float y, int width, int height) {
 
@@ -44,35 +44,40 @@ public class Skeleton extends Actor {
 
     }
     public void act(float delta) {
-
-        // Movem l'Spacecraft depenent de la direcció controlant que no surti de la pantalla
-        switch (direction) {
-            case SKELETON_UP:
-                if (this.position.y + Settings.MOB_VELOCITY * delta <= Settings.GAME_HEIGHT) {
-                    this.position.y += Settings.MOB_VELOCITY * delta;
-                }
-                break;
-            case SKELETON_LEFT:
-                if (this.position.x - Settings.MOB_VELOCITY * delta <= Settings.GAME_WIDTH) {
-                    this.position.x -= Settings.MOB_VELOCITY * delta;
-                }
-                break;
-            case SKELETON_DOWN:
-                if (this.position.y - height + Settings.MOB_VELOCITY * delta >= 0) {
-                    this.position.y -= Settings.MOB_VELOCITY * delta;
-                }
-                break;
-            case SKELETON_RIGHT:
-                if (this.position.x + Settings.MOB_VELOCITY * delta >= 0) {
-                    this.position.x += Settings.MOB_VELOCITY * delta;
-                }
-                break;
-            case SKELETON_IDLE:
-                break;
+        if (!isDead) {
+            // Movem l'Spacecraft depenent de la direcció controlant que no surti de la pantalla
+            switch (direction) {
+                case SKELETON_UP:
+                    if (this.position.y + Settings.MOB_VELOCITY * delta <= Settings.GAME_HEIGHT) {
+                        this.position.y += Settings.MOB_VELOCITY * delta;
+                    }
+                    break;
+                case SKELETON_LEFT:
+                    if (this.position.x - Settings.MOB_VELOCITY * delta <= Settings.GAME_WIDTH) {
+                        this.position.x -= Settings.MOB_VELOCITY * delta;
+                    }
+                    break;
+                case SKELETON_DOWN:
+                    if (this.position.y - height + Settings.MOB_VELOCITY * delta >= 0) {
+                        this.position.y -= Settings.MOB_VELOCITY * delta;
+                    }
+                    break;
+                case SKELETON_RIGHT:
+                    if (this.position.x + Settings.MOB_VELOCITY * delta >= 0) {
+                        this.position.x += Settings.MOB_VELOCITY * delta;
+                    }
+                    break;
+                case SKELETON_IDLE:
+                    break;
+            }
+            collisionRect.set(position.x + 4, position.y, width / 2, height / 2);
+            if (cooldown > 0) {
+                cooldown -= delta;
+            }
         }
-        collisionRect.set(position.x+4, position.y, width/2, height/2);
-        if(cooldown > 0) {
-            cooldown -= delta;
+        else{
+            position.x = 500;
+            position.y = 500;
         }
     }
 
@@ -95,6 +100,10 @@ public class Skeleton extends Actor {
             return false;
         }
 
+    }
+
+    public void killed(){
+        isDead = true;
     }
 
     // Obtenim el TextureRegion depenent de la posició de l'spacecraft
