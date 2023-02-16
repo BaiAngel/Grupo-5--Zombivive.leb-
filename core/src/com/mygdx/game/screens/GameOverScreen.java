@@ -55,7 +55,7 @@ public class GameOverScreen extends ScreenAdapter {
         batch.begin();
         BitmapFont font = new BitmapFont(false);
 
-        font.draw(batch, "You win!", Gdx.graphics.getWidth() * .25f, Gdx.graphics.getHeight() * .75f);
+        font.draw(batch, "You lose!", Gdx.graphics.getWidth() * .25f, Gdx.graphics.getHeight() * .75f);
         font.draw(batch, "Press enter to restart.", Gdx.graphics.getWidth() * .25f, Gdx.graphics.getHeight() * .25f);
         batch.end();
 

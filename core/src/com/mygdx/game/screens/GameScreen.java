@@ -42,7 +42,7 @@ public class GameScreen implements Screen {
         private ShapeRenderer shapeRenderer;
         // Per obtenir el batch de l'stage
         private Batch batch;
-        private int timeBetweenEnemySpawns = 500;
+        private int timeBetweenEnemySpawns = 5;
         private int enemySpawnTimer = 0;
         private int timeBetweenBulletSpawns = 50;
         private int bulletSpawnTimer = 0;

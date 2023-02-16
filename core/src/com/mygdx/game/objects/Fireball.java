@@ -28,6 +28,8 @@ public class Fireball extends Actor {
     private int width, height = 1;
     private int direction;
     public Rectangle boundingBox;
+    private boolean outBullet = false;
+    private float timer = 2f;
 
 
     public Fireball(float x, float y) {
@@ -47,33 +49,45 @@ public class Fireball extends Actor {
 
     }
     public void act(float delta) {
-
-        // Movem l'Spacecraft depenent de la direcció controlant que no surti de la pantalla
-        switch (direction) {
-            case BULLET_UP:
-                if (this.position.y + Settings.BULLET_VELOCITY * delta <= Settings.GAME_HEIGHT) {
-                    this.position.y += Settings.BULLET_VELOCITY * delta;
-                }
-                break;
-            case BULLET_RIGHT:
-                if (this.position.x - Settings.BULLET_VELOCITY * delta <= Settings.GAME_WIDTH) {
-                    this.position.x -= Settings.BULLET_VELOCITY * delta;
-                }
-                break;
-            case BULLET_DOWN:
-                if (this.position.y - height + Settings.BULLET_VELOCITY * delta >= 0) {
-                    this.position.y -= Settings.BULLET_VELOCITY * delta;
-                }
-                break;
-            case BULLET_LEFT:
-                if (this.position.x + Settings.BULLET_VELOCITY * delta >= 0) {
-                    this.position.x += Settings.BULLET_VELOCITY * delta;
-                }
-                break;
-            case BULLET_IDLE:
-                break;
+        if (!outBullet) {
+            // Movem l'Spacecraft depenent de la direcció controlant que no surti de la pantalla
+            switch (direction) {
+                case BULLET_UP:
+                    if (this.position.y + Settings.BULLET_VELOCITY * delta <= Settings.GAME_HEIGHT) {
+                        this.position.y += Settings.BULLET_VELOCITY * delta;
+                    }
+                    break;
+                case BULLET_RIGHT:
+                    if (this.position.x - Settings.BULLET_VELOCITY * delta <= Settings.GAME_WIDTH) {
+                        this.position.x -= Settings.BULLET_VELOCITY * delta;
+                    }
+                    break;
+                case BULLET_DOWN:
+                    if (this.position.y - height + Settings.BULLET_VELOCITY * delta >= 0) {
+                        this.position.y -= Settings.BULLET_VELOCITY * delta;
+                    }
+                    break;
+                case BULLET_LEFT:
+                    if (this.position.x + Settings.BULLET_VELOCITY * delta >= 0) {
+                        this.position.x += Settings.BULLET_VELOCITY * delta;
+                    }
+                    break;
+                case BULLET_IDLE:
+                    break;
+            }
+            boundingBox.set(position.x + 2, position.y + 1, (float) (width / 2), (float) (height / 2));
+            if (timer > 0) {
+                timer -= delta;
+            }
+            else {
+                fireballOut();
+            }
         }
-                boundingBox.set(position.x+2, position.y + 1, (float) (width/2), (float) (height/2));
+        else {
+            boundingBox.set(position.x + 2, position.y + 1, (float) (width / 2), (float) (height / 2));
+            position.x = 500;
+            position.y = 500;
+        }
     }
 
 
@@ -84,6 +98,10 @@ public class Fireball extends Actor {
             return (Intersector.overlaps(boundingBox, skeleton.getCollisionRect()));
         }
         return false;
+    }
+
+    public void fireballOut () {
+        outBullet = true;
     }
 
     // Obtenim el TextureRegion depenent de la posició de l'spacecraft
