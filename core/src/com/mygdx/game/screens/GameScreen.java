@@ -205,7 +205,7 @@ public class GameScreen implements Screen {
 
                 if (bulletSpawnTimer > timeBetweenBulletSpawns){
                         bulletList.add(
-                                new Fireball(human.getCentreX(), human.getCentreY(), Settings.BULLET_WIDTH, Settings.BULLET_HEIGHT)
+                                new Fireball(human.getCentreX(), human.getCentreY())
 
                         );
                         ListIterator<Fireball> bulletListIterator = bulletList.listIterator();

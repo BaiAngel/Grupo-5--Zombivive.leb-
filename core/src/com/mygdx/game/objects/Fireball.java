@@ -1,7 +1,7 @@
 package com.mygdx.game.objects;
 
 import static com.mygdx.game.helpers.AssetManager.frameActual;
-import static com.mygdx.game.objects.Human.humanFacing;
+import static com.mygdx.game.objects.Human.getHumanFacing;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -25,17 +25,23 @@ public class Fireball extends Actor {
     private float tiempoAnim = 0f;
     // Paràmetres de Bullet
     private Vector2 position;
-    private int width, height;
+    private int width, height = 1;
     private int direction;
     public Rectangle boundingBox;
 
 
-    public Fireball(float x, float y, int width, int height) {
+    public Fireball(float x, float y) {
         // Inicialitzem els arguments segons la crida del constructor
-        this.width = width;
-        this.height = height;
+        if (getHumanFacing() == BULLET_UP || getHumanFacing() == BULLET_DOWN) {
+            this.width = Settings.BULLET_WIDTH_Y;
+            this.height = Settings.BULLET_HEIGHT_Y;
+        }
+        else if (getHumanFacing() == BULLET_RIGHT || getHumanFacing() == BULLET_LEFT) {
+            this.width = Settings.BULLET_WIDTH_X;
+            this.height = Settings.BULLET_HEIGHT_X;
+        }
         position = new Vector2(x, y);
-        direction = humanFacing;
+        direction = getHumanFacing();
         this.boundingBox =  new Rectangle(position.x+2, position.y + 1, (float) (width/2), (float) (height/2));
 
 

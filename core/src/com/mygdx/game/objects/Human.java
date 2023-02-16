@@ -29,10 +29,10 @@ public class Human extends Actor {
     private int direction;
     private Rectangle boundingBox;
     private float tiempoAnim = 0f;
-    public static int humanFacing = Settings.IDLE;
-    public static int MAX_HEALTH = 100;
-    public static int health = MAX_HEALTH;
-    public static int regeneration = 1;
+    private static int humanFacing = Settings.IDLE;
+    private static int MAX_HEALTH = 100;
+    private static int health = MAX_HEALTH;
+    private static int regeneration = 1;
     private float timer = 0;
     private float TIMER_VELOCITY = 2f;
     private float centreHumanX, centreHumanY;
@@ -115,16 +115,6 @@ public class Human extends Actor {
 
     }
 
-    public Fireball[] fireFireball() {
-        Fireball[] fireball = new Fireball[2];
-        fireball[0] = new Fireball(getCentreX(), getCentreY(), Settings.BULLET_WIDTH, Settings.BULLET_HEIGHT);
-        fireball[1] = new Fireball(getCentreX(), getCentreY()*0.93f, Settings.BULLET_WIDTH, Settings.BULLET_HEIGHT);
-
-        Settings.FIREBALL_SPAWN_TIMER = 0;
-
-        return fireball;
-    }
-
     // Obtenim el TextureRegion depenent de la posició de l'spacecraft
     public Animation getHumanTexture() {
 
@@ -203,6 +193,10 @@ public class Human extends Actor {
 
     public float getCentreY() {
         return centreHumanY;
+    }
+
+    public static int getHumanFacing() {
+        return humanFacing;
     }
 
     @Override
