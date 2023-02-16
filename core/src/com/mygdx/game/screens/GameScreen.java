@@ -103,9 +103,9 @@ public class GameScreen implements Screen {
 
         @Override
         public void render(float delta) {
+
                 Gdx.gl.glClearColor( 0, 0, 0.5f, 1);
                 Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-                stage.draw();
                 drawElements();
                 drawHud(delta);
                 if (!gameOver) {
@@ -114,6 +114,7 @@ public class GameScreen implements Screen {
                         stage.act(delta);
                         updateGame(delta);
                         calcularGameOver();
+                        shapeRenderer.end();
                 }else {
                         game.setScreen(new GameOverScreen(game));
                         batch.begin();
@@ -155,7 +156,7 @@ public class GameScreen implements Screen {
                 while (enemySkeletonListIterator.hasNext()) {
                         Skeleton skeleton = enemySkeletonListIterator.next();
                         checkMovement(skeleton);
-                        skeleton.act(delta);
+                        skeleton.draw(batch,0);
                 }
 
                 renderLasers(delta);
@@ -167,7 +168,6 @@ public class GameScreen implements Screen {
 
         private void spawnSkeleton(float deltaTime) {
                 enemySpawnTimer = enemySpawnTimer + deltaTime;
-                Gdx.app.log("fdsf","enemy "+enemySpawnTimer);
                 if (enemySpawnTimer > timeBetweenEnemySpawns) {
                         skeletonList.add(new Skeleton(Settings.MOB_STARTX,
                                 Settings.MOB_STARTY,
@@ -233,14 +233,12 @@ public class GameScreen implements Screen {
                 hud.stage.draw();
                 hud.act(delta);
                 //drawVida
-                batch.begin();
                 health = new NinePatch(red, 0, 0, 0, 0);
                 backgroundHealth = new NinePatch(black, 0, 0, 0, 0);
                 currentHealth = human.getHealth();
                 width = currentHealth / totalHealth * totalBarWidth;
                 backgroundHealth.draw(batch, Settings.GAME_WIDTH/2, Settings.GAME_HEIGHT/2+35, totalBarWidth,10);
                 health.draw(batch, Settings.GAME_WIDTH/2, Settings.GAME_HEIGHT/2+35, width,10);
-                batch.end();
         }
 
 /*

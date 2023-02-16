@@ -74,6 +74,7 @@ public class Skeleton extends Actor {
         if(cooldown > 0) {
             cooldown -= delta;
         }
+
     }
 
     public boolean collides(Human human) {
