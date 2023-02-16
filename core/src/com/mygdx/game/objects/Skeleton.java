@@ -25,11 +25,10 @@ public class Skeleton extends Actor {
     private Vector2 position;
     private int width, height;
     private int direction;
-    private Rectangle boundingBox;
+    private Rectangle collisionRect;
     private float COOLDOWN_TIME = 2f;
     private float tiempoAnim = 0f;
     private float cooldown = 0;
-    public boolean isDead = false;
 
 
     public Skeleton(float x, float y, int width, int height) {
@@ -41,7 +40,7 @@ public class Skeleton extends Actor {
 
         // Inicialitzem Human a l'estat normal
         direction = SKELETON_IDLE;
-        boundingBox = new Rectangle(position.x+4, position.y, width/2, height/2);
+        collisionRect = new Rectangle();
 
     }
     public void act(float delta) {
@@ -71,23 +70,19 @@ public class Skeleton extends Actor {
             case SKELETON_IDLE:
                 break;
         }
+        collisionRect.set(position.x+4, position.y, width/2, height/2);
         if(cooldown > 0) {
             cooldown -= delta;
         }
-
     }
 
     public boolean collides(Human human) {
 
         if (position.x <= human.getX() + human.getWidth()) {
             // Comprovem si han col·lisionat sempre que l'asteroide es trobi a la mateixa alçada que l'spacecraft
-            return (Intersector.overlaps(boundingBox, human.getCollisionRect()));
+            return (Intersector.overlaps(collisionRect, human.getCollisionRect()));
         }
         return false;
-    }
-
-    public boolean hitAndCheckDestroyed(Fireball fireball) {
-        return true;
     }
 
     public boolean attackCooldown()
@@ -102,9 +97,6 @@ public class Skeleton extends Actor {
 
     }
 
-    public boolean intersects(Rectangle otherRectangle) {
-        return boundingBox.overlaps(otherRectangle);
-    }
     // Obtenim el TextureRegion depenent de la posició de l'spacecraft
     public Animation getSkeletonTexture() {
 
@@ -165,7 +157,7 @@ public class Skeleton extends Actor {
         direction = SKELETON_IDLE;
     }
     public Rectangle getCollisionRect() {
-        return boundingBox;
+        return collisionRect;
     }
 
 

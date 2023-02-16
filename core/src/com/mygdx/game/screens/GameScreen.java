@@ -11,7 +11,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.Zombivive;
@@ -24,7 +23,7 @@ import com.mygdx.game.objects.Skeleton;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.utils.Settings;
 
-import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
@@ -34,7 +33,7 @@ public class GameScreen implements Screen {
         Zombivive game;
         private final Texture red, black;
         private LinkedList<Skeleton> skeletonList;
-        private LinkedList<Fireball> fireballList;
+        private LinkedList<Fireball> bulletList;
         private Stage stage;
         private Human human;
         private OrthographicCamera camera;
@@ -43,8 +42,10 @@ public class GameScreen implements Screen {
         private ShapeRenderer shapeRenderer;
         // Per obtenir el batch de l'stage
         private Batch batch;
-        private float timeBetweenEnemySpawns = 10;
-        public float enemySpawnTimer = 0;
+        private int timeBetweenEnemySpawns = 500;
+        private int enemySpawnTimer = 0;
+        private int timeBetweenBulletSpawns = 50;
+        private int bulletSpawnTimer = 0;
         private Hud hud;
         private SpriteBatch spriteBatch;
         private float width, totalBarWidth, currentHealth, totalHealth;
@@ -64,6 +65,8 @@ public class GameScreen implements Screen {
                 // Posant el paràmetre a true configurem la càmera perquè
                 // faci servir el sistema de coordenades Y-Down
                 camera.setToOrtho(false);
+
+
                 // Creem el viewport amb les mateixes dimensions que la càmera
                 StretchViewport viewport = new StretchViewport(Settings.GAME_WIDTH/2, Settings.GAME_HEIGHT/2 , camera);
 
@@ -76,7 +79,7 @@ public class GameScreen implements Screen {
                 // Creem la persona
                 human = new Human(Settings.HUMAN_STARTX, Settings.HUMAN_STARTY, Settings.HUMAN_WIDTH, Settings.HUMAN_HEIGHT);
                 skeletonList = new LinkedList<>();
-                fireballList = new LinkedList<>();
+                bulletList = new LinkedList<>();
 
                 // Creem el fons
                 background = new Background(0,0, Settings.GAME_WIDTH, Settings.GAME_HEIGHT);
@@ -103,18 +106,17 @@ public class GameScreen implements Screen {
 
         @Override
         public void render(float delta) {
-
                 Gdx.gl.glClearColor( 0, 0, 0.5f, 1);
                 Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+                stage.draw();
                 drawElements();
                 drawHud(delta);
                 if (!gameOver) {
                         camera.position.set(human.getX(), human.getY(), 0);
                         camera.update();
                         stage.act(delta);
-                        updateGame(delta);
+                        updateGame();
                         calcularGameOver();
-                        shapeRenderer.end();
                 }else {
                         game.setScreen(new GameOverScreen(game));
                         batch.begin();
@@ -134,97 +136,15 @@ public class GameScreen implements Screen {
                         gameOver = true;
                 }
         }
-/*
+
         @SuppressWarnings("SuspiciousIndentation")
         private void updateGame() {
                 spawnSkeleton();
                 spawnBullet();
-                if (!skeletonList.isEmpty())
+                if (skeletonList != null)
                 updateSkeleton();
-                if (!fireballList.isEmpty() && !skeletonList.isEmpty())
+                if (bulletList != null)
                 updateBullet();
-        }
-*/
-
-
-        private void updateGame(float delta) {
-                human.act(delta);
-
-                spawnSkeleton(delta);
-
-                ListIterator<Skeleton> enemySkeletonListIterator = skeletonList.listIterator();
-                while (enemySkeletonListIterator.hasNext()) {
-                        Skeleton skeleton = enemySkeletonListIterator.next();
-                        checkMovement(skeleton);
-                        skeleton.draw(batch,0);
-                }
-
-                renderLasers(delta);
-
-                detectCollisions();
-        }
-
-
-
-        private void spawnSkeleton(float deltaTime) {
-                enemySpawnTimer = enemySpawnTimer + deltaTime;
-                if (enemySpawnTimer > timeBetweenEnemySpawns) {
-                        skeletonList.add(new Skeleton(Settings.MOB_STARTX,
-                                Settings.MOB_STARTY,
-                                Settings.MOB_WIDTH, Settings.MOB_HEIGHT));
-                        enemySpawnTimer -= timeBetweenEnemySpawns;
-                }
-        }
-
-        private void renderLasers(float deltaTime) {
-                //create new lasers
-                //player lasers
-                if (human.canFireFireball()) {
-                        Fireball[] fireball = human.fireFireball();
-                        fireballList.addAll(Arrays.asList(fireball));
-                }
-                //draw lasers
-                //remove old lasers
-                ListIterator<Fireball> iterator = fireballList.listIterator();
-                while (iterator.hasNext()) {
-                        Fireball fireball = iterator.next();
-                        fireball.draw(batch,0);
-                        fireball.act(deltaTime);
-                        if (fireball.boundingBox.x > Settings.GAME_HEIGHT) {
-                                iterator.remove();
-                        }
-                }
-                iterator = fireballList.listIterator();
-                while (iterator.hasNext()) {
-                        Fireball fireball = iterator.next();
-                        fireball.draw(batch, 1);
-                        fireball.act(deltaTime);
-                        if (fireball.boundingBox.y + fireball.boundingBox.height < 0) {
-                                iterator.remove();
-                        }
-                }
-        }
-
-        private void detectCollisions() {
-                //for each player laser, check whether it intersects an enemy ship
-                ListIterator<Fireball> fireballListIterator = fireballList.listIterator();
-                while (fireballListIterator.hasNext()) {
-                        Fireball fireball = fireballListIterator.next();
-                        ListIterator<Skeleton> skeletonListIterator = skeletonList.listIterator();
-                        while (skeletonListIterator.hasNext()) {
-                                Skeleton skeleton = skeletonListIterator.next();
-
-                                if (skeleton.intersects(fireball.boundingBox)) {
-                                        //contact with enemy ship
-                                        if (skeleton.hitAndCheckDestroyed(fireball)) {
-                                                skeletonListIterator.remove();
-                                                hud.addScore(1);
-                                        }
-                                        fireballListIterator.remove();
-                                        break;
-                                }
-                        }
-                }
         }
 
         private void drawHud(float delta) {
@@ -233,15 +153,17 @@ public class GameScreen implements Screen {
                 hud.stage.draw();
                 hud.act(delta);
                 //drawVida
+                batch.begin();
                 health = new NinePatch(red, 0, 0, 0, 0);
                 backgroundHealth = new NinePatch(black, 0, 0, 0, 0);
                 currentHealth = human.getHealth();
                 width = currentHealth / totalHealth * totalBarWidth;
                 backgroundHealth.draw(batch, Settings.GAME_WIDTH/2, Settings.GAME_HEIGHT/2+35, totalBarWidth,10);
                 health.draw(batch, Settings.GAME_WIDTH/2, Settings.GAME_HEIGHT/2+35, width,10);
+                batch.end();
         }
 
-/*
+
         private void updateSkeleton() {
                 ListIterator<Skeleton> skeletonListIterator = skeletonList.listIterator();
                 while (skeletonListIterator.hasNext()) {
@@ -252,7 +174,7 @@ public class GameScreen implements Screen {
         }
 
         private void updateBullet() {
-                ListIterator<Fireball> bulletListIterator = fireballList.listIterator();
+                ListIterator<Fireball> bulletListIterator = bulletList.listIterator();
                 while (bulletListIterator.hasNext()) {
                         Fireball bullet = bulletListIterator.next();
                         checkColision(bullet);
@@ -278,20 +200,20 @@ public class GameScreen implements Screen {
         }
 
         private void spawnBullet() {
-                Settings.FIREBALL_SPAWN_TIMER = Settings.FIREBALL_SPAWN_TIMER + 1;
+                bulletSpawnTimer = bulletSpawnTimer + 1;
                 //Gdx.app.log("Timer", "SpawnTimer: " + bulletSpawnTimer);
 
-                if (Settings.FIREBALL_SPAWN_TIMER > Settings.TIME_BETWEEN_FIREBALL_SPAWNS){
-                        fireballList.add(
+                if (bulletSpawnTimer > timeBetweenBulletSpawns){
+                        bulletList.add(
                                 new Fireball(human.getCentreX(), human.getCentreY(), Settings.BULLET_WIDTH, Settings.BULLET_HEIGHT)
 
                         );
-                        ListIterator<Fireball> bulletListIterator = fireballList.listIterator();
+                        ListIterator<Fireball> bulletListIterator = bulletList.listIterator();
                         while (bulletListIterator.hasNext()) {
                                 Fireball bullet = bulletListIterator.next();
                                 stage.addActor(bullet);
                         }
-                        Settings.FIREBALL_SPAWN_TIMER = 0;
+                        bulletSpawnTimer = 0;
                 }
         }
 
@@ -308,22 +230,16 @@ public class GameScreen implements Screen {
 
         private void checkColision(Fireball bullet) {
                 ListIterator<Skeleton> skeletonListIterator = skeletonList.listIterator();
-                Gdx.app.log("Zombie ", "skeletonListIterator"+ skeletonListIterator);
                 while (skeletonListIterator.hasNext()) {
-                        //Gdx.app.log("Zombie ", "skeletonListIterator.hasnext"+ skeletonListIterator.hasNext());
-                        //Gdx.app.log("Zombie ", "skeletonListIterator.next"+ skeletonListIterator.next());
                         Skeleton skeleton = skeletonListIterator.next();
-
+                        Iterator<Skeleton> iterator = skeleton.iterator();
                         if (bullet.collides(skeleton)) {
+                                skeleton.remove();
                                 skeletonList.remove(skeleton);
-                                //skeleton.remove();
-                                skeleton.isDead = true;
                                 hud.addScore(1);
                         }
                 }
         }
-
- */
 
         private void checkMovement(Skeleton mob) {
                 float resy = human.getY() - mob.getY();
@@ -389,7 +305,7 @@ public class GameScreen implements Screen {
                         shapeRenderer.rect(skeleton.getX()+4, skeleton.getY(), (float) (skeleton.getWidth()/2), (float) (skeleton.getHeight()/2));
                 }
                 shapeRenderer.setColor(new Color(1, 1, 0, 1));
-                ListIterator<Fireball> bulletListIterator = fireballList.listIterator();
+                ListIterator<Fireball> bulletListIterator = bulletList.listIterator();
                 while (bulletListIterator.hasNext()) {
                         Fireball bullet = bulletListIterator.next();
                         shapeRenderer.rect(bullet.getX()+2, bullet.getY()+1, (float) (bullet.getWidth()/2), (float) (bullet.getHeight()/2));
