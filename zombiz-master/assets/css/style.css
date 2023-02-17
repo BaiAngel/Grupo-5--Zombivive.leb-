@@ -113,7 +113,7 @@ html,body{
 
 }
 .header li  a{
-	color: #888;
+	color: rgb(0, 0, 0);
 	outline: 0;
 }
 /* header-left  */
@@ -131,15 +131,15 @@ html,body{
 }
 .header-left li  i{
 	margin-right:7px;
-	color: #888;
+	color: rgb(0, 0, 0);
 }
 .header-left li :hover {
-	color: #7370d8;
+	color: #000000;
 }/* header-left  */
 
 /* header-right */
 .header-right {
-	color: #888;
+	color: rgb(0, 0, 0);
 	font-family: 'Poppins', sans-serif;
 	
 }
@@ -158,7 +158,7 @@ html,body{
 	
 }
 .header-right li a:hover{
-	color:#7370d8;
+	color:#eb1b33;
 }
 .reg a {
     margin-right: 5px;
@@ -942,12 +942,14 @@ a:focus.service-btn{
 	background: url(../../assets/images/team/Cballero.gif) no-repeat;
 }
 .team-box-bg-2{
-	background: url(../../assets/images/team/Mago2.jpg) no-repeat;
+	background: url(../../assets/images/team/mago.png) no-repeat;
 }
 .team-box-bg-3{
 	background: url(../../assets/images/team/Sokulol.png) no-repeat;
 }
-
+.team-box-bg-4{
+	background: url(../../assets/images/team/persona.png) no-repeat;
+}
 
 /*team-box-inner*/
 .team-box-inner{
@@ -956,7 +958,7 @@ a:focus.service-btn{
     left: 0;
     width: 100%;
 	padding: 19px 0 0px 30px;
-	background: #eb5353;
+	background: #972929;
 	height: 90px;
 	-webkit-transition: .7s;
     -moz-transition: .7s;
@@ -986,7 +988,7 @@ a.learn-btn,
 a:hover.learn-btn,
 a:focus.learn-btn,
 a:active.learn-btn{
-    color: #7086e6;
+    color: #000000;
     font-size:12px;
 	font-family: 'Lato', sans-serif;
 	font-weight: 700;
@@ -1043,7 +1045,7 @@ a:active.learn-btn{
 
 /*pricing-header */
 .pricing-header{
-	background:#7370d8;
+	background:#d87970;
 	padding-top: 25px;
     padding-bottom: 28px;
     -webkit-transition:all 0.3s linear;
@@ -1109,11 +1111,11 @@ a:active.learn-btn{
 	color: #fff;
 }
 .pricing-box:hover {
-	box-shadow: 0px 0px 30px 0px rgba(115, 120, 216, 0.3);
+	box-shadow: 0px 0px 30px 0px rgba(0, 13, 255, 0.3);
     opacity: 1;
 }
 .project-btn.pricing-btn a:hover{
-	color:#7370d8;
+	color:#0700d4;
 }
 
 /*-------------------------------------
@@ -1136,7 +1138,7 @@ a:active.learn-btn{
     height: 100px;
     line-height: 100px;
     border-radius: 50%;
-    border: 2px solid #7370d8;
+    border: 2px solid #4d0909;
 }
 .testemonial .owl-theme .owl-nav.disabled+.owl-dots {
     padding-bottom: 110px;
@@ -1148,11 +1150,11 @@ a:active.learn-btn{
     margin: 5px 3px;
     border-radius:50%;
     background: transparent;
-    border: 2px solid #dfdeff;	
+    border: 2px solid #500000;	
 }
 .testemonial .owl-theme .owl-dots .owl-dot.active span{
-    background: #7370d8;
-    border: 2px solid #7370d8;
+    background: #9c0606;
+    border: 2px solid #d87070;
 }
 
 /*home1-testm-txt*/
@@ -1160,14 +1162,14 @@ a:active.learn-btn{
     padding-top: 50px;
 }
 .home1-testm-txt p{
-	color: #888;
+	color: rgb(245, 0, 0);
 	font-size: 24px;
     font-family: 'Poppins', sans-serif;
     letter-spacing: -0.5px;
     padding: 15px 0 30px;
 }
 .home1-testm-txt h3 a{
-	color: #7370d8;
+	color: #aa0000;
 	font-size: 24px;
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
@@ -1772,7 +1774,7 @@ a:active.learn-btn{
 .about-part:before{
 	position:absolute;
 	content:'';
-	background: rgba(115,112,216,.6);
+	background: rgba(100, 100, 100, 0.397);
 	height:100%;
 	width:100%;
 	top:0;
@@ -1802,7 +1804,7 @@ a:active.learn-btn{
     content: "";
 }
 .breadcrumb li>a{
-	color:#dddcff;
+	color:#ff0909;
 	font-size:20px;
 	font-weight:500;
 	font-family: 'Playfair Display', serif;
