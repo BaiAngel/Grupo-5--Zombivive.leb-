@@ -85,15 +85,14 @@ public class Fireball extends Actor {
         }
         else {
             boundingBox.set(position.x + 2, position.y + 1, (float) (width / 2), (float) (height / 2));
-            position.x = 500;
-            position.y = 500;
+            position.x = 5000;
+            position.y = 5000;
         }
     }
 
 
     public boolean collides(Skeleton skeleton) {
         if (getX() <= skeleton.getX() + skeleton.getWidth()) {
-            Gdx.app.log("Timer", "namc ");
             // Comprovem si han col·lisionat sempre que l'asteroide es trobi a la mateixa alçada que l'spacecraft
             return (Intersector.overlaps(boundingBox, skeleton.getCollisionRect()));
         }

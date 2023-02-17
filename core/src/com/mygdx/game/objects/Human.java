@@ -183,6 +183,11 @@ public class Human extends Actor {
         return health;
     }
 
+    public static void setHealth(int vida) {
+        health = vida;
+    }
+
+
     public static int getMaxHealth() {
         return MAX_HEALTH;
     }

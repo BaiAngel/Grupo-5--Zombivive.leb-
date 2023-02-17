@@ -122,6 +122,7 @@ public class GameScreen implements Screen {
                         batch.begin();
                         // Si hi ha hagut col·lisió: reproduïm l'explosió
                         BitmapFont font = new BitmapFont(false);
+                        Human.setHealth(100);
                         font.draw(batch, "GameOver", Settings.GAME_WIDTH/3, Settings.GAME_HEIGHT/3);
                         batch.end();
                 }
@@ -157,6 +158,7 @@ public class GameScreen implements Screen {
                 health = new NinePatch(red, 0, 0, 0, 0);
                 backgroundHealth = new NinePatch(black, 0, 0, 0, 0);
                 currentHealth = human.getHealth();
+                Gdx.app.log("App", "vida: "+ human.getHealth());
                 width = currentHealth / totalHealth * totalBarWidth;
                 backgroundHealth.draw(batch, Settings.GAME_WIDTH/2, Settings.GAME_HEIGHT/2+35, totalBarWidth,10);
                 health.draw(batch, Settings.GAME_WIDTH/2, Settings.GAME_HEIGHT/2+35, width,10);

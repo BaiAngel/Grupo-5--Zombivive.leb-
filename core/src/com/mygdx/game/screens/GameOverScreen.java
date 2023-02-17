@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.Zombivive;
+import com.mygdx.game.objects.Human;
 import com.mygdx.game.utils.Settings;
 
 public class GameOverScreen extends ScreenAdapter {
@@ -54,7 +55,6 @@ public class GameOverScreen extends ScreenAdapter {
 
         batch.begin();
         BitmapFont font = new BitmapFont(false);
-
         font.draw(batch, "You lose!", Gdx.graphics.getWidth() * .25f, Gdx.graphics.getHeight() * .75f);
         font.draw(batch, "Press enter to restart.", Gdx.graphics.getWidth() * .25f, Gdx.graphics.getHeight() * .25f);
         batch.end();
