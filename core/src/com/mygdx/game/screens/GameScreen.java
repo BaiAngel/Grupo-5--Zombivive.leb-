@@ -62,6 +62,7 @@ public class GameScreen implements Screen {
 
                 // Creem la càmera de les dimensions del joc
                 camera = new OrthographicCamera(Settings.GAME_WIDTH, Settings.GAME_HEIGHT);
+                Gdx.app.log("Dimen", "game width" + Settings.GAME_WIDTH + "Game height " + Settings.GAME_HEIGHT);
                 // Posant el paràmetre a true configurem la càmera perquè
                 // faci servir el sistema de coordenades Y-Down
                 camera.setToOrtho(false);
@@ -158,7 +159,6 @@ public class GameScreen implements Screen {
                 health = new NinePatch(red, 0, 0, 0, 0);
                 backgroundHealth = new NinePatch(black, 0, 0, 0, 0);
                 currentHealth = human.getHealth();
-                Gdx.app.log("App", "vida: "+ human.getHealth());
                 width = currentHealth / totalHealth * totalBarWidth;
                 backgroundHealth.draw(batch, Settings.GAME_WIDTH/2, Settings.GAME_HEIGHT/2+35, totalBarWidth,10);
                 health.draw(batch, Settings.GAME_WIDTH/2, Settings.GAME_HEIGHT/2+35, width,10);

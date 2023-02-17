@@ -33,7 +33,7 @@ public class AssetManager {
         //Crear skeleton
         createSkeletonTexture();
         //Crear skeleton
-        createFireballTexture();
+        createFireballBlueTexture();
         //Sounds
         //Hit
         hitSound = Gdx.audio.newSound(Gdx.files.internal("sounds/bite.mp3"));
@@ -46,19 +46,35 @@ public class AssetManager {
         background.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
     }
 
-    private static void createFireballTexture() {
+    private static void createFireballRedTexture() {
         divideIn = 4;
         //fireballUp
-        path = "bullets/fireball/up.png";
+        path = "bullets/fireballR/up.png";
         aFireballUp = crearAnimacion(path, divideIn);
         //fireballRight
-        path = "bullets/fireball/right.png";
+        path = "bullets/fireballR/right.png";
         aFireballRight = crearAnimacion(path, divideIn);
         //fireballDown
-        path = "bullets/fireball/down.png";
+        path = "bullets/fireballR/down.png";
         aFireballDown = crearAnimacion(path, divideIn);
         //fireballLeft
-        path = "bullets/fireball/left.png";
+        path = "bullets/fireballR/left.png";
+        aFireballLeft = crearAnimacion(path, divideIn);
+    }
+
+    private static void createFireballBlueTexture() {
+        divideIn = 4;
+        //fireballUp
+        path = "bullets/fireballB/up.png";
+        aFireballUp = crearAnimacion(path, divideIn);
+        //fireballRight
+        path = "bullets/fireballB/right.png";
+        aFireballRight = crearAnimacion(path, divideIn);
+        //fireballDown
+        path = "bullets/fireballB/down.png";
+        aFireballDown = crearAnimacion(path, divideIn);
+        //fireballLeft
+        path = "bullets/fireballB/left.png";
         aFireballLeft = crearAnimacion(path, divideIn);
     }
 
