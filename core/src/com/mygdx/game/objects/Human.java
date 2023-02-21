@@ -60,31 +60,23 @@ public class Human extends Actor {
         switch (direction) {
             case HUMAN_UP:
                 humanFacing = Settings.UP;
-                if (this.position.y + Settings.HUMAN_VELOCITY * delta <= Settings.GAME_HEIGHT) {
-                    this.position.y += Settings.HUMAN_VELOCITY * delta;
-                    this.centreHumanY += Settings.HUMAN_VELOCITY * delta;
-                }
+                this.position.y += Settings.HUMAN_VELOCITY * delta;
+                this.centreHumanY += Settings.HUMAN_VELOCITY * delta;
                 break;
             case HUMAN_RIGHT:
                 humanFacing = Settings.RIGHT;
-                if (this.position.x - Settings.HUMAN_VELOCITY * delta <= Settings.GAME_WIDTH) {
-                    this.position.x -= Settings.HUMAN_VELOCITY * delta;
-                    this.centreHumanX -= Settings.HUMAN_VELOCITY * delta;
-                }
+                this.position.x -= Settings.HUMAN_VELOCITY * delta;
+                this.centreHumanX -= Settings.HUMAN_VELOCITY * delta;
                 break;
             case HUMAN_DOWN:
                 humanFacing = Settings.DOWN;
-                if (this.position.y - height + Settings.HUMAN_VELOCITY * delta >= 0) {
-                    this.position.y -= Settings.HUMAN_VELOCITY * delta;
-                    this.centreHumanY -= Settings.HUMAN_VELOCITY * delta;
-                }
+                this.position.y -= Settings.HUMAN_VELOCITY * delta;
+                this.centreHumanY -= Settings.HUMAN_VELOCITY * delta;
                 break;
             case HUMAN_LEFT:
                 humanFacing = Settings.LEFT;
-                if (this.position.x + Settings.HUMAN_VELOCITY * delta >= 0) {
-                    this.position.x += Settings.HUMAN_VELOCITY * delta;
-                    this.centreHumanX += Settings.HUMAN_VELOCITY * delta;
-                }
+                this.position.x += Settings.HUMAN_VELOCITY * delta;
+                this.centreHumanX += Settings.HUMAN_VELOCITY * delta;
                 break;
             case HUMAN_IDLE:
                 humanFacing = Settings.DOWN;

@@ -48,24 +48,16 @@ public class Skeleton extends Actor {
             // Movem l'Spacecraft depenent de la direcció controlant que no surti de la pantalla
             switch (direction) {
                 case SKELETON_UP:
-                    if (this.position.y + Settings.MOB_VELOCITY * delta <= Settings.GAME_HEIGHT) {
-                        this.position.y += Settings.MOB_VELOCITY * delta;
-                    }
+                    this.position.y += Settings.MOB_VELOCITY * delta;
                     break;
                 case SKELETON_LEFT:
-                    if (this.position.x - Settings.MOB_VELOCITY * delta <= Settings.GAME_WIDTH) {
-                        this.position.x -= Settings.MOB_VELOCITY * delta;
-                    }
+                    this.position.x -= Settings.MOB_VELOCITY * delta;
                     break;
                 case SKELETON_DOWN:
-                    if (this.position.y - height + Settings.MOB_VELOCITY * delta >= 0) {
-                        this.position.y -= Settings.MOB_VELOCITY * delta;
-                    }
+                    this.position.y -= Settings.MOB_VELOCITY * delta;
                     break;
                 case SKELETON_RIGHT:
-                    if (this.position.x + Settings.MOB_VELOCITY * delta >= 0) {
-                        this.position.x += Settings.MOB_VELOCITY * delta;
-                    }
+                    this.position.x += Settings.MOB_VELOCITY * delta;
                     break;
                 case SKELETON_IDLE:
                     break;

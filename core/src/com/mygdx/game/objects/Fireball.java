@@ -53,24 +53,16 @@ public class Fireball extends Actor {
             // Movem l'Spacecraft depenent de la direcció controlant que no surti de la pantalla
             switch (direction) {
                 case BULLET_UP:
-                    if (this.position.y + Settings.BULLET_VELOCITY * delta <= Settings.GAME_HEIGHT) {
-                        this.position.y += Settings.BULLET_VELOCITY * delta;
-                    }
+                    this.position.y += Settings.BULLET_VELOCITY * delta;
                     break;
                 case BULLET_RIGHT:
-                    if (this.position.x - Settings.BULLET_VELOCITY * delta <= Settings.GAME_WIDTH) {
-                        this.position.x -= Settings.BULLET_VELOCITY * delta;
-                    }
+                    this.position.x -= Settings.BULLET_VELOCITY * delta;
                     break;
                 case BULLET_DOWN:
-                    if (this.position.y - height + Settings.BULLET_VELOCITY * delta >= 0) {
-                        this.position.y -= Settings.BULLET_VELOCITY * delta;
-                    }
+                    this.position.y -= Settings.BULLET_VELOCITY * delta;
                     break;
                 case BULLET_LEFT:
-                    if (this.position.x + Settings.BULLET_VELOCITY * delta >= 0) {
-                        this.position.x += Settings.BULLET_VELOCITY * delta;
-                    }
+                    this.position.x += Settings.BULLET_VELOCITY * delta;
                     break;
                 case BULLET_IDLE:
                     break;
