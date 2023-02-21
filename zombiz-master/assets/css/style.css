@@ -217,7 +217,7 @@ html,body{
 
 /* sticky */
 .sticky{
-	background: rgba(116, 44, 44);
+	background: rgb(116, 44, 44);
 	padding: 10px 0px 0px;
 	height:80px;
 	color: #fff;
@@ -518,7 +518,7 @@ html,body{
 	font-weight: 700;
 }
 .section-header h2 span{
-	color: #4d4e54;
+	color: #aa0000;
 }
 .section-header p{
 	color: #888;
