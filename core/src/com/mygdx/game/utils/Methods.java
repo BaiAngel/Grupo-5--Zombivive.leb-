@@ -1,11 +1,14 @@
 package com.mygdx.game.utils;
 
 import java.util.Random;
+
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
@@ -28,5 +31,17 @@ public class Methods {
         pixmap.dispose();
 
         return drawable;
+    }
+
+    public static boolean getColision (Rectangle r1, Rectangle r2) {
+        boolean contactTrue = false;
+        if (r1.overlaps(r2)) {
+            Gdx.app.log("app","contact");
+            contactTrue = true;
+        }
+        else {
+            Gdx.app.log("app","NO contact");
+        }
+        return contactTrue;
     }
 }

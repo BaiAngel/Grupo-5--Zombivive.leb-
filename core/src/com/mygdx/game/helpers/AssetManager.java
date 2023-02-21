@@ -3,11 +3,11 @@ package com.mygdx.game.helpers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 
 public class AssetManager {
 
@@ -41,9 +41,6 @@ public class AssetManager {
         music = Gdx.audio.newMusic(Gdx.files.internal("sounds/music.mp3"));
         music.setVolume(0.2f);
         music.setLooping(true);
-        // Carreguem les textures i li apliquem el mètode d'escalat 'nearest'
-        background = new Texture(Gdx.files.internal("fons/fons.png"));
-        background.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
     }
 
     private static void createFireballRedTexture() {
@@ -137,6 +134,13 @@ public class AssetManager {
 
         Animation createAnimation = new Animation(0.3f, regionsMovimiento);
         return createAnimation;
+    }
+
+    public static TiledMap crearMap() {
+        TiledMap map;
+        TmxMapLoader loader = new TmxMapLoader();
+        map = loader.load("maps/map.tmx");
+        return map;
     }
 
     public static void dispose() {

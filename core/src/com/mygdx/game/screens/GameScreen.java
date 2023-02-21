@@ -11,19 +11,21 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.Zombivive;
 import com.mygdx.game.helpers.AssetManager;
 import com.mygdx.game.helpers.InputHandler;
-import com.mygdx.game.objects.Background;
 import com.mygdx.game.objects.Fireball;
 import com.mygdx.game.objects.Human;
 import com.mygdx.game.objects.Skeleton;
 import com.mygdx.game.scenes.Hud;
+import com.mygdx.game.utils.Methods;
 import com.mygdx.game.utils.Settings;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
@@ -37,7 +39,6 @@ public class GameScreen implements Screen {
         private Stage stage;
         private Human human;
         private OrthographicCamera camera;
-        private Background background;
         // Representació de figures geomètriques
         private ShapeRenderer shapeRenderer;
         // Per obtenir el batch de l'stage
@@ -50,6 +51,9 @@ public class GameScreen implements Screen {
         private SpriteBatch spriteBatch;
         private float width, totalBarWidth, currentHealth, totalHealth;
         private NinePatch health, backgroundHealth;
+        //Mapa
+        private TiledMap map;
+        private OrthogonalTiledMapRenderer renderer;
 
         public GameScreen(Zombivive game) {
                 this.game = game;
@@ -82,11 +86,9 @@ public class GameScreen implements Screen {
                 skeletonList = new LinkedList<>();
                 bulletList = new LinkedList<>();
 
-                // Creem el fons
-                background = new Background(0,0, Settings.GAME_WIDTH, Settings.GAME_HEIGHT);
+
 
                 // Afegim els actors a l'stage
-                stage.addActor(background);
                 stage.addActor(human);
                 // Donem nom a l'Actor
                 human.setName("human");
@@ -102,13 +104,16 @@ public class GameScreen implements Screen {
 
         @Override
         public void show() {
-
+                map = AssetManager.crearMap();
+                renderer = new OrthogonalTiledMapRenderer(map);
         }
 
         @Override
         public void render(float delta) {
                 Gdx.gl.glClearColor( 0, 0, 0.5f, 1);
                 Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+                renderer.setView(camera);
+                renderer.render();
                 stage.draw();
                 drawElements();
                 drawHud(delta);
@@ -141,6 +146,8 @@ public class GameScreen implements Screen {
 
         @SuppressWarnings("SuspiciousIndentation")
         private void updateGame() {
+                Rectangle a = new Rectangle(20, 20, 50,50);
+                Methods.getColision(a,human.getCollisionRect());
                 spawnSkeleton();
                 spawnBullet();
                 if (skeletonList != null)
@@ -283,10 +290,12 @@ public class GameScreen implements Screen {
 
                 /* 1 */
                 // Pintem el fons de negre per evitar el "flickering"
-                //Gdx.gl20.glClearColor(1.0f, 0.0f, 0.0f, 0.5f);
-                //Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+                /*
+                Gdx.gl20.glClearColor(1.0f, 0.0f, 0.0f, 0.5f);
+                Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
+*/
                 /* 2 */
+
                 // Recollim les propietats del Batch de l'Stage
                 shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
                 // Inicialitzem el shaperenderer
@@ -311,6 +320,7 @@ public class GameScreen implements Screen {
                         shapeRenderer.rect(bullet.getX()+2, bullet.getY()+1, (float) (bullet.getWidth()/2), (float) (bullet.getHeight()/2));
                 }
                 /* 4 */
+                shapeRenderer.rect(20, 20, 50,50);
                 shapeRenderer.end();
         }
 
@@ -331,12 +341,12 @@ public class GameScreen implements Screen {
 
         @Override
         public void hide() {
-
+                dispose();
         }
 
         @Override
         public void dispose() {
-
+                map.dispose();
         }
 
         public Stage getStage() {
