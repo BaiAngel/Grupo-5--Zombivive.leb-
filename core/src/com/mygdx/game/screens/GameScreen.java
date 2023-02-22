@@ -340,9 +340,14 @@ public class GameScreen implements Screen {
                 shapeRenderer.end();
                 shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
                 shapeRenderer.setColor(new Color(1, 1, 1, 1));
-
+                //up
+                //shapeRenderer.rect(human.getX()+1, human.getY() + human.getHeight()/2, human.getWidth()-1, 1);
                 //down
-                shapeRenderer.rect(human.getX()+1, human.getY(), human.getWidth()-1, 1);
+                //shapeRenderer.rect(human.getX()+1, human.getY(), human.getWidth()-1, 1);
+                //right
+                //shapeRenderer.rect(human.getX()+1, human.getY(), 1, human.getHeight()/2);
+                //left
+                shapeRenderer.rect(human.getX()+ human.getHeight()/2, human.getY(), 1, human.getHeight()/2);
                 shapeRenderer.end();
         }
 
