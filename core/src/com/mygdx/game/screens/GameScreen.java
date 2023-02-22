@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
@@ -54,6 +55,7 @@ public class GameScreen implements Screen {
         //Mapa
         private TiledMap map;
         private OrthogonalTiledMapRenderer renderer;
+        private int MapProperties, mapWidth, mapHeight, tilePixelWidth, tilePixelHeight, mapPixelWidth, mapPixelHeight;
 
         public GameScreen(Zombivive game) {
                 this.game = game;
@@ -73,7 +75,7 @@ public class GameScreen implements Screen {
 
 
                 // Creem el viewport amb les mateixes dimensions que la càmera
-                StretchViewport viewport = new StretchViewport(Settings.GAME_WIDTH/2, Settings.GAME_HEIGHT/2 , camera);
+                StretchViewport viewport = new StretchViewport(Settings.GAME_WIDTH / 2, Settings.GAME_HEIGHT / 2, camera);
 
                 // Creem l'stage i assignem el viewport
                 stage = new Stage(viewport);
@@ -87,7 +89,6 @@ public class GameScreen implements Screen {
                 bulletList = new LinkedList<>();
 
 
-
                 // Afegim els actors a l'stage
                 stage.addActor(human);
                 // Donem nom a l'Actor
@@ -95,22 +96,25 @@ public class GameScreen implements Screen {
                 //Health
                 totalHealth = human.getMaxHealth();
                 currentHealth = human.getHealth();
-                totalBarWidth=31;
+                totalBarWidth = 31;
                 red = new Texture(Gdx.files.internal("fons/red.png"));
                 black = new Texture(Gdx.files.internal("fons/black.png"));
                 // Assignem com a gestor d'entrada la classe InputHandler
                 Gdx.input.setInputProcessor(new InputHandler(this));
+
+
         }
 
         @Override
         public void show() {
                 map = AssetManager.crearMap();
                 renderer = new OrthogonalTiledMapRenderer(map);
+                crearMapProperties();
         }
 
         @Override
         public void render(float delta) {
-                Gdx.gl.glClearColor( 0, 0, 0.5f, 1);
+                Gdx.gl.glClearColor((float) (129/255.0), (float) (185/255.0), (float) (11/255.0), 1);
                 Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
                 renderer.setView(camera);
                 renderer.render();
@@ -135,6 +139,17 @@ public class GameScreen implements Screen {
 
         }
 
+        private void crearMapProperties() {
+                //Mapdata
+                MapProperties prop = map.getProperties();
+                mapWidth = prop.get("width", Integer.class);
+                mapHeight = prop.get("height", Integer.class);
+                tilePixelWidth = prop.get("tilewidth", Integer.class);
+                tilePixelHeight = prop.get("tileheight", Integer.class);
+                mapPixelWidth = mapWidth * tilePixelWidth;
+                mapPixelHeight = mapHeight * tilePixelHeight;
+        }
+
         private void calcularGameOver() {
                 if (hud.isTimeUp()) {
                        gameOver = true;
@@ -146,8 +161,8 @@ public class GameScreen implements Screen {
 
         @SuppressWarnings("SuspiciousIndentation")
         private void updateGame() {
-                Rectangle a = new Rectangle(20, 20, 50,50);
-                Methods.getColision(a,human.getCollisionRect());
+                Rectangle mapZone = new Rectangle(20, 20, mapPixelWidth-40,mapPixelHeight-40);
+                Methods.getColision(mapZone,human.getCollisionRect());
                 spawnSkeleton();
                 spawnBullet();
                 if (skeletonList != null)
@@ -319,8 +334,15 @@ public class GameScreen implements Screen {
                         Fireball bullet = bulletListIterator.next();
                         shapeRenderer.rect(bullet.getX()+2, bullet.getY()+1, (float) (bullet.getWidth()/2), (float) (bullet.getHeight()/2));
                 }
+                shapeRenderer.setColor(new Color(1, 1, 1, 1));
+                shapeRenderer.rect(20, 20, mapPixelWidth-40,mapPixelHeight-40);
                 /* 4 */
-                shapeRenderer.rect(20, 20, 50,50);
+                shapeRenderer.end();
+                shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+                shapeRenderer.setColor(new Color(1, 1, 1, 1));
+
+                //down
+                shapeRenderer.rect(human.getX()+1, human.getY(), human.getWidth()-1, 1);
                 shapeRenderer.end();
         }
 
