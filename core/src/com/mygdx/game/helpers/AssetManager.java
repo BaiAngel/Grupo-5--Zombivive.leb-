@@ -29,7 +29,7 @@ public class AssetManager {
 
     public static void load() {
         //Crear human
-        createHumanTexture();
+        createHumanMageTexture();
         //Crear skeleton
         createSkeletonTexture();
         //Crear skeleton
@@ -98,25 +98,48 @@ public class AssetManager {
         aSkeletonLeft = crearAnimacion(path, divideIn);
     }
 
-    private static void createHumanTexture() {
+    private static void createHumanWarriorTexture() {
         //humanIdle
-        path = "humanAnimation/humanIdle.png";
+        path = "humanAnimation/warrior/humanIdle.png";
         divideIn = 1;
         aHumanIdle = crearAnimacion(path, divideIn);
         //HumanUp
-        path = "humanAnimation/humanUp.png";
+        path = "humanAnimation/warrior/humanUp.png";
         divideIn = 3;
         aHumanUp = crearAnimacion(path, divideIn);
         //HumanRight
-        path = "humanAnimation/humanRight.png";
+        path = "humanAnimation/warrior/humanRight.png";
         divideIn = 3;
         aHumanRight = crearAnimacion(path, divideIn);
         //HumanDown
-        path = "humanAnimation/humanDown.png";
+        path = "humanAnimation/warrior/humanDown.png";
         divideIn = 2;
         aHumanDown = crearAnimacion(path, divideIn);
         //HumanLeft
-        path = "humanAnimation/humanLeft.png";
+        path = "humanAnimation/warrior/humanLeft.png";
+        divideIn = 3;
+        aHumanLeft = crearAnimacion(path, divideIn);
+    }
+
+    private static void createHumanMageTexture() {
+        //humanIdle
+        path = "humanAnimation/mage/humanIdle.png";
+        divideIn = 1;
+        aHumanIdle = crearAnimacion(path, divideIn);
+        //HumanUp
+        path = "humanAnimation/mage/humanUp.png";
+        divideIn = 3;
+        aHumanUp = crearAnimacion(path, divideIn);
+        //HumanRight
+        path = "humanAnimation/mage/humanRight.png";
+        divideIn = 3;
+        aHumanRight = crearAnimacion(path, divideIn);
+        //HumanDown
+        path = "humanAnimation/mage/humanDown.png";
+        divideIn = 2;
+        aHumanDown = crearAnimacion(path, divideIn);
+        //HumanLeft
+        path = "humanAnimation/mage/humanLeft.png";
         divideIn = 3;
         aHumanLeft = crearAnimacion(path, divideIn);
     }
