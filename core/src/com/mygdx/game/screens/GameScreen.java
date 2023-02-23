@@ -54,6 +54,7 @@ public class GameScreen implements Screen {
         private NinePatch health, backgroundHealth;
         //Mapa
         private TiledMap map;
+        public static Rectangle mapZone;
         private OrthogonalTiledMapRenderer renderer;
         private int MapProperties, mapWidth, mapHeight, tilePixelWidth, tilePixelHeight, mapPixelWidth, mapPixelHeight;
 
@@ -161,7 +162,7 @@ public class GameScreen implements Screen {
 
         @SuppressWarnings("SuspiciousIndentation")
         private void updateGame() {
-                Rectangle mapZone = new Rectangle(20, 20, mapPixelWidth-40,mapPixelHeight-40);
+                mapZone = new Rectangle(20, 20, mapPixelWidth-40,mapPixelHeight-40);
                 Methods.getColision(mapZone,human.getCollisionRect());
                 spawnSkeleton();
                 spawnBullet();
@@ -341,13 +342,13 @@ public class GameScreen implements Screen {
                 shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
                 shapeRenderer.setColor(new Color(1, 1, 1, 1));
                 //up
-                //shapeRenderer.rect(human.getX()+1, human.getY() + human.getHeight()/2, human.getWidth()-1, 1);
+                shapeRenderer.rect(human.getX()+1, human.getY() + human.getHeight()/2, human.getWidth()-1, 1);
                 //down
-                //shapeRenderer.rect(human.getX()+1, human.getY(), human.getWidth()-1, 1);
-                //right
-                //shapeRenderer.rect(human.getX()+1, human.getY(), 1, human.getHeight()/2);
+                shapeRenderer.rect(human.getX()+1, human.getY(), human.getWidth()-1, 1);
                 //left
-                shapeRenderer.rect(human.getX()+ human.getHeight()/2, human.getY(), 1, human.getHeight()/2);
+                shapeRenderer.rect(human.getX()+1, human.getY(), 1, human.getHeight()/2);
+                //right
+                shapeRenderer.rect(human.getX()+ human.getHeight()/2-1, human.getY(), 1, human.getHeight()/2);
                 shapeRenderer.end();
         }
 

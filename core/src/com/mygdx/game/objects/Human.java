@@ -1,6 +1,7 @@
 package com.mygdx.game.objects;
 
 import static com.mygdx.game.helpers.AssetManager.frameActual;
+import static com.mygdx.game.screens.GameScreen.mapZone;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.helpers.AssetManager;
+import com.mygdx.game.screens.GameScreen;
 import com.mygdx.game.utils.Methods;
 import com.mygdx.game.utils.Settings;
 
@@ -27,7 +29,7 @@ public class Human extends Actor {
     private Vector2 position;
     private int width, height;
     private int direction;
-    private Rectangle boundingBox;
+    private Rectangle boundingBox, limitUp, limitDown, limitRight, limitLeft;
     private float tiempoAnim = 0f;
     private static int humanFacing = Settings.IDLE;
     private static int MAX_HEALTH = 100;
@@ -50,6 +52,15 @@ public class Human extends Actor {
         direction = HUMAN_IDLE;
         // Creem el rectangle de col·lisions
         boundingBox = new Rectangle(position.x+4, position.y, width/2, height/2);
+        //up
+        limitUp = new Rectangle(getX()+1, getY() + getHeight()/2, getWidth()-1, 1);
+        //down
+        limitDown = new Rectangle(getX()+1, getY(), getWidth()-1, 1);
+        //left
+        limitLeft = new Rectangle(getX()+1, getY(), 1, getHeight()/2);
+        //right
+        limitRight = new Rectangle(getX()+ getHeight()/2-1, getY(), 1, getHeight()/2);
+
         centreHumanX = x+5;
         centreHumanY = y+5;
 
@@ -59,24 +70,32 @@ public class Human extends Actor {
         // Movem l'Spacecraft depenent de la direcció controlant que no surti de la pantalla
         switch (direction) {
             case HUMAN_UP:
-                humanFacing = Settings.UP;
-                this.position.y += Settings.HUMAN_VELOCITY * delta;
-                this.centreHumanY += Settings.HUMAN_VELOCITY * delta;
+                if (Methods.getColision(getLimitUp(), GameScreen.mapZone)) {
+                    humanFacing = Settings.UP;
+                    this.position.y += Settings.HUMAN_VELOCITY * delta;
+                    this.centreHumanY += Settings.HUMAN_VELOCITY * delta;
+                }
                 break;
             case HUMAN_RIGHT:
-                humanFacing = Settings.RIGHT;
-                this.position.x -= Settings.HUMAN_VELOCITY * delta;
-                this.centreHumanX -= Settings.HUMAN_VELOCITY * delta;
+                if (Methods.getColision(getLimitLeft(), GameScreen.mapZone)) {
+                    humanFacing = Settings.RIGHT;
+                    this.position.x -= Settings.HUMAN_VELOCITY * delta;
+                    this.centreHumanX -= Settings.HUMAN_VELOCITY * delta;
+                }
                 break;
             case HUMAN_DOWN:
-                humanFacing = Settings.DOWN;
-                this.position.y -= Settings.HUMAN_VELOCITY * delta;
-                this.centreHumanY -= Settings.HUMAN_VELOCITY * delta;
+                if (Methods.getColision(getLimitDown(), GameScreen.mapZone)) {
+                    humanFacing = Settings.DOWN;
+                    this.position.y -= Settings.HUMAN_VELOCITY * delta;
+                    this.centreHumanY -= Settings.HUMAN_VELOCITY * delta;
+                }
                 break;
             case HUMAN_LEFT:
-                humanFacing = Settings.LEFT;
-                this.position.x += Settings.HUMAN_VELOCITY * delta;
-                this.centreHumanX += Settings.HUMAN_VELOCITY * delta;
+                if (Methods.getColision(getLimitRight(), GameScreen.mapZone)) {
+                    humanFacing = Settings.LEFT;
+                    this.position.x += Settings.HUMAN_VELOCITY * delta;
+                    this.centreHumanX += Settings.HUMAN_VELOCITY * delta;
+                }
                 break;
             case HUMAN_IDLE:
                 humanFacing = Settings.DOWN;
@@ -86,7 +105,20 @@ public class Human extends Actor {
         if(timer > 0) {
             timer -= delta;
         }
+        crearLimitHuman();
         regenerarVida(regeneration);
+    }
+
+    private void crearLimitHuman() {
+        //up
+        limitUp.set(getX()+1, getY() + getHeight()/2, getWidth()-1, 1);
+        //down
+        limitDown.set(getX()+1, getY(), getWidth()-1, 1);
+        //left
+        limitLeft.set(getX()+1, getY(), 1, getHeight()/2);
+        //right
+        limitRight.set(getX()+ getHeight()/2-1, getY(), 1, getHeight()/2);
+
     }
 
     private void regenerarVida(int regeneration) {
@@ -123,6 +155,22 @@ public class Human extends Actor {
             default:
                 return AssetManager.aHumanIdle;
         }
+    }
+
+    public Rectangle getLimitLeft() {
+        return limitLeft;
+    }
+
+    public Rectangle getLimitDown() {
+        return limitDown;
+    }
+
+    public Rectangle getLimitRight() {
+        return limitRight;
+    }
+
+    public Rectangle getLimitUp() {
+        return limitUp;
     }
 
     // Getters dels atributs principals
