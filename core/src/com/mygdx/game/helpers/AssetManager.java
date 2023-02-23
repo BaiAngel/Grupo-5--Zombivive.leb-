@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
 
 public class AssetManager {
 
@@ -41,6 +43,19 @@ public class AssetManager {
         music = Gdx.audio.newMusic(Gdx.files.internal("sounds/music.mp3"));
         music.setVolume(0.2f);
         music.setLooping(true);
+        //JSON
+        path = "maps/mapForest/forest.json";
+        JsonValue base = getJson(path);
+        int c;
+        for (JsonValue layers : base.get("layers"))
+        {
+            System.out.println(layers.getString("name"));
+            if (layers.getString("name").equals("Hitbox entorno")) {
+                for (c = 0; c < layers.get("objects").size; c++) {
+                    System.out.println(layers.get("objects").get(c).getFloat("x"));
+                }
+            }
+        }
     }
 
     private static void createFireballRedTexture() {
@@ -159,11 +174,17 @@ public class AssetManager {
         return createAnimation;
     }
 
-    public static TiledMap crearMap() {
+    public static TiledMap crearMapForestTmx() {
         TiledMap map;
         TmxMapLoader loader = new TmxMapLoader();
-        map = loader.load("maps/map.tmx");
+        map = loader.load("maps/mapForest/forest.tmx");
         return map;
+    }
+
+    public static JsonValue getJson(String path) {
+        JsonReader json = new JsonReader();
+        JsonValue base = json.parse(Gdx.files.internal(path));
+        return base;
     }
 
     public static void dispose() {

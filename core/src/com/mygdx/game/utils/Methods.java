@@ -36,11 +36,11 @@ public class Methods {
     public static boolean getColision (Rectangle r1, Rectangle r2) {
         boolean contactTrue = false;
         if (r1.overlaps(r2)) {
-            Gdx.app.log("app","contact");
+            //Gdx.app.log("app","contact");
             contactTrue = true;
         }
         else {
-            Gdx.app.log("app","NO contact");
+            //Gdx.app.log("app","NO contact");
         }
         return contactTrue;
     }

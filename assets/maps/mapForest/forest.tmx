@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="44">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="45">
  <tileset firstgid="1" name="blowharder" tilewidth="16" tileheight="16" tilecount="4408" columns="116">
-  <image source="blowharder.png" width="1856" height="608"/>
+  <image source="../mapSource/blowharder.png" width="1856" height="608"/>
  </tileset>
- <tileset firstgid="4409" name="blowharder" tilewidth="8" tileheight="8" tilecount="0" columns="232">
+ <tileset firstgid="4409" name="blowharder" tilewidth="8" tileheight="8" tilecount="17632" columns="232">
   <grid orientation="orthogonal" width="16" height="16"/>
-  <image source="blowharder.png" width="1856" height="608"/>
+  <image source="../mapSource/blowharder.png" width="1856" height="608"/>
  </tileset>
- <tileset firstgid="4409" name="blowharder" tilewidth="16" tileheight="16" tilecount="4408" columns="116">
-  <image source="blowharder.png" width="1856" height="608"/>
+ <tileset firstgid="22041" name="blowharder" tilewidth="16" tileheight="16" tilecount="4408" columns="116">
+  <image source="../mapSource/blowharder.png" width="1856" height="608"/>
+ </tileset>
+ <tileset firstgid="26449" name="blowharder" tilewidth="16" tileheight="16" tilecount="4408" columns="116">
+  <image source="../mapSource/blowharder.png" width="1856" height="608"/>
  </tileset>
  <layer id="1" name="Mapa" width="30" height="30">
   <data encoding="csv">
@@ -35,16 +38,15 @@
 1284,2207,3083,2216,1807,2216,2216,2503,3083,2216,2165,2166,2167,1858,2165,2166,2167,2207,2216,2216,2216,1807,2216,2216,2216,2216,2216,1807,2216,1284,
 1284,2207,2216,2216,2216,2216,2216,2216,2216,2216,2281,2282,2283,1858,2281,2282,2283,2207,2216,2216,2216,2504,2216,2216,2216,2216,2216,2216,2216,1284,
 1284,2207,2216,2216,2216,2216,2216,2206,2206,2206,2397,2398,2399,1858,2397,2398,2399,2207,2387,2387,2387,2040,2040,2387,2040,2387,2387,2387,2216,1284,
-1284,2207,2216,1807,2216,2216,2216,2206,1742,1743,1743,1743,1743,2090,2206,2216,2216,2207,2387,2387,2040,6614,6614,6501,6614,2507,2508,2509,1511,1284,
-1284,2207,2216,2216,2216,2216,2216,2206,1858,2206,2206,2206,2206,2206,2206,2216,2216,2207,2387,2387,2387,6614,6614,6614,6614,2623,2624,2625,1511,1284,
-1284,2207,2216,2168,2169,2170,2216,1807,1858,2206,2216,2216,2216,1807,2216,2216,2216,2207,2387,2387,2040,6614,6501,6614,6614,2739,2740,2741,1511,1284,
+1284,2207,2216,1807,2216,2216,2216,2206,1742,1743,1743,1743,1743,2090,2206,2216,2216,2207,2387,2387,2040,24246,24246,24133,24246,2507,2508,2509,1511,1284,
+1284,2207,2216,2216,2216,2216,2216,2206,1858,2206,2206,2206,2206,2206,2206,2216,2216,2207,2387,2387,2387,24246,24246,24246,24246,2623,2624,2625,1511,1284,
+1284,2207,2216,2168,2169,2170,2216,1807,1858,2206,2216,2216,2216,1807,2216,2216,2216,2207,2387,2387,2040,24246,24133,24246,24246,2739,2740,2741,1511,1284,
 1284,2207,2216,2284,2285,2286,2216,2206,1858,2206,2216,2216,2216,2216,2216,2216,2216,2207,2207,2207,2216,2216,2216,2216,2216,2216,2216,2216,1511,1284,
 1284,2207,1511,2400,2401,2402,2216,2206,1858,2206,2216,2216,2216,1511,1511,2041,2216,2207,1807,2216,2216,2216,2216,2216,2216,1807,2216,2216,1511,1284,
 1284,2207,2207,1511,1511,1511,1511,2041,1858,2041,1511,1511,1511,1807,1511,1511,1511,1511,1511,1511,1511,1511,1807,1511,1511,1511,1511,1511,1511,1284,
 1284,1284,1284,1284,1284,1284,1284,1284,1284,1284,1284,1284,1284,1284,1284,1284,1284,1284,1284,1284,1284,1284,1284,1284,1284,1284,1284,1284,1284,1284
 </data>
  </layer>
- <objectgroup id="11" name="Personaje"/>
  <objectgroup id="8" name="Hitbox entorno">
   <object id="2" x="212.525" y="210.871" width="41.3472" height="26.4622"/>
   <object id="3" x="162.081" y="243.949" width="58.7131" height="34.7317"/>
@@ -81,6 +83,6 @@
   <object id="38" x="435.8" y="34.7317" width="9.09639" height="9.92334"/>
   <object id="39" x="434.973" y="68.6364" width="9.09639" height="4.96167"/>
   <object id="40" x="406.857" y="372.125" width="35.5586" height="39.6933"/>
+  <object id="44" x="419.333" y="275.333" width="10.6667" height="10.6667"/>
  </objectgroup>
- <objectgroup id="9" name="puerta casa"/>
 </map>

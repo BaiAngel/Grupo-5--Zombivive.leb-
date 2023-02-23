@@ -67,6 +67,16 @@ public class Human extends Actor {
     }
     public void act(float delta) {
         Settings.FIREBALL_SPAWN_TIMER += delta;
+        checkMovementColision(delta);
+        boundingBox.set(position.x+4, position.y, width/2, height/2);
+        if(timer > 0) {
+            timer -= delta;
+        }
+        crearLimitHuman();
+        regenerarVida(regeneration);
+    }
+
+    private void checkMovementColision(float delta) {
         // Movem l'Spacecraft depenent de la direcció controlant que no surti de la pantalla
         switch (direction) {
             case HUMAN_UP:
@@ -101,12 +111,6 @@ public class Human extends Actor {
                 humanFacing = Settings.DOWN;
                 break;
         }
-        boundingBox.set(position.x+4, position.y, width/2, height/2);
-        if(timer > 0) {
-            timer -= delta;
-        }
-        crearLimitHuman();
-        regenerarVida(regeneration);
     }
 
     private void crearLimitHuman() {

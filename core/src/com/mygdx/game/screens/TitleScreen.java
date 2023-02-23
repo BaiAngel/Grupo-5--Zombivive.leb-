@@ -70,7 +70,7 @@ public class TitleScreen implements Screen {
     public void show() {
         Gdx.input.setInputProcessor(stage);
         batch = new SpriteBatch();
-        texture = new Texture(Gdx.files.internal("maps/fondo.jpg"));
+        texture = new Texture(Gdx.files.internal("maps/titleScreenFondo/fondo.jpg"));
     }
 
     @Override

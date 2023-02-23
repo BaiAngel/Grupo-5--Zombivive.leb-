@@ -53,6 +53,7 @@ public class GameScreen implements Screen {
         private float width, totalBarWidth, currentHealth, totalHealth;
         private NinePatch health, backgroundHealth;
         //Mapa
+        private LinkedList<Rectangle> mapColision;
         private TiledMap map;
         public static Rectangle mapZone;
         private OrthogonalTiledMapRenderer renderer;
@@ -88,8 +89,7 @@ public class GameScreen implements Screen {
                 human = new Human(Settings.HUMAN_STARTX, Settings.HUMAN_STARTY, Settings.HUMAN_WIDTH, Settings.HUMAN_HEIGHT);
                 skeletonList = new LinkedList<>();
                 bulletList = new LinkedList<>();
-
-
+                mapColision = new LinkedList<>();
                 // Afegim els actors a l'stage
                 stage.addActor(human);
                 // Donem nom a l'Actor
@@ -108,9 +108,11 @@ public class GameScreen implements Screen {
 
         @Override
         public void show() {
-                map = AssetManager.crearMap();
+                map = AssetManager.crearMapForestTmx();
                 renderer = new OrthogonalTiledMapRenderer(map);
                 crearMapProperties();
+                //Try capes
+
         }
 
         @Override
