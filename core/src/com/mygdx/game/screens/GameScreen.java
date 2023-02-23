@@ -1,5 +1,7 @@
 package com.mygdx.game.screens;
 
+import static com.mygdx.game.helpers.AssetManager.getJson;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -16,6 +18,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.Zombivive;
 import com.mygdx.game.helpers.AssetManager;
@@ -112,7 +115,20 @@ public class GameScreen implements Screen {
                 renderer = new OrthogonalTiledMapRenderer(map);
                 crearMapProperties();
                 //Try capes
-
+                //JSON
+                String path = "maps/mapForest/forest.json";
+                JsonValue base = getJson(path);
+                for (JsonValue layers : base.get("layers"))
+                {
+                        System.out.println(layers.getString("name"));
+                        if (layers.getString("name").equals("Hitbox entorno")) {
+                                for (int c = 0; c < layers.get("objects").size; c++) {
+                                        mapColision.add(new Rectangle(
+                                                layers.get("objects").get(c).getFloat("x"), layers.get("objects").get(c).getFloat("y"), layers.get("objects").get(c).getFloat("width"), layers.get("objects").get(c).getFloat("height")
+                                        ));
+                                }
+                        }
+                }
         }
 
         @Override
@@ -351,6 +367,14 @@ public class GameScreen implements Screen {
                 shapeRenderer.rect(human.getX()+1, human.getY(), 1, human.getHeight()/2);
                 //right
                 shapeRenderer.rect(human.getX()+ human.getHeight()/2-1, human.getY(), 1, human.getHeight()/2);
+                shapeRenderer.end();
+                shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+                shapeRenderer.setColor(new Color(1, 0, 0, 1));
+                ListIterator<Rectangle> mapColisionIterator = mapColision.listIterator();
+                while (mapColisionIterator.hasNext()) {
+                        Rectangle colision = mapColisionIterator.next();
+                        shapeRenderer.rect(colision.getX(), colision.getY(), colision.getWidth(), colision.getHeight());
+                }
                 shapeRenderer.end();
         }
 

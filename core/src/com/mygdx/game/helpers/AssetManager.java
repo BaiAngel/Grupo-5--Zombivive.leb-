@@ -43,19 +43,6 @@ public class AssetManager {
         music = Gdx.audio.newMusic(Gdx.files.internal("sounds/music.mp3"));
         music.setVolume(0.2f);
         music.setLooping(true);
-        //JSON
-        path = "maps/mapForest/forest.json";
-        JsonValue base = getJson(path);
-        int c;
-        for (JsonValue layers : base.get("layers"))
-        {
-            System.out.println(layers.getString("name"));
-            if (layers.getString("name").equals("Hitbox entorno")) {
-                for (c = 0; c < layers.get("objects").size; c++) {
-                    System.out.println(layers.get("objects").get(c).getFloat("x"));
-                }
-            }
-        }
     }
 
     private static void createFireballRedTexture() {
@@ -188,7 +175,6 @@ public class AssetManager {
     }
 
     public static void dispose() {
-        background.dispose();
     }
 
 }
