@@ -17,6 +17,8 @@ import com.mygdx.game.screens.GameScreen;
 import com.mygdx.game.utils.Methods;
 import com.mygdx.game.utils.Settings;
 
+import java.util.ListIterator;
+
 public class Human extends Actor {
     // Diferents posicions de Human: recta, pujant i baixant
     public static final int HUMAN_IDLE = Settings.IDLE;
@@ -53,9 +55,9 @@ public class Human extends Actor {
         // Creem el rectangle de col·lisions
         boundingBox = new Rectangle(position.x+4, position.y, width/2, height/2);
         //up
-        limitUp = new Rectangle(getX()+1, getY() + getHeight()/2, getWidth()-1, 1);
+        limitUp = new Rectangle((float) (getX()+1+1.6), getY() + getHeight()/2, (float) (getWidth()/1.4), 1);
         //down
-        limitDown = new Rectangle(getX()+1, getY(), getWidth()-1, 1);
+        limitDown = new Rectangle((float) (getX()+1+1.6), getY(), (float) (getWidth()/1.4), 1);
         //left
         limitLeft = new Rectangle(getX()+1, getY(), 1, getHeight()/2);
         //right
@@ -77,39 +79,79 @@ public class Human extends Actor {
     }
 
     private void checkMovementColision(float delta) {
-        // Movem l'Spacecraft depenent de la direcció controlant que no surti de la pantalla
-        switch (direction) {
-            case HUMAN_UP:
-                if (Methods.getColision(getLimitUp(), GameScreen.mapZone)) {
-                    humanFacing = Settings.UP;
-                    this.position.y += Settings.HUMAN_VELOCITY * delta;
-                    this.centreHumanY += Settings.HUMAN_VELOCITY * delta;
+        if (GameScreen.mapZone != null) {
+            // Movem l'Spacecraft depenent de la direcció controlant que no surti de la pantalla
+            boolean colisionUp = false;
+            boolean colisionDown = false;
+            boolean colisionRight = false;
+            boolean colisionLeft = false;
+
+            if (!Methods.getColision(getLimitUp(), GameScreen.mapZone)) {
+                colisionUp = true;
+            }
+            if (!Methods.getColision(getLimitDown(), GameScreen.mapZone)) {
+                colisionDown = true;
+            }
+            if (!Methods.getColision(getLimitLeft(), GameScreen.mapZone)) {
+                colisionRight = true;
+            }
+            if (!Methods.getColision(getLimitRight(), GameScreen.mapZone)) {
+               colisionLeft = true;
+            }
+
+            ListIterator<Rectangle> mapColisionIterator = GameScreen.mapColision.listIterator();
+            while (mapColisionIterator.hasNext()) {
+                Rectangle colision = mapColisionIterator.next();
+
+                Rectangle traduccionTemporalColision = new Rectangle(colision.x, colision.y, colision.width, colision.height);
+
+                if (Methods.getColision(getLimitUp(), traduccionTemporalColision)) {
+                    colisionUp = true;
                 }
-                break;
-            case HUMAN_RIGHT:
-                if (Methods.getColision(getLimitLeft(), GameScreen.mapZone)) {
-                    humanFacing = Settings.RIGHT;
-                    this.position.x -= Settings.HUMAN_VELOCITY * delta;
-                    this.centreHumanX -= Settings.HUMAN_VELOCITY * delta;
+                if (Methods.getColision(getLimitDown(), traduccionTemporalColision)) {
+                    colisionDown = true;
                 }
-                break;
-            case HUMAN_DOWN:
-                if (Methods.getColision(getLimitDown(), GameScreen.mapZone)) {
+                if (Methods.getColision(getLimitLeft(), traduccionTemporalColision)) {
+                    colisionRight = true;
+                }
+                if (Methods.getColision(getLimitRight(), traduccionTemporalColision)) {
+                    colisionLeft = true;
+                }
+            }
+
+            switch (direction) {
+                case HUMAN_UP:
+                    if (!colisionUp) {
+                        humanFacing = Settings.UP;
+                        this.position.y += Settings.HUMAN_VELOCITY * delta;
+                        this.centreHumanY += Settings.HUMAN_VELOCITY * delta;
+                    }
+                    break;
+                case HUMAN_RIGHT:
+                    if (!colisionRight) {
+                        humanFacing = Settings.RIGHT;
+                        this.position.x -= Settings.HUMAN_VELOCITY * delta;
+                        this.centreHumanX -= Settings.HUMAN_VELOCITY * delta;
+                    }
+                    break;
+                case HUMAN_DOWN:
+                    if (!colisionDown) {
+                        humanFacing = Settings.DOWN;
+                        this.position.y -= Settings.HUMAN_VELOCITY * delta;
+                        this.centreHumanY -= Settings.HUMAN_VELOCITY * delta;
+                    }
+                    break;
+                case HUMAN_LEFT:
+                    if (!colisionLeft) {
+                        humanFacing = Settings.LEFT;
+                        this.position.x += Settings.HUMAN_VELOCITY * delta;
+                        this.centreHumanX += Settings.HUMAN_VELOCITY * delta;
+                    }
+                    break;
+                case HUMAN_IDLE:
                     humanFacing = Settings.DOWN;
-                    this.position.y -= Settings.HUMAN_VELOCITY * delta;
-                    this.centreHumanY -= Settings.HUMAN_VELOCITY * delta;
-                }
-                break;
-            case HUMAN_LEFT:
-                if (Methods.getColision(getLimitRight(), GameScreen.mapZone)) {
-                    humanFacing = Settings.LEFT;
-                    this.position.x += Settings.HUMAN_VELOCITY * delta;
-                    this.centreHumanX += Settings.HUMAN_VELOCITY * delta;
-                }
-                break;
-            case HUMAN_IDLE:
-                humanFacing = Settings.DOWN;
-                break;
+                    break;
+            }
         }
     }
 

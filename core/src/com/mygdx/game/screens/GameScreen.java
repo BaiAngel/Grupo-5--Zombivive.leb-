@@ -56,7 +56,7 @@ public class GameScreen implements Screen {
         private float width, totalBarWidth, currentHealth, totalHealth;
         private NinePatch health, backgroundHealth;
         //Mapa
-        private LinkedList<Rectangle> mapColision;
+        public static LinkedList<Rectangle> mapColision;
         private TiledMap map;
         public static Rectangle mapZone;
         private OrthogonalTiledMapRenderer renderer;
@@ -360,13 +360,13 @@ public class GameScreen implements Screen {
                 shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
                 shapeRenderer.setColor(new Color(1, 1, 1, 1));
                 //up
-                shapeRenderer.rect(human.getX()+1, human.getY() + human.getHeight()/2, human.getWidth()-1, 1);
+                shapeRenderer.rect((float) (human.getX()+1+1.6), human.getY() + human.getHeight()/2, (float) (human.getWidth()/1.4), 1);
                 //down
-                shapeRenderer.rect(human.getX()+1, human.getY(), human.getWidth()-1, 1);
+                shapeRenderer.rect((float) (human.getX()+1+1.6), human.getY(), (float) (human.getWidth()/1.4), 1);
                 //left
-                shapeRenderer.rect(human.getX()+1, human.getY(), 1, human.getHeight()/2);
+                shapeRenderer.rect(human.getX()+1, human.getY()+1, 1, human.getHeight()/2-1);
                 //right
-                shapeRenderer.rect(human.getX()+ human.getHeight()/2-1, human.getY(), 1, human.getHeight()/2);
+                shapeRenderer.rect(human.getX()+ human.getHeight()/2-1, human.getY()+1, 1, human.getHeight()/2-1);
                 shapeRenderer.end();
                 shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
                 shapeRenderer.setColor(new Color(1, 0, 0, 1));
