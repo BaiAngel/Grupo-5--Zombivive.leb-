@@ -47,7 +47,7 @@ public class GameScreen implements Screen {
         private ShapeRenderer shapeRenderer;
         // Per obtenir el batch de l'stage
         private Batch batch;
-        private int timeBetweenEnemySpawns = 5;
+        private int timeBetweenEnemySpawns = 50000;
         private int enemySpawnTimer = 0;
         private int timeBetweenBulletSpawns = 50;
         private int bulletSpawnTimer = 0;
@@ -360,13 +360,23 @@ public class GameScreen implements Screen {
                 shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
                 shapeRenderer.setColor(new Color(1, 1, 1, 1));
                 //up
-                shapeRenderer.rect((float) (human.getX()+1+1.6), human.getY() + human.getHeight()/2, (float) (human.getWidth()/1.4), 1);
+                shapeRenderer.rect((float) (human.getX()+5.5), human.getY() + human.getHeight()/2, (float) (human.getWidth()/3), 1);
                 //down
-                shapeRenderer.rect((float) (human.getX()+1+1.6), human.getY(), (float) (human.getWidth()/1.4), 1);
+                shapeRenderer.rect((float) (human.getX()+5.5), human.getY(), (float) (human.getWidth()/3), 1);
                 //left
-                shapeRenderer.rect(human.getX()+1, human.getY()+1, 1, human.getHeight()/2-1);
+                shapeRenderer.rect(human.getX()+1, human.getY()+5, 1, human.getHeight()/5);
                 //right
-                shapeRenderer.rect(human.getX()+ human.getHeight()/2-1, human.getY()+1, 1, human.getHeight()/2-1);
+                shapeRenderer.rect(human.getX()+ human.getHeight()/2-1, human.getY()+5, 1, human.getHeight()/5);
+                //up
+                Rectangle limitUp = new Rectangle((float) (human.getX()+5.5), human.getY() + human.getHeight()/2, (float) (human.getWidth()/3), 1);
+                //down
+                Rectangle limitDown = new Rectangle((float) (human.getX()+5.5), human.getY(), (float) (human.getWidth()/3), 1);
+                //left
+                Rectangle limitLeft = new Rectangle(human.getX()+1, human.getY()+5, 1, human.getHeight()/5);
+                //right
+                Rectangle limitRight = new Rectangle(human.getX()+ human.getHeight()/2-1, human.getY()+5, 1, human.getHeight()/5);
+                Gdx.app.log("app", "Up "+limitUp+" Down "+limitDown+" Left "+limitLeft+" Right "+limitRight);
+
                 shapeRenderer.end();
                 shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
                 shapeRenderer.setColor(new Color(1, 0, 0, 1));

@@ -55,14 +55,14 @@ public class Human extends Actor {
         // Creem el rectangle de col·lisions
         boundingBox = new Rectangle(position.x+4, position.y, width/2, height/2);
         //up
-        limitUp = new Rectangle((float) (getX()+1+1.6), getY() + getHeight()/2, (float) (getWidth()/1.4), 1);
+        limitUp = new Rectangle((float) (getX()+5.5), getY() + getHeight()/2, (float) (getWidth()/3), 1);
         //down
-        limitDown = new Rectangle((float) (getX()+1+1.6), getY(), (float) (getWidth()/1.4), 1);
+        limitDown = new Rectangle((float) (getX()+5.5), getY(), (float) (getWidth()/3), 1);
         //left
-        limitLeft = new Rectangle(getX()+1, getY(), 1, getHeight()/2);
+        limitLeft = new Rectangle(getX()+1, getY()+5, 1, getHeight()/5);
         //right
-        limitRight = new Rectangle(getX()+ getHeight()/2-1, getY(), 1, getHeight()/2);
-
+        limitRight = new Rectangle(getX()+ getHeight()/2-1, getY()+5, 1, getHeight()/5);
+        Gdx.app.log("app", "Up "+limitUp+" Down "+limitDown+" Left "+limitLeft+" Right "+limitRight);
         centreHumanX = x+5;
         centreHumanY = y+5;
 
@@ -75,7 +75,20 @@ public class Human extends Actor {
             timer -= delta;
         }
         crearLimitHuman();
+        movimentHitbox();
         regenerarVida(regeneration);
+    }
+
+    private void movimentHitbox() {
+        //up
+        limitUp = new Rectangle((float) (getX()+5.5), getY() + getHeight()/2, (float) (getWidth()/3), 1);
+        //down
+        limitDown = new Rectangle((float) (getX()+5.5), getY(), (float) (getWidth()/3), 1);
+        //left
+        limitLeft = new Rectangle(getX()+1, getY()+5, 1, getHeight()/5);
+        //right
+        limitRight = new Rectangle(getX()+ getHeight()/2-1, getY()+5, 1, getHeight()/5);
+        Gdx.app.log("app", "Up "+limitUp+" Down "+limitDown+" Left "+limitLeft+" Right "+limitRight);
     }
 
     private void checkMovementColision(float delta) {
@@ -119,6 +132,7 @@ public class Human extends Actor {
                 }
             }
 
+            //Gdx.app.log("app", "Up "+colisionUp+" Down "+colisionDown+" Left "+colisionRight+" Right "+colisionLeft);
             switch (direction) {
                 case HUMAN_UP:
                     if (!colisionUp) {
