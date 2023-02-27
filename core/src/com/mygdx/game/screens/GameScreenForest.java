@@ -33,7 +33,7 @@ import com.mygdx.game.utils.Settings;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
-public class GameScreen implements Screen {
+public class GameScreenForest implements Screen {
         // Per controlar el gameover
         Boolean gameOver = false;
         Zombivive game;
@@ -62,7 +62,7 @@ public class GameScreen implements Screen {
         private OrthogonalTiledMapRenderer renderer;
         private int MapProperties, mapWidth, mapHeight, tilePixelWidth, tilePixelHeight, mapPixelWidth, mapPixelHeight;
 
-        public GameScreen(Zombivive game) {
+        public GameScreenForest(Zombivive game) {
                 this.game = game;
                 // Iniciem la música
                 AssetManager.music.play();

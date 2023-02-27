@@ -88,7 +88,6 @@ public class Human extends Actor {
         limitLeft = new Rectangle(getX()+1, getY()+5, 1, getHeight()/5);
         //right
         limitRight = new Rectangle(getX()+ getHeight()/2-1, getY()+5, 1, getHeight()/5);
-        Gdx.app.log("app", "Up "+limitUp+" Down "+limitDown+" Left "+limitLeft+" Right "+limitRight);
     }
 
     private void checkMovementColision(float delta) {
@@ -163,7 +162,6 @@ public class Human extends Actor {
                     }
                     break;
                 case HUMAN_IDLE:
-                    humanFacing = Settings.DOWN;
                     break;
             }
         }
@@ -213,7 +211,17 @@ public class Human extends Actor {
             case HUMAN_LEFT:
                 return AssetManager.aHumanRight;
             default:
-                return AssetManager.aHumanIdle;
+                switch (humanFacing) {
+                    case Settings.UP:
+                        return AssetManager.aHumanIdleUp;
+                    case Settings.DOWN:
+                        return AssetManager.aHumanIdleDown;
+                    case Settings.LEFT:
+                        return AssetManager.aHumanIdleRight;
+                    case Settings.RIGHT:
+                        return AssetManager.aHumanIdleLeft;
+                }
+                return AssetManager.aHumanIdleDown;
         }
     }
 

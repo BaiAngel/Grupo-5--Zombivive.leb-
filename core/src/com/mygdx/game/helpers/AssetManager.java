@@ -14,10 +14,9 @@ import com.badlogic.gdx.utils.JsonValue;
 public class AssetManager {
 
     // Animacions
-    public static Animation aHumanIdle, aHumanUp, aHumanRight, aHumanLeft, aHumanDown;
+    public static Animation aHumanIdleDown,aHumanIdleUp,aHumanIdleLeft,aHumanIdleRight, aHumanUp, aHumanRight, aHumanLeft, aHumanDown;
     public static Animation aSkeletonIdle, aSkeletonUp, aSkeletonRight, aSkeletonLeft, aSkeletonDown;
     public static Animation aFireballUp, aFireballRight, aFireballLeft, aFireballDown;
-    public static Texture background;
     // Try
     public static TextureRegion [] regionsMovimiento;
     private static Texture imagen;
@@ -104,7 +103,7 @@ public class AssetManager {
         //humanIdle
         path = "humanAnimation/warrior/humanIdle.png";
         divideIn = 1;
-        aHumanIdle = crearAnimacion(path, divideIn);
+        aHumanIdleDown = crearAnimacion(path, divideIn);
         //HumanUp
         path = "humanAnimation/warrior/humanUp.png";
         divideIn = 3;
@@ -125,9 +124,18 @@ public class AssetManager {
 
     private static void createHumanMageTexture() {
         //humanIdle
-        path = "humanAnimation/mage/humanIdle.png";
+        path = "humanAnimation/mage/humanIdleDown.png";
         divideIn = 1;
-        aHumanIdle = crearAnimacion(path, divideIn);
+        aHumanIdleDown = crearAnimacion(path, divideIn);
+        path = "humanAnimation/mage/humanIdleUp.png";
+        divideIn = 1;
+        aHumanIdleUp = crearAnimacion(path, divideIn);
+        path = "humanAnimation/mage/humanIdleRight.png";
+        divideIn = 1;
+        aHumanIdleRight = crearAnimacion(path, divideIn);
+        path = "humanAnimation/mage/humanIdleLeft.png";
+        divideIn = 1;
+        aHumanIdleLeft = crearAnimacion(path, divideIn);
         //HumanUp
         path = "humanAnimation/mage/humanUp.png";
         divideIn = 3;
