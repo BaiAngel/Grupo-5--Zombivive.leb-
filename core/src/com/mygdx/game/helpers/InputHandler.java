@@ -4,7 +4,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.mygdx.game.objects.Human;
 import com.mygdx.game.screens.GameScreen;
-import com.mygdx.game.screens.GameScreenForest;
 
 public class InputHandler implements InputProcessor {
 

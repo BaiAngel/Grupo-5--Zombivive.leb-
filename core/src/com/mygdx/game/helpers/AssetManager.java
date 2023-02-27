@@ -24,13 +24,16 @@ public class AssetManager {
     // Necesito
     private static String path;
     private static int divideIn;
+    private static int selectCharacter = 1;
+    private final static int MAGE = 0;
+    private final static int WARRIOR = 1;
     // Sons
     public static Sound hitSound;
     public static Music music;
 
     public static void load() {
         //Crear human
-        createHumanMageTexture();
+        createHumanTexture();
         //Crear skeleton
         createSkeletonTexture();
         //Crear skeleton
@@ -42,6 +45,17 @@ public class AssetManager {
         music = Gdx.audio.newMusic(Gdx.files.internal("sounds/music.mp3"));
         music.setVolume(0.2f);
         music.setLooping(true);
+    }
+
+    private static void createHumanTexture() {
+        switch (selectCharacter) {
+            case WARRIOR:
+                createHumanWarriorTexture();
+                break;
+            case MAGE:
+                createHumanMageTexture();
+                break;
+        }
     }
 
     private static void createFireballRedTexture() {
@@ -173,6 +187,13 @@ public class AssetManager {
         TiledMap map;
         TmxMapLoader loader = new TmxMapLoader();
         map = loader.load("maps/mapForest/forest.tmx");
+        return map;
+    }
+
+    public static TiledMap crearMapDesertTmx() {
+        TiledMap map;
+        TmxMapLoader loader = new TmxMapLoader();
+        map = loader.load("maps/mapDesert/desert.tmx");
         return map;
     }
 

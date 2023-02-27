@@ -32,7 +32,7 @@ public class Fireball extends Actor {
     private float timer = 2f;
 
 
-    public Fireball(float x, float y) {
+    public Fireball(float x, float y, int lvl) {
         // Inicialitzem els arguments segons la crida del constructor
         if (getHumanFacing() == BULLET_UP || getHumanFacing() == BULLET_DOWN) {
             this.width = Settings.BULLET_WIDTH_Y;

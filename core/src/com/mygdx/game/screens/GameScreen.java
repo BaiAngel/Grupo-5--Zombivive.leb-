@@ -58,9 +58,13 @@ public class GameScreen implements Screen {
         //Mapa
         public static LinkedList<Rectangle> mapColision;
         private TiledMap map;
+        private String path;
         public static Rectangle mapZone;
         private OrthogonalTiledMapRenderer renderer;
         private int MapProperties, mapWidth, mapHeight, tilePixelWidth, tilePixelHeight, mapPixelWidth, mapPixelHeight;
+        private int selectMap = 0;
+        private final int MAP_FOREST = 0;
+        private final int MAP_DESERT = 1;
 
         public GameScreen(Zombivive game) {
                 this.game = game;
@@ -105,18 +109,24 @@ public class GameScreen implements Screen {
                 black = new Texture(Gdx.files.internal("fons/black.png"));
                 // Assignem com a gestor d'entrada la classe InputHandler
                 Gdx.input.setInputProcessor(new InputHandler(this));
-
-
         }
 
         @Override
         public void show() {
-                map = AssetManager.crearMapForestTmx();
+                switch (selectMap) {
+                        case MAP_FOREST:
+                                map = AssetManager.crearMapForestTmx();
+                                path = "maps/mapDesert/desert.json";
+                                break;
+                        case MAP_DESERT:
+                                map = AssetManager.crearMapDesertTmx();
+                                path = "maps/mapDesert/desert.json";
+                                break;
+                }
                 renderer = new OrthogonalTiledMapRenderer(map);
                 crearMapProperties();
                 //Try capes
                 //JSON
-                String path = "maps/mapForest/forest.json";
                 JsonValue base = getJson(path);
                 for (JsonValue layers : base.get("layers"))
                 {
@@ -248,7 +258,7 @@ public class GameScreen implements Screen {
 
                 if (bulletSpawnTimer > timeBetweenBulletSpawns){
                         bulletList.add(
-                                new Fireball(human.getCentreX(), human.getCentreY())
+                                new Fireball(human.getCentreX(), human.getCentreY(), human.getLvl())
 
                         );
                         ListIterator<Fireball> bulletListIterator = bulletList.listIterator();
