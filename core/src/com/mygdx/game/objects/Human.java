@@ -38,7 +38,7 @@ public class Human extends Actor {
     private static int health = MAX_HEALTH;
     private static int regeneration = 1;
     private float timer = 0;
-    private int lvl = 1;
+    public static int lvl = 1;
     private float TIMER_VELOCITY = 2f;
     private float centreHumanX, centreHumanY;
 

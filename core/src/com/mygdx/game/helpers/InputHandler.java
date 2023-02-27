@@ -10,7 +10,6 @@ public class InputHandler implements InputProcessor {
     // Objectes necessaris
     private Human human;
     private GameScreen screen;
-    private GameScreenForest forestScreen;
 
     // Enter per a la gestió del moviment d'arrossegament
     int previousY = 0;
@@ -21,14 +20,6 @@ public class InputHandler implements InputProcessor {
         // Obtenim tots els elements necessaris
         this.screen = screen;
         human = screen.getHuman();
-
-    }
-
-    public InputHandler(GameScreenForest forestScreen) {
-
-        // Obtenim tots els elements necessaris
-        this.forestScreen = forestScreen;
-        human = forestScreen.getHuman();
 
     }
 

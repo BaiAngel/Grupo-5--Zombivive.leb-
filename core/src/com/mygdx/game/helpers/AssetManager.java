@@ -24,7 +24,7 @@ public class AssetManager {
     // Necesito
     private static String path;
     private static int divideIn;
-    private static int selectCharacter = 1;
+    private static int selectCharacter = 0;
     private final static int MAGE = 0;
     private final static int WARRIOR = 1;
     // Sons

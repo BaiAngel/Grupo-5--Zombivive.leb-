@@ -116,7 +116,7 @@ public class GameScreen implements Screen {
                 switch (selectMap) {
                         case MAP_FOREST:
                                 map = AssetManager.crearMapForestTmx();
-                                path = "maps/mapDesert/desert.json";
+                                path = "maps/mapForest/forest.json";
                                 break;
                         case MAP_DESERT:
                                 map = AssetManager.crearMapDesertTmx();
@@ -148,7 +148,7 @@ public class GameScreen implements Screen {
                 renderer.setView(camera);
                 renderer.render();
                 stage.draw();
-                //drawElements();
+                drawElements();
                 drawHud(delta);
                 if (!gameOver) {
                         camera.position.set(human.getX(), human.getY(), 0);
@@ -257,16 +257,20 @@ public class GameScreen implements Screen {
 
 
                 if (bulletSpawnTimer > timeBetweenBulletSpawns){
-                        bulletList.add(
-                                new Fireball(human.getCentreX(), human.getCentreY(), human.getLvl())
+                        switch (human.getLvl()) {
+                                case (1):
+                                        bulletList.add(
+                                                new Fireball(human.getCentreX(), human.getCentreY(), human.getLvl())
 
-                        );
-                        ListIterator<Fireball> bulletListIterator = bulletList.listIterator();
-                        while (bulletListIterator.hasNext()) {
-                                Fireball bullet = bulletListIterator.next();
-                                stage.addActor(bullet);
+                                        );
+                                        ListIterator<Fireball> bulletListIterator = bulletList.listIterator();
+                                        while (bulletListIterator.hasNext()) {
+                                                Fireball bullet = bulletListIterator.next();
+                                                stage.addActor(bullet);
+                                        }
+                                        bulletSpawnTimer = 0;
+                                        break;
                         }
-                        bulletSpawnTimer = 0;
                 }
         }
 

@@ -1,5 +1,7 @@
 package com.mygdx.game.scenes;
 
+import static java.lang.String.*;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -11,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.objects.Human;
 import com.mygdx.game.utils.Settings;
 
 public class Hud implements Disposable{
@@ -56,10 +59,10 @@ public class Hud implements Disposable{
         table.setFillParent(true);
 
         //define our labels using the String, and a Label style consisting of a font and color
-        countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        scoreLabel =new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        countdownLabel = new Label(format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        scoreLabel =new Label(format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        livesLabel = new Label(String.format("%01d", lives), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        livesLabel = new Label(format("%01d", lives), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         worldLabel = new Label("LIVES", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         marioLabel = new Label("KILLS", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
@@ -86,14 +89,20 @@ public class Hud implements Disposable{
             } else {
                 timeUp = true;
             }
-            countdownLabel.setText(String.format("%03d", worldTimer));
+            countdownLabel.setText(format("%03d", worldTimer));
             timeCount = 0;
         }
     }
 
     public static void addScore(int value){
         score += value;
-        scoreLabel.setText(String.format("%06d", score));
+        scoreLabel.setText(format("%06d", score));
+        if (score == 10 && Human.lvl == 1) {
+            Human.lvl = 2;
+        }
+        else if (score == 25 && Human.lvl == 2) {
+            Human.lvl = 3;
+        }
     }
 
     public static void eliminateLive(){
@@ -104,7 +113,7 @@ public class Hud implements Disposable{
             dead = true;
             Gdx.app.log("lives", "out");
         }
-        livesLabel.setText(String.format("%1d", lives));
+        livesLabel.setText(format("%1d", lives));
     }
 
     @Override
