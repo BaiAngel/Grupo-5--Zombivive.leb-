@@ -257,20 +257,18 @@ public class GameScreen implements Screen {
 
 
                 if (bulletSpawnTimer > timeBetweenBulletSpawns){
-                        switch (human.getLvl()) {
-                                case (1):
-                                        bulletList.add(
-                                                new Fireball(human.getCentreX(), human.getCentreY(), human.getLvl())
+                        for (int b = 0; b < human.getLvl(); b++) {
+                                                bulletList.add(
+                                                        new Fireball(human.getCentreX(), human.getCentreY(), human.getLvl())
 
-                                        );
+                                                );
+                                        }
                                         ListIterator<Fireball> bulletListIterator = bulletList.listIterator();
                                         while (bulletListIterator.hasNext()) {
                                                 Fireball bullet = bulletListIterator.next();
                                                 stage.addActor(bullet);
                                         }
                                         bulletSpawnTimer = 0;
-                                        break;
-                        }
                 }
         }
 
