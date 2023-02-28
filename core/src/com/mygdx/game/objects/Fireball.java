@@ -2,6 +2,7 @@ package com.mygdx.game.objects;
 
 import static com.mygdx.game.helpers.AssetManager.frameActual;
 import static com.mygdx.game.objects.Human.getHumanFacing;
+import static com.mygdx.game.objects.Human.lvl;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -33,17 +34,28 @@ public class Fireball extends Actor {
 
 
     public Fireball(float x, float y, int lvl) {
+        position = new Vector2(x, y);
+        if (lvl == 1) {
+            direction = getHumanFacing();
+        }
+        if (lvl == 2) {
+            direction = getBulletDirection(2, getHumanFacing());
+        }
+        if (lvl == 3) {
+            direction = getBulletDirection(1, getHumanFacing());
+        }
+        if (lvl == 4) {
+            direction = getBulletDirection(3, getHumanFacing());
+        }
         // Inicialitzem els arguments segons la crida del constructor
-        if (getHumanFacing() == BULLET_UP || getHumanFacing() == BULLET_DOWN) {
+        if (direction == BULLET_UP || direction == BULLET_DOWN) {
             this.width = Settings.BULLET_WIDTH_Y;
             this.height = Settings.BULLET_HEIGHT_Y;
         }
-        else if (getHumanFacing() == BULLET_RIGHT || getHumanFacing() == BULLET_LEFT) {
+        else if (direction == BULLET_RIGHT || direction == BULLET_LEFT) {
             this.width = Settings.BULLET_WIDTH_X;
             this.height = Settings.BULLET_HEIGHT_X;
         }
-        position = new Vector2(x, y);
-        direction = getHumanFacing();
         this.boundingBox =  new Rectangle(position.x+2, position.y + 1, (float) (width/2), (float) (height/2));
 
 
@@ -97,20 +109,58 @@ public class Fireball extends Actor {
 
     // Obtenim el TextureRegion depenent de la posició de l'spacecraft
     public Animation getBulletTexture() {
+        if (lvl < 5) {
+            return getBulletTextureRed();
+        }
+        else {
+            return getBulletTextureBlue();
+        }
 
+    }
+
+    private Animation getBulletTextureBlue() {
         switch (direction) {
 
             case BULLET_UP:
-                return AssetManager.aFireballUp;
+                return AssetManager.aFireballBUp;
             case BULLET_RIGHT:
-                return AssetManager.aFireballLeft;
+                return AssetManager.aFireballBLeft;
             case BULLET_DOWN:
-                return AssetManager.aFireballDown;
+                return AssetManager.aFireballBDown;
             case BULLET_LEFT:
-                return AssetManager.aFireballRight;
+                return AssetManager.aFireballBRight;
             default:
-                return AssetManager.aFireballDown;
+                return AssetManager.aFireballBDown;
         }
+    }
+
+    private Animation getBulletTextureRed() {
+        switch (direction) {
+
+            case BULLET_UP:
+                return AssetManager.aFireballRUp;
+            case BULLET_RIGHT:
+                return AssetManager.aFireballRLeft;
+            case BULLET_DOWN:
+                return AssetManager.aFireballRDown;
+            case BULLET_LEFT:
+                return AssetManager.aFireballRRight;
+            default:
+                return AssetManager.aFireballRDown;
+        }
+    }
+
+    public int getBulletDirection (int site, int dir) {
+        //site 0 mateix
+        //site 1 seguent
+        //site 2 reverse
+        //site 3 penultim
+        for (int i = 0; i < site; i++) {
+            if (dir == 4)
+                dir = 0;
+            dir++;
+        }
+        return dir;
     }
 
     // Getters dels atributs principals
@@ -135,6 +185,7 @@ public class Fireball extends Actor {
         super.draw(batch, parentAlpha);
         tiempoAnim += Gdx.graphics.getDeltaTime(); //es el tiempo que paso desde el ultimo render
         Animation frameDir = getBulletTexture();
+        if (frameDir != null)
         frameActual = (TextureRegion) frameDir.getKeyFrame(tiempoAnim,true);
         batch.draw(frameActual,getX(),getY(),boundingBox.width, boundingBox.height);
     }

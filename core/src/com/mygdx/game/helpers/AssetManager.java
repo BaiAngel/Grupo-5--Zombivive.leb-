@@ -16,7 +16,8 @@ public class AssetManager {
     // Animacions
     public static Animation aHumanIdleDown,aHumanIdleUp,aHumanIdleLeft,aHumanIdleRight, aHumanUp, aHumanRight, aHumanLeft, aHumanDown;
     public static Animation aSkeletonIdle, aSkeletonUp, aSkeletonRight, aSkeletonLeft, aSkeletonDown;
-    public static Animation aFireballUp, aFireballRight, aFireballLeft, aFireballDown;
+    public static Animation aFireballRUp, aFireballRRight, aFireballRLeft, aFireballRDown;
+    public static Animation aFireballBUp, aFireballBRight, aFireballBLeft, aFireballBDown;
     // Try
     public static TextureRegion [] regionsMovimiento;
     private static Texture imagen;
@@ -38,6 +39,7 @@ public class AssetManager {
         createSkeletonTexture();
         //Crear skeleton
         createFireballBlueTexture();
+        createFireballRedTexture();
         //Sounds
         //Hit
         hitSound = Gdx.audio.newSound(Gdx.files.internal("sounds/bite.mp3"));
@@ -62,32 +64,32 @@ public class AssetManager {
         divideIn = 4;
         //fireballUp
         path = "bullets/fireballR/up.png";
-        aFireballUp = crearAnimacion(path, divideIn);
+        aFireballRUp = crearAnimacion(path, divideIn);
         //fireballRight
         path = "bullets/fireballR/right.png";
-        aFireballRight = crearAnimacion(path, divideIn);
+        aFireballRRight = crearAnimacion(path, divideIn);
         //fireballDown
         path = "bullets/fireballR/down.png";
-        aFireballDown = crearAnimacion(path, divideIn);
+        aFireballRDown = crearAnimacion(path, divideIn);
         //fireballLeft
         path = "bullets/fireballR/left.png";
-        aFireballLeft = crearAnimacion(path, divideIn);
+        aFireballRLeft = crearAnimacion(path, divideIn);
     }
 
     private static void createFireballBlueTexture() {
         divideIn = 4;
         //fireballUp
         path = "bullets/fireballB/up.png";
-        aFireballUp = crearAnimacion(path, divideIn);
+        aFireballBUp = crearAnimacion(path, divideIn);
         //fireballRight
         path = "bullets/fireballB/right.png";
-        aFireballRight = crearAnimacion(path, divideIn);
+        aFireballBRight = crearAnimacion(path, divideIn);
         //fireballDown
         path = "bullets/fireballB/down.png";
-        aFireballDown = crearAnimacion(path, divideIn);
+        aFireballBDown = crearAnimacion(path, divideIn);
         //fireballLeft
         path = "bullets/fireballB/left.png";
-        aFireballLeft = crearAnimacion(path, divideIn);
+        aFireballBLeft = crearAnimacion(path, divideIn);
     }
 
     private static void createSkeletonTexture() {

@@ -103,6 +103,12 @@ public class Hud implements Disposable{
         else if (score == 25 && Human.lvl == 2) {
             Human.lvl = 3;
         }
+        else if (score == 50 && Human.lvl == 3) {
+            Human.lvl = 4;
+        }
+        else if (score == 100 && Human.lvl == 4) {
+            Human.lvl = 5;
+        }
     }
 
     public static void eliminateLive(){

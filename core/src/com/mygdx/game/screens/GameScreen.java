@@ -47,7 +47,7 @@ public class GameScreen implements Screen {
         private ShapeRenderer shapeRenderer;
         // Per obtenir el batch de l'stage
         private Batch batch;
-        private int timeBetweenEnemySpawns = 50;
+        private int timeBetweenEnemySpawns = 5;
         private int enemySpawnTimer = 0;
         private int timeBetweenBulletSpawns = 50;
         private int bulletSpawnTimer = 0;
@@ -257,9 +257,9 @@ public class GameScreen implements Screen {
 
 
                 if (bulletSpawnTimer > timeBetweenBulletSpawns){
-                        for (int b = 0; b < human.getLvl(); b++) {
+                        for (int b = 1; b <= human.getLvl(); b++) {
                                                 bulletList.add(
-                                                        new Fireball(human.getCentreX(), human.getCentreY(), human.getLvl())
+                                                        new Fireball(human.getCentreX(), human.getCentreY(), b)
 
                                                 );
                                         }
