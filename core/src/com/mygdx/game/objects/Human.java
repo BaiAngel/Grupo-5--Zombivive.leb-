@@ -187,10 +187,6 @@ public class Human extends Actor {
         }
     }
 
-    public boolean canFireFireball() {
-        return (Settings.FIREBALL_SPAWN_TIMER - Settings.TIME_BETWEEN_FIREBALL_SPAWNS >= 0);
-    }
-
 
     public void getHit(int damage) {
 
@@ -296,6 +292,9 @@ public class Human extends Actor {
         health = vida;
     }
 
+    public static void resetLvl() {
+        lvl = 1;
+    }
 
     public static int getMaxHealth() {
         return MAX_HEALTH;

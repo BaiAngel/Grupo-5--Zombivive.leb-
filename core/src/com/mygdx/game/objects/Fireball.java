@@ -31,7 +31,7 @@ public class Fireball extends Actor {
     public Rectangle boundingBox;
     private boolean outBullet = false;
     private float timer = 2f;
-
+    private int bulletHealth = 1;
 
     public Fireball(float x, float y, int lvl) {
         position = new Vector2(x, y);
@@ -46,6 +46,9 @@ public class Fireball extends Actor {
         }
         if (lvl == 4) {
             direction = getBulletDirection(3, getHumanFacing());
+        }
+        if (Human.lvl == 5) {
+            bulletHealth = 5;
         }
         // Inicialitzem els arguments segons la crida del constructor
         if (direction == BULLET_UP || direction == BULLET_DOWN) {
@@ -86,6 +89,9 @@ public class Fireball extends Actor {
             else {
                 fireballOut();
             }
+            if (bulletHealth == 0) {
+                fireballOut();
+            }
         }
         else {
             boundingBox.set(position.x + 2, position.y + 1, (float) (width / 2), (float) (height / 2));
@@ -105,6 +111,10 @@ public class Fireball extends Actor {
 
     public void fireballOut () {
         outBullet = true;
+    }
+
+    public void reduceBulletHealth () {
+        bulletHealth--;
     }
 
     // Obtenim el TextureRegion depenent de la posició de l'spacecraft

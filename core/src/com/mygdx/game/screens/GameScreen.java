@@ -47,7 +47,7 @@ public class GameScreen implements Screen {
         private ShapeRenderer shapeRenderer;
         // Per obtenir el batch de l'stage
         private Batch batch;
-        private int timeBetweenEnemySpawns = 5;
+        private int timeBetweenEnemySpawns = 50;
         private int enemySpawnTimer = 0;
         private int timeBetweenBulletSpawns = 50;
         private int bulletSpawnTimer = 0;
@@ -62,7 +62,7 @@ public class GameScreen implements Screen {
         public static Rectangle mapZone;
         private OrthogonalTiledMapRenderer renderer;
         private int MapProperties, mapWidth, mapHeight, tilePixelWidth, tilePixelHeight, mapPixelWidth, mapPixelHeight;
-        private int selectMap = 0;
+        private int selectMap = 1;
         private final int MAP_FOREST = 0;
         private final int MAP_DESERT = 1;
 
@@ -143,7 +143,14 @@ public class GameScreen implements Screen {
 
         @Override
         public void render(float delta) {
-                Gdx.gl.glClearColor((float) (129/255.0), (float) (185/255.0), (float) (11/255.0), 1);
+                switch (selectMap) {
+                        case MAP_FOREST:
+                                Gdx.gl.glClearColor((float) (129/255.0), (float) (185/255.0), (float) (11/255.0), 1);
+                                break;
+                        case MAP_DESERT:
+                                Gdx.gl.glClearColor((float) (226/255.0), (float) (168/255.0), (float) (23/255.0), 1);
+                                break;
+                }
                 Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
                 renderer.setView(camera);
                 renderer.render();
@@ -162,6 +169,7 @@ public class GameScreen implements Screen {
                         // Si hi ha hagut col·lisió: reproduïm l'explosió
                         BitmapFont font = new BitmapFont(false);
                         Human.setHealth(100);
+                        Human.resetLvl();
                         font.draw(batch, "GameOver", Settings.GAME_WIDTH/3, Settings.GAME_HEIGHT/3);
                         batch.end();
                 }
@@ -289,6 +297,7 @@ public class GameScreen implements Screen {
                         Skeleton skeleton = skeletonListIterator.next();
                         if (bullet.collides(skeleton)) {
                                 skeleton.killed();
+                                bullet.reduceBulletHealth();
                                 hud.addScore(1);
                         }
                 }

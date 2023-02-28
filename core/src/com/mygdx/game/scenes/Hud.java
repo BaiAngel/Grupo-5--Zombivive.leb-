@@ -1,5 +1,6 @@
 package com.mygdx.game.scenes;
 
+import static com.mygdx.game.objects.Human.lvl;
 import static java.lang.String.*;
 
 import com.badlogic.gdx.Gdx;
@@ -62,8 +63,8 @@ public class Hud implements Disposable{
         countdownLabel = new Label(format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         scoreLabel =new Label(format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        livesLabel = new Label(format("%01d", lives), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        worldLabel = new Label("LIVES", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        livesLabel = new Label(format("%01d", lvl), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        worldLabel = new Label("LEVEL", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         marioLabel = new Label("KILLS", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
         //add our labels to our table, padding the top, and giving them all equal width with expandX
@@ -97,29 +98,19 @@ public class Hud implements Disposable{
     public static void addScore(int value){
         score += value;
         scoreLabel.setText(format("%06d", score));
-        if (score == 10 && Human.lvl == 1) {
-            Human.lvl = 2;
+        if (score == 10 && lvl == 1) {
+            lvl = 2;
         }
-        else if (score == 25 && Human.lvl == 2) {
-            Human.lvl = 3;
+        else if (score == 25 && lvl == 2) {
+            lvl = 3;
         }
-        else if (score == 50 && Human.lvl == 3) {
-            Human.lvl = 4;
+        else if (score == 50 && lvl == 3) {
+            lvl = 4;
         }
-        else if (score == 100 && Human.lvl == 4) {
-            Human.lvl = 5;
+        else if (score == 100 && lvl == 4) {
+            lvl = 5;
         }
-    }
-
-    public static void eliminateLive(){
-        if (lives > 0) {
-            lives--;
-            Gdx.app.log("lives", ""+lives);
-        } else {
-            dead = true;
-            Gdx.app.log("lives", "out");
-        }
-        livesLabel.setText(format("%1d", lives));
+        livesLabel.setText(format("%01d", lvl));
     }
 
     @Override
