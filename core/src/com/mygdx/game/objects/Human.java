@@ -63,7 +63,6 @@ public class Human extends Actor {
         limitLeft = new Rectangle(getX()+1, getY()+5, 1, getHeight()/5);
         //right
         limitRight = new Rectangle(getX()+ getHeight()/2-1, getY()+5, 1, getHeight()/5);
-        Gdx.app.log("app", "Up "+limitUp+" Down "+limitDown+" Left "+limitLeft+" Right "+limitRight);
         centreHumanX = x+5;
         centreHumanY = y+5;
 

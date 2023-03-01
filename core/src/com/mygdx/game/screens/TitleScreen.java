@@ -23,6 +23,7 @@ public class TitleScreen implements Screen {
     private Texture texture;
     private Stage stage;
     private Game game;
+    public static int selectMap = 1;
 
     public TitleScreen(final Zombivive game) {
         this.game = game;

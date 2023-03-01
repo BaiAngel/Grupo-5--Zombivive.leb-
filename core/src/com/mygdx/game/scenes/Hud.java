@@ -41,7 +41,7 @@ public class Hud implements Disposable{
 
     public Hud(SpriteBatch sb){
         //define our tracking variables
-        worldTimer = 100;
+        worldTimer = 300;
         timeCount = 0;
         score = 0;
         lives=3;
@@ -115,6 +115,10 @@ public class Hud implements Disposable{
 
     @Override
     public void dispose() { stage.dispose(); }
+
+    public static Integer getScore() {
+        return score;
+    }
 
     public boolean isTimeUp() { return timeUp; }
 

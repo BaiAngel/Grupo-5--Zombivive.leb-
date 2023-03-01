@@ -1,7 +1,6 @@
 package com.mygdx.game.screens;
 
 import static com.mygdx.game.helpers.AssetManager.getJson;
-import static com.mygdx.game.objects.Human.getHumanFacing;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -64,10 +63,10 @@ public class GameScreen implements Screen {
         public static Rectangle mapZone;
         private OrthogonalTiledMapRenderer renderer;
         private int MapProperties, mapWidth, mapHeight, tilePixelWidth, tilePixelHeight, mapPixelWidth, mapPixelHeight;
-        private int selectMap = 0;
         private final int MAP_FOREST = 0;
         private final int MAP_DESERT = 1;
         int numBullets = 1;
+        int attackDamage = 10;
 
         public GameScreen(Zombivive game) {
                 this.game = game;
@@ -117,7 +116,7 @@ public class GameScreen implements Screen {
 
         @Override
         public void show() {
-                switch (selectMap) {
+                switch (TitleScreen.selectMap) {
                         case MAP_FOREST:
                                 map = AssetManager.crearMapForestTmx();
                                 path = "maps/mapForest/forest.json";
@@ -153,7 +152,7 @@ public class GameScreen implements Screen {
 
         @Override
         public void render(float delta) {
-                switch (selectMap) {
+                switch (TitleScreen.selectMap) {
                         case MAP_FOREST:
                                 Gdx.gl.glClearColor((float) (129 / 255.0), (float) (185 / 255.0), (float) (11 / 255.0), 1);
                                 break;
@@ -312,7 +311,7 @@ public class GameScreen implements Screen {
                         // La nau explota i desapareix
                         if (mob.attackCooldown() == true) {
                                 Gdx.app.log("App", "Ñam");
-                                human.getHit(10);
+                                human.getHit(attackDamage);
                                 AssetManager.hitSound.play();
                         }
                 }
