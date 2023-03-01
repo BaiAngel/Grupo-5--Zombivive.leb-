@@ -166,7 +166,7 @@ public class GameScreen implements Screen {
                         updateGame();
                         calcularGameOver();
                 }else {
-                        game.setScreen(new GameOverScreen(game));
+                        game.setScreen(new PuntuacioScreen(game));
                         Human.setHealth(100);
                         Human.resetLvl();
                 }

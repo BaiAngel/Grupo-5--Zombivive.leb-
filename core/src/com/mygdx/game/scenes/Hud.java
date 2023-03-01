@@ -4,6 +4,7 @@ import static com.mygdx.game.objects.Human.lvl;
 import static java.lang.String.*;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -41,7 +42,7 @@ public class Hud implements Disposable{
 
     public Hud(SpriteBatch sb){
         //define our tracking variables
-        worldTimer = 300;
+        worldTimer = 30;
         timeCount = 0;
         score = 0;
         lives=3;
@@ -111,7 +112,12 @@ public class Hud implements Disposable{
             lvl = 5;
         }
         livesLabel.setText(format("%01d", lvl));
+        Preferences prefs = Gdx.app.getPreferences("preferencia");
+        // reemplaza esto con tu propio puntaje
+        prefs.putInteger("score", score);
+        prefs.flush(); // es importante llamar a flush para que los cambios se guarden
     }
+
 
     @Override
     public void dispose() { stage.dispose(); }
