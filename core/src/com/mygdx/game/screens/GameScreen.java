@@ -72,25 +72,18 @@ public class GameScreen implements Screen {
                 this.game = game;
                 // Iniciem la música
                 AssetManager.music.play();
-
                 // Creem el ShapeRenderer
                 shapeRenderer = new ShapeRenderer();
                 spriteBatch = new SpriteBatch();
-
                 // Creem la càmera de les dimensions del joc
                 camera = new OrthographicCamera(Settings.GAME_WIDTH, Settings.GAME_HEIGHT);
-                Gdx.app.log("Dimen", "game width" + Settings.GAME_WIDTH + "Game height " + Settings.GAME_HEIGHT);
                 // Posant el paràmetre a true configurem la càmera perquè
                 // faci servir el sistema de coordenades Y-Down
                 camera.setToOrtho(false);
-
-
                 // Creem el viewport amb les mateixes dimensions que la càmera
                 StretchViewport viewport = new StretchViewport(Settings.GAME_WIDTH / 2, Settings.GAME_HEIGHT / 2, camera);
-
                 // Creem l'stage i assignem el viewport
                 stage = new Stage(viewport);
-
                 batch = stage.getBatch();
                 //create our game HUD for scores/timers/level info
                 hud = new Hud(spriteBatch);
@@ -248,18 +241,8 @@ public class GameScreen implements Screen {
 
         private void spawnSkeleton() {
                 enemySpawnTimer = enemySpawnTimer + 1;
-                //Gdx.app.log("Timer", "SpawnTimer: " + enemySpawnTimer);
                 int timerDifficulty = timeBetweenEnemySpawns / numBullets;
-                System.out.println(timerDifficulty);
                 if (enemySpawnTimer > timerDifficulty){
-                        /*
-                        ListIterator<Rectangle> mapSpawnsIterator = mapSpawns.listIterator();
-                        while (mapSpawnsIterator.hasNext()) {
-                                Rectangle colision = mapSpawnsIterator.next();
-                                shapeRenderer.rect(colision.getX(), colision.getY(), colision.getWidth(), colision.getHeight());
-                        }
-
-                         */
                         float mobSpawnX, mobSpawnY;
                         int numero = (int)(Math.random()*mapSpawns.size());
                         mobSpawnX = mapSpawns.get(numero).x;
@@ -279,8 +262,6 @@ public class GameScreen implements Screen {
 
         private void spawnBullet() {
                 bulletSpawnTimer = bulletSpawnTimer + 1;
-
-
                 if (bulletSpawnTimer > timeBetweenBulletSpawns){
                         if (Human.lvl == 1) {
                                 numBullets = 1;
@@ -292,17 +273,16 @@ public class GameScreen implements Screen {
                                 numBullets = 4;
                         }
                         for (int b = 1; b <= numBullets; b++) {
-                                                bulletList.add(
-                                                        new Fireball(human.getCentreX(), human.getCentreY(), b)
-
-                                                );
-                                        }
-                                        ListIterator<Fireball> bulletListIterator = bulletList.listIterator();
-                                        while (bulletListIterator.hasNext()) {
-                                                Fireball bullet = bulletListIterator.next();
-                                                stage.addActor(bullet);
-                                        }
-                                        bulletSpawnTimer = 0;
+                                bulletList.add(
+                                        new Fireball(human.getCentreX(), human.getCentreY(), b)
+                                );
+                        }
+                        ListIterator<Fireball> bulletListIterator = bulletList.listIterator();
+                        while (bulletListIterator.hasNext()) {
+                                Fireball bullet = bulletListIterator.next();
+                                stage.addActor(bullet);
+                        }
+                        bulletSpawnTimer = 0;
                 }
         }
 
@@ -368,24 +348,12 @@ public class GameScreen implements Screen {
         }
 
         private void drawElements(){
-
-                /* 1 */
-                // Pintem el fons de negre per evitar el "flickering"
-                /*
-                Gdx.gl20.glClearColor(1.0f, 0.0f, 0.0f, 0.5f);
-                Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-*/
-                /* 2 */
-
                 // Recollim les propietats del Batch de l'Stage
                 shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
                 // Inicialitzem el shaperenderer
                 shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-
-                /* 3 */
                 // Definim el color (verd)
                 shapeRenderer.setColor(new Color(0, 1, 0, 1));
-
                 // Pintem la nau
                 shapeRenderer.rect(human.getX()+4, human.getY(), human.getWidth()/2, human.getHeight()/2);
                 shapeRenderer.setColor(new Color(1, 0, 0, 1));
@@ -402,7 +370,6 @@ public class GameScreen implements Screen {
                 }
                 shapeRenderer.setColor(new Color(1, 1, 1, 1));
                 shapeRenderer.rect(20, 20, mapPixelWidth-40,mapPixelHeight-40);
-                /* 4 */
                 shapeRenderer.end();
                 shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
                 shapeRenderer.setColor(new Color(1, 1, 1, 1));
