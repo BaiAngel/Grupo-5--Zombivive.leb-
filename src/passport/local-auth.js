@@ -17,9 +17,15 @@ passport.use('local-singup', new LocalStratergy({
     passwordField: 'passw',
     passReqToCallback: true
 }, async (req, email, passw, done) => {
-    const user = new User();
-    user.email = email;
-    user.passw = passw;
-    await user.save();
-    done(null, user);
+
+   const user = User.findOne({email: email});
+    if(user){
+        return done(null, false, req.flash('singupMessage', 'El email ya existe'));
+    }else{
+    const newUser = new User();
+    newUser.email = email;
+    newUser.passw = newUser.encryptPassword(passw);
+    await newUser.save();
+    done(null, newUser);
+    }
 }));

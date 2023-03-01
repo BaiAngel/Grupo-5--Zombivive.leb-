@@ -248,6 +248,12 @@ html,body{
     background-color: transparent;
     border-color: transparent;
 }
+.fondo{
+	background-color:rgba(252, 252, 252, 0.486);
+}
+.color_letra{
+	color: rgb(255, 255, 255);
+}
 .navbar-default .navbar-nav li a{
 	font-size: 16px;
 	color: rgb(255, 0, 0);
@@ -305,7 +311,9 @@ html,body{
 .sticky .search input {
 	top:40px;
 }
-
+.p{
+	font-family: Arial;
+}
 
 .search span {
     position: absolute;
@@ -400,6 +408,11 @@ html,body{
 }
 .single-slide-item.slide-2 {
 	background-image:url(../../assets/images/banner/desierto1.jpg);
+	position:relative;
+	z-index:1;
+}
+.single-slide-item.slide-3 {
+	background-image:url(../../assets/images/banner/Fondo_Perfil.jpg);
 	position:relative;
 	z-index:1;
 }
@@ -753,9 +766,7 @@ a:focus.service-btn{
 .project{
 	padding: 117px 0 109px;
 }
-.project-details{
-	
-}
+
 .project-content {
     margin-top:62px;
 }
@@ -933,7 +944,20 @@ a:focus.service-btn{
     transition: 0.5s ease-in-out;
 }
 /*single-team-box*/
-
+.snip {
+	font-family: 'Open Sans', Arial, sans-serif;
+	position: relative;
+	overflow: hidden;
+	margin: 10px;
+	min-width: 250px;
+	max-width: 310px;
+	width: 100%;
+	background-color: #ffffff;
+	color: #000000;
+	text-align: left;
+	font-size: 16px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  }
 
 
 /*team-box-bg*/
@@ -1734,11 +1758,8 @@ a:active.learn-btn{
 	-o-transition:all 0.2s linear;
     transition: all 0.2s linear;
 }
-.foot-menu   li a,
-.foot-menu   li a:hover,
-.foot-menu   li a:focus{
-	
-}
+
+
 .foot-menu  li {
 	position:relative;
 	padding-left:42px;
