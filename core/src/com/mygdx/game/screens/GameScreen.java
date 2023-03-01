@@ -1,6 +1,7 @@
 package com.mygdx.game.screens;
 
 import static com.mygdx.game.helpers.AssetManager.getJson;
+import static com.mygdx.game.objects.Human.getHumanFacing;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -57,14 +58,16 @@ public class GameScreen implements Screen {
         private NinePatch health, backgroundHealth;
         //Mapa
         public static LinkedList<Rectangle> mapColision;
+        public static LinkedList<Rectangle> mapSpawns;
         private TiledMap map;
         private String path;
         public static Rectangle mapZone;
         private OrthogonalTiledMapRenderer renderer;
         private int MapProperties, mapWidth, mapHeight, tilePixelWidth, tilePixelHeight, mapPixelWidth, mapPixelHeight;
-        private int selectMap = 1;
+        private int selectMap = 0;
         private final int MAP_FOREST = 0;
         private final int MAP_DESERT = 1;
+        int numBullets = 1;
 
         public GameScreen(Zombivive game) {
                 this.game = game;
@@ -97,6 +100,7 @@ public class GameScreen implements Screen {
                 skeletonList = new LinkedList<>();
                 bulletList = new LinkedList<>();
                 mapColision = new LinkedList<>();
+                mapSpawns = new LinkedList<>();
                 // Afegim els actors a l'stage
                 stage.addActor(human);
                 // Donem nom a l'Actor
@@ -130,10 +134,16 @@ public class GameScreen implements Screen {
                 JsonValue base = getJson(path);
                 for (JsonValue layers : base.get("layers"))
                 {
-                        System.out.println(layers.getString("name"));
                         if (layers.getString("name").equals("Hitbox entorno")) {
                                 for (int c = 0; c < layers.get("objects").size; c++) {
                                         mapColision.add(new Rectangle(
+                                                layers.get("objects").get(c).getFloat("x"), layers.get("objects").get(c).getFloat("y"), layers.get("objects").get(c).getFloat("width"), layers.get("objects").get(c).getFloat("height")
+                                        ));
+                                }
+                        }
+                        if (layers.getString("name").equals("Spawns")) {
+                                for (int c = 0; c < layers.get("objects").size; c++) {
+                                        mapSpawns.add(new Rectangle(
                                                 layers.get("objects").get(c).getFloat("x"), layers.get("objects").get(c).getFloat("y"), layers.get("objects").get(c).getFloat("width"), layers.get("objects").get(c).getFloat("height")
                                         ));
                                 }
@@ -145,10 +155,10 @@ public class GameScreen implements Screen {
         public void render(float delta) {
                 switch (selectMap) {
                         case MAP_FOREST:
-                                Gdx.gl.glClearColor((float) (129/255.0), (float) (185/255.0), (float) (11/255.0), 1);
+                                Gdx.gl.glClearColor((float) (129 / 255.0), (float) (185 / 255.0), (float) (11 / 255.0), 1);
                                 break;
                         case MAP_DESERT:
-                                Gdx.gl.glClearColor((float) (226/255.0), (float) (168/255.0), (float) (23/255.0), 1);
+                                Gdx.gl.glClearColor((float) (226 / 255.0), (float) (168 / 255.0), (float) (23 / 255.0), 1);
                                 break;
                 }
                 Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -157,7 +167,7 @@ public class GameScreen implements Screen {
                 stage.draw();
                 drawElements();
                 drawHud(delta);
-                if (!gameOver) {
+                 if (!gameOver) {
                         camera.position.set(human.getX(), human.getY(), 0);
                         camera.update();
                         stage.act(delta);
@@ -165,13 +175,8 @@ public class GameScreen implements Screen {
                         calcularGameOver();
                 }else {
                         game.setScreen(new GameOverScreen(game));
-                        batch.begin();
-                        // Si hi ha hagut col·lisió: reproduïm l'explosió
-                        BitmapFont font = new BitmapFont(false);
                         Human.setHealth(100);
                         Human.resetLvl();
-                        font.draw(batch, "GameOver", Settings.GAME_WIDTH/3, Settings.GAME_HEIGHT/3);
-                        batch.end();
                 }
 
         }
@@ -245,10 +250,23 @@ public class GameScreen implements Screen {
         private void spawnSkeleton() {
                 enemySpawnTimer = enemySpawnTimer + 1;
                 //Gdx.app.log("Timer", "SpawnTimer: " + enemySpawnTimer);
+                int timerDifficulty = timeBetweenEnemySpawns / numBullets;
+                System.out.println(timerDifficulty);
+                if (enemySpawnTimer > timerDifficulty){
+                        /*
+                        ListIterator<Rectangle> mapSpawnsIterator = mapSpawns.listIterator();
+                        while (mapSpawnsIterator.hasNext()) {
+                                Rectangle colision = mapSpawnsIterator.next();
+                                shapeRenderer.rect(colision.getX(), colision.getY(), colision.getWidth(), colision.getHeight());
+                        }
 
-                if (enemySpawnTimer > timeBetweenEnemySpawns){
+                         */
+                        float mobSpawnX, mobSpawnY;
+                        int numero = (int)(Math.random()*mapSpawns.size());
+                        mobSpawnX = mapSpawns.get(numero).x;
+                        mobSpawnY = mapSpawns.get(numero).y;
                         skeletonList.add(
-                                new Skeleton(Settings.MOB_STARTX, Settings.MOB_STARTY, Settings.MOB_WIDTH, Settings.MOB_HEIGHT)
+                                new Skeleton(mobSpawnX, mobSpawnY, Settings.MOB_WIDTH, Settings.MOB_HEIGHT)
 
                         );
                         ListIterator<Skeleton> skeletonListIterator = skeletonList.listIterator();
@@ -265,7 +283,16 @@ public class GameScreen implements Screen {
 
 
                 if (bulletSpawnTimer > timeBetweenBulletSpawns){
-                        for (int b = 1; b <= human.getLvl(); b++) {
+                        if (Human.lvl == 1) {
+                                numBullets = 1;
+                        }
+                        if (Human.lvl == 3) {
+                                numBullets = 2;
+                        }
+                        if (Human.lvl == 4) {
+                                numBullets = 4;
+                        }
+                        for (int b = 1; b <= numBullets; b++) {
                                                 bulletList.add(
                                                         new Fireball(human.getCentreX(), human.getCentreY(), b)
 
@@ -403,6 +430,12 @@ public class GameScreen implements Screen {
                 ListIterator<Rectangle> mapColisionIterator = mapColision.listIterator();
                 while (mapColisionIterator.hasNext()) {
                         Rectangle colision = mapColisionIterator.next();
+                        shapeRenderer.rect(colision.getX(), colision.getY(), colision.getWidth(), colision.getHeight());
+                }
+                shapeRenderer.setColor(new Color(0, 0, (float) 0.26, 1));
+                ListIterator<Rectangle> mapSpawnsIterator = mapSpawns.listIterator();
+                while (mapSpawnsIterator.hasNext()) {
+                        Rectangle colision = mapSpawnsIterator.next();
                         shapeRenderer.rect(colision.getX(), colision.getY(), colision.getWidth(), colision.getHeight());
                 }
                 shapeRenderer.end();

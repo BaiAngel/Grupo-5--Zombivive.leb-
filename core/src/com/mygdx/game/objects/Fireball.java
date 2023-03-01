@@ -30,7 +30,7 @@ public class Fireball extends Actor {
     private int direction;
     public Rectangle boundingBox;
     private boolean outBullet = false;
-    private float timer = 2f;
+    private float timer = 0.5f;
     private int bulletHealth = 1;
 
     public Fireball(float x, float y, int lvl) {
@@ -49,6 +49,9 @@ public class Fireball extends Actor {
         }
         if (Human.lvl == 5) {
             bulletHealth = 5;
+        }
+        if (Human.lvl >= 2) {
+            timer = 2f;
         }
         // Inicialitzem els arguments segons la crida del constructor
         if (direction == BULLET_UP || direction == BULLET_DOWN) {
