@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.helpers.AssetManager;
 import com.mygdx.game.screens.GameScreen;
 import com.mygdx.game.screens.PuntuacioScreen;
+import com.mygdx.game.screens.SplashScreen;
 import com.mygdx.game.screens.TitleScreen;
 
 public class Zombivive extends Game {
@@ -21,7 +22,7 @@ public class Zombivive extends Game {
 		// A l'iniciar el joc carreguem els recursos
 		AssetManager.load();
 		// I definim la pantalla principal com a la pantalla
-		setScreen(new TitleScreen(this));
+		setScreen(new SplashScreen(this));
 	}
 
 	@Override

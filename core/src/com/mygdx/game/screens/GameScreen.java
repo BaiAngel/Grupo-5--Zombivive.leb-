@@ -63,8 +63,8 @@ public class GameScreen implements Screen {
         public static Rectangle mapZone;
         private OrthogonalTiledMapRenderer renderer;
         private int MapProperties, mapWidth, mapHeight, tilePixelWidth, tilePixelHeight, mapPixelWidth, mapPixelHeight;
-        private final int MAP_FOREST = 0;
-        private final int MAP_DESERT = 1;
+        public static final int MAP_FOREST = 0;
+        public static final int MAP_DESERT = 1;
         int numBullets = 1;
         int attackDamage = 10;
 
@@ -109,16 +109,16 @@ public class GameScreen implements Screen {
 
         @Override
         public void show() {
-                switch (TitleScreen.selectMap) {
-                        case MAP_FOREST:
+                
+                         MAP_FOREST:
                                 map = AssetManager.crearMapForestTmx();
                                 path = "maps/mapForest/forest.json";
-                                break;
-                        case MAP_DESERT:
+                                
+                         MAP_DESERT:
                                 map = AssetManager.crearMapDesertTmx();
                                 path = "maps/mapDesert/desert.json";
-                                break;
-                }
+                                
+                
                 renderer = new OrthogonalTiledMapRenderer(map);
                 crearMapProperties();
                 //Try capes
@@ -159,7 +159,7 @@ public class GameScreen implements Screen {
                 stage.draw();
                 drawElements();
                 drawHud(delta);
-                 if (!gameOver) {
+                if (!gameOver) {
                         camera.position.set(human.getX(), human.getY(), 0);
                         camera.update();
                         stage.act(delta);
@@ -186,7 +186,7 @@ public class GameScreen implements Screen {
 
         private void calcularGameOver() {
                 if (hud.isTimeUp()) {
-                       gameOver = true;
+                        gameOver = true;
                 }
                 else if (human.getHealth() <= 0) {
                         gameOver = true;
@@ -200,9 +200,9 @@ public class GameScreen implements Screen {
                 spawnSkeleton();
                 spawnBullet();
                 if (skeletonList != null)
-                updateSkeleton();
+                        updateSkeleton();
                 if (bulletList != null)
-                updateBullet();
+                        updateBullet();
         }
 
         private void drawHud(float delta) {
