@@ -9,7 +9,7 @@ router.get('/', (req, res, next) => {
 
 router.post('/singup', passport.authenticate('local-singup',{
     successRedirect: '/',
-    failureRedirect: '/singup',
+    failureRedirect: '/blog.html',
     passReqToCallback: true
 }));
 
