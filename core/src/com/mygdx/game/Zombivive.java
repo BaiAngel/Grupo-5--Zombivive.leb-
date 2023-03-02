@@ -12,6 +12,8 @@ import com.mygdx.game.screens.GameScreen;
 import com.mygdx.game.screens.PuntuacioScreen;
 import com.mygdx.game.screens.TitleScreen;
 
+import java.io.IOException;
+
 public class Zombivive extends Game {
 	static public Skin gameSkin;
 
@@ -20,8 +22,9 @@ public class Zombivive extends Game {
 		gameSkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
 		// A l'iniciar el joc carreguem els recursos
 		AssetManager.load();
-		// I definim la pantalla principal com a la pantalla
-		setScreen(new TitleScreen(this));
+		// I definim la pantalla principal com a la pantal
+			setScreen(new TitleScreen(this));
+
 	}
 
 	@Override

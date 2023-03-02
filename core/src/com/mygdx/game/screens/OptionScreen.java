@@ -15,9 +15,6 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Zombivive;
 
-/**
- * Created by julienvillegas on 17/01/2017.
- */
 public class OptionScreen implements Screen {
 
     private Stage stage;

@@ -15,9 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Zombivive;
 
-/**
- * Cire
- */
 public class PuntuacioScreen implements Screen {
 
     private Stage stage;
