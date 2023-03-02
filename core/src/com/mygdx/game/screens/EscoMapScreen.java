@@ -29,7 +29,7 @@ public class EscoMapScreen implements Screen {
     public EscoMapScreen(Game game) {
         this.game = game;
         stage = new Stage(new ScreenViewport());
-        background = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("fons/black.png"))));
+        background = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("fons/fondoMap.png"))));
         createUI();
         Label title = new Label("Escull mapa", Zombivive.gameSkin,"big-black");
         title.setAlignment(Align.center);
