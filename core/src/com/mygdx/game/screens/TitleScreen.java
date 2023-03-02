@@ -29,27 +29,16 @@ public class TitleScreen implements Screen {
     private Game game;
     public static int selectMap = 1;
 
-    public TitleScreen(final Zombivive game) {
+    public TitleScreen(final Zombivive game) throws IOException {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Socket socket = new Socket();
-        try {
             socket.connect(new InetSocketAddress("localhost", 3000), 5000);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         // Enviar datos al servidor Node.js
         OutputStream outputStream = null;
-        try {
             outputStream = socket.getOutputStream();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            outputStream.write("Hello from LibGDX".getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        outputStream.write("0".getBytes());
+            outputStream.write("0r".getBytes());
 
 // Recibir datos del servidor Node.js
         InputStream inputStream = null;

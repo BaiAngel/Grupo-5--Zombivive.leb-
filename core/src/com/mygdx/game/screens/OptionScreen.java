@@ -15,6 +15,8 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Zombivive;
 
+import java.io.IOException;
+
 public class OptionScreen implements Screen {
 
     private Stage stage;
@@ -36,7 +38,11 @@ public class OptionScreen implements Screen {
         backButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(new TitleScreen((Zombivive) game));
+                try {
+                    game.setScreen(new TitleScreen((Zombivive) game));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
