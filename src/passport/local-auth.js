@@ -29,4 +29,4 @@ passport.use('local-singup', new LocalStratergy({
     done(null, newUser);
     }
 }));
-//si
+
