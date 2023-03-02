@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.helpers.AssetManager;
+import com.mygdx.game.screens.EscoMapScreen;
 import com.mygdx.game.screens.GameScreen;
 import com.mygdx.game.screens.PuntuacioScreen;
 import com.mygdx.game.screens.SplashScreen;
@@ -22,7 +23,7 @@ public class Zombivive extends Game {
 		// A l'iniciar el joc carreguem els recursos
 		AssetManager.load();
 		// I definim la pantalla principal com a la pantalla
-		setScreen(new SplashScreen(this));
+		setScreen(new EscoMapScreen(this));
 	}
 
 	@Override

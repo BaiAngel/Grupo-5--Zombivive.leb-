@@ -65,9 +65,10 @@ public class GameScreen implements Screen {
         private int MapProperties, mapWidth, mapHeight, tilePixelWidth, tilePixelHeight, mapPixelWidth, mapPixelHeight;
         public static final int MAP_FOREST = 0;
         public static final int MAP_DESERT = 1;
+        public  static int selectMap;
         int numBullets = 1;
         int attackDamage = 10;
-
+        EscoMapScreen escoMapScreen;
         public GameScreen(Zombivive game) {
                 this.game = game;
                 // Iniciem la música
@@ -103,22 +104,23 @@ public class GameScreen implements Screen {
                 totalBarWidth = 31;
                 red = new Texture(Gdx.files.internal("fons/red.png"));
                 black = new Texture(Gdx.files.internal("fons/black.png"));
+                escoMapScreen = new EscoMapScreen(game);
                 // Assignem com a gestor d'entrada la classe InputHandler
                 Gdx.input.setInputProcessor(new InputHandler(this));
         }
 
         @Override
         public void show() {
-                
-                         MAP_FOREST:
+                switch (TitleScreen.selectMap) {
+                        case MAP_FOREST:
                                 map = AssetManager.crearMapForestTmx();
                                 path = "maps/mapForest/forest.json";
-                                
-                         MAP_DESERT:
+                                break;
+                        case MAP_DESERT:
                                 map = AssetManager.crearMapDesertTmx();
                                 path = "maps/mapDesert/desert.json";
-                                
-                
+                                break;
+                }
                 renderer = new OrthogonalTiledMapRenderer(map);
                 crearMapProperties();
                 //Try capes

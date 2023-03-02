@@ -15,58 +15,18 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Zombivive;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-
 
 public class TitleScreen implements Screen {
     private SpriteBatch batch;
     private Texture texture;
     private Stage stage;
     private Game game;
-    public static int selectMap = 1;
+    public static int selectMap=0;
 
     public TitleScreen(final Zombivive game) {
         this.game = game;
         stage = new Stage(new ScreenViewport());
-        Socket socket = new Socket();
-        try {
-            socket.connect(new InetSocketAddress("localhost", 3000), 5000);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        // Enviar datos al servidor Node.js
-        OutputStream outputStream = null;
-        try {
-            outputStream = socket.getOutputStream();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            outputStream.write("Hello from LibGDX".getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-// Recibir datos del servidor Node.js
-        InputStream inputStream = null;
-        try {
-            inputStream = socket.getInputStream();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        byte[] buffer = new byte[1024];
-        int length = 0;
-        try {
-            length = inputStream.read(buffer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String message = new String(buffer, 0, length);
-        System.out.println("Received data from Node.js: " + message);
         Label title = new Label("Zombivive", Zombivive.gameSkin,"big-black");
         title.setAlignment(Align.center);
         title.setY(Gdx.graphics.getHeight()*2/3);
@@ -79,7 +39,7 @@ public class TitleScreen implements Screen {
         playButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(new GameScreen(game));
+                game.setScreen(new EscoMapScreen(game));
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
