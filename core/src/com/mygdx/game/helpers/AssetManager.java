@@ -1,5 +1,7 @@
 package com.mygdx.game.helpers;
 
+import static com.mygdx.game.screens.TitleScreen.selectCharacter;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -25,7 +27,6 @@ public class AssetManager {
     // Necesito
     private static String path;
     private static int divideIn;
-    private static int selectCharacter = 0;
     private final static int MAGE = 0;
     private final static int WARRIOR = 1;
     // Sons

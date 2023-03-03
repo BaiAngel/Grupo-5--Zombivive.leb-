@@ -27,11 +27,13 @@ public class TitleScreen implements Screen {
     private Texture texture;
     private Stage stage;
     private Game game;
-    public static int selectMap = 1;
+    public static int selectMap = 0;
+    public static int selectCharacter = 0;
 
     public TitleScreen(final Zombivive game) throws IOException {
         this.game = game;
         stage = new Stage(new ScreenViewport());
+        /*
         Socket socket = new Socket();
             socket.connect(new InetSocketAddress("localhost", 3000), 5000);
         // Enviar datos al servidor Node.js
@@ -40,7 +42,7 @@ public class TitleScreen implements Screen {
         outputStream.write("0".getBytes());
             outputStream.write("0r".getBytes());
 
-// Recibir datos del servidor Node.js
+        // Recibir datos del servidor Node.js
         InputStream inputStream = null;
         try {
             inputStream = socket.getInputStream();
@@ -56,6 +58,8 @@ public class TitleScreen implements Screen {
         }
         String message = new String(buffer, 0, length);
         System.out.println("Received data from Node.js: " + message);
+
+         */
         Label title = new Label("Zombivive", Zombivive.gameSkin,"big-black");
         title.setAlignment(Align.center);
         title.setY(Gdx.graphics.getHeight()*2/3);
