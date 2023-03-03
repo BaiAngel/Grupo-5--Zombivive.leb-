@@ -27,8 +27,8 @@ public class TitleScreen implements Screen {
     private Texture texture;
     private Stage stage;
     private Game game;
-    public static int selectMap = 0;
-    public static int selectCharacter = 0;
+    public static int selectMap = 1;
+    public static int selectCharacter = 1;
 
     public TitleScreen(final Zombivive game) throws IOException {
         this.game = game;
@@ -46,7 +46,7 @@ public class TitleScreen implements Screen {
         InputStream inputStream = null;
         try {
             inputStream = socket.getInputStream();
-        } catch (IOException e) {
+        } catch (IOException e) {4
             e.printStackTrace();
         }
         byte[] buffer = new byte[1024];

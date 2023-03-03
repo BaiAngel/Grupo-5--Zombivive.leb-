@@ -23,6 +23,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.Zombivive;
 import com.mygdx.game.helpers.AssetManager;
 import com.mygdx.game.helpers.InputHandler;
+import com.mygdx.game.objects.Boss;
 import com.mygdx.game.objects.Fireball;
 import com.mygdx.game.objects.Human;
 import com.mygdx.game.objects.Skeleton;
@@ -39,6 +40,7 @@ public class GameScreen implements Screen {
         Zombivive game;
         private final Texture red, black;
         private LinkedList<Skeleton> skeletonList;
+        private LinkedList<Boss> bossList;
         private LinkedList<Fireball> bulletList;
         private Stage stage;
         private Human human;
@@ -47,8 +49,10 @@ public class GameScreen implements Screen {
         private ShapeRenderer shapeRenderer;
         // Per obtenir el batch de l'stage
         private Batch batch;
-        private int timeBetweenEnemySpawns = 50;
+        private int timeBetweenEnemySpawns = 500;
+        private int timeBetweenBossSpawns = 200;
         private int enemySpawnTimer = 0;
+        private int bossSpawnTimer = 0;
         private int timeBetweenBulletSpawns = 50;
         private int bulletSpawnTimer = 0;
         private Hud hud;
@@ -67,6 +71,7 @@ public class GameScreen implements Screen {
         private final int MAP_DESERT = 1;
         int numBullets = 1;
         int attackDamage = 10;
+        int attackBossDamage = 30;
 
         public GameScreen(Zombivive game) {
                 this.game = game;
@@ -90,6 +95,7 @@ public class GameScreen implements Screen {
                 // Creem la persona
                 human = new Human(Settings.HUMAN_STARTX, Settings.HUMAN_STARTY, Settings.HUMAN_WIDTH, Settings.HUMAN_HEIGHT);
                 skeletonList = new LinkedList<>();
+                bossList = new LinkedList<>();
                 bulletList = new LinkedList<>();
                 mapColision = new LinkedList<>();
                 mapSpawns = new LinkedList<>();
@@ -198,11 +204,14 @@ public class GameScreen implements Screen {
                 mapZone = new Rectangle(20, 20, mapPixelWidth-40,mapPixelHeight-40);
                 Methods.getColision(mapZone,human.getCollisionRect());
                 spawnSkeleton();
+                spawnBoss();
                 spawnBullet();
                 if (skeletonList != null)
-                updateSkeleton();
+                        updateSkeleton();
+                if (bossList != null)
+                        updateBoss();
                 if (bulletList != null)
-                updateBullet();
+                        updateBullet();
         }
 
         private void drawHud(float delta) {
@@ -228,6 +237,15 @@ public class GameScreen implements Screen {
                         Skeleton skeleton = skeletonListIterator.next();
                         checkColision(skeleton);
                         checkMovement(skeleton);
+                }
+        }
+
+        private void updateBoss() {
+                ListIterator<Boss> bossListIterator = bossList.listIterator();
+                while (bossListIterator.hasNext()) {
+                        Boss boss = bossListIterator.next();
+                        checkColision(boss);
+                        checkMovement(boss);
                 }
         }
 
@@ -257,6 +275,26 @@ public class GameScreen implements Screen {
                                 stage.addActor(skeleton);
                         }
                         enemySpawnTimer = 0;
+                }
+        }
+
+        private void spawnBoss() {
+                bossSpawnTimer = bossSpawnTimer + 1;
+                if (bossSpawnTimer > timeBetweenBossSpawns){
+                        float mobSpawnX, mobSpawnY;
+                        int numero = (int)(Math.random()*mapSpawns.size());
+                        mobSpawnX = mapSpawns.get(numero).x;
+                        mobSpawnY = mapSpawns.get(numero).y;
+                        bossList.add(
+                                new Boss(mobSpawnX, mobSpawnY, Settings.BOSS_WIDTH, Settings.BOSS_HEIGHT)
+
+                        );
+                        ListIterator<Boss> bossListIterator = bossList.listIterator();
+                        while (bossListIterator.hasNext()) {
+                                Boss boss = bossListIterator.next();
+                                stage.addActor(boss);
+                        }
+                        bossSpawnTimer = 0;
                 }
         }
 
@@ -297,6 +335,17 @@ public class GameScreen implements Screen {
                 }
         }
 
+        private void checkColision(Boss mob) {
+                if (mob.collides(human)) {
+                        // La nau explota i desapareix
+                        if (mob.attackCooldown() == true) {
+                                Gdx.app.log("App", "Bong");
+                                human.getHit(attackBossDamage);
+                                AssetManager.hitSound.play();
+                        }
+                }
+        }
+
         private void checkColision(Fireball bullet) {
                 ListIterator<Skeleton> skeletonListIterator = skeletonList.listIterator();
                 while (skeletonListIterator.hasNext()) {
@@ -323,7 +372,45 @@ public class GameScreen implements Screen {
                 }
         }
 
+        private void checkMovement(Boss mob) {
+                float resy = human.getY() - mob.getY();
+                float resx = human.getX() - mob.getX();
+                if (Math.abs(resx) > Math.abs(resy)) {
+                        trakingX(mob);
+                }
+                else if((Math.abs(resx) < Math.abs(resy))){
+                        trakingY(mob);
+                }
+                else{
+                        mob.goStraight();
+                }
+        }
+
         private void trakingY(Skeleton mob) {
+                float resy = human.getY() - mob.getY();
+                if (resy<0){
+                        mob.goDown();
+                }else if (resy > 0){
+                        mob.goUp();
+                }
+                else {
+                        mob.goStraight();
+                }
+        }
+
+        private void trakingX(Boss mob) {
+                float resx = human.getX() - mob.getX();
+                if (resx<0){
+                        mob.goLeft();
+                } else if (resx > 0){
+                        mob.goRight();
+                }
+                else {
+                        mob.goStraight();
+                }
+        }
+
+        private void trakingY(Boss mob) {
                 float resy = human.getY() - mob.getY();
                 if (resy<0){
                         mob.goDown();

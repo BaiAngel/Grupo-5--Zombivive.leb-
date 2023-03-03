@@ -20,6 +20,7 @@ public class AssetManager {
     public static Animation aSkeletonIdle, aSkeletonUp, aSkeletonRight, aSkeletonLeft, aSkeletonDown;
     public static Animation aFireballRUp, aFireballRRight, aFireballRLeft, aFireballRDown;
     public static Animation aFireballBUp, aFireballBRight, aFireballBLeft, aFireballBDown;
+    public static Animation aBossIdle, aBossHit;
     // Try
     public static TextureRegion [] regionsMovimiento;
     private static Texture imagen;
@@ -38,6 +39,8 @@ public class AssetManager {
         createHumanTexture();
         //Crear skeleton
         createSkeletonTexture();
+        //Crear boss
+        createBossTexture();
         //Crear skeleton
         createFireballBlueTexture();
         createFireballRedTexture();
@@ -59,6 +62,16 @@ public class AssetManager {
                 createHumanMageTexture();
                 break;
         }
+    }
+
+    private static void createBossTexture() {
+        divideIn = 8;
+        //Boss Animation
+        path = "bossAnimation/bossIdle.png";
+        aBossIdle = crearAnimacion(path, divideIn);
+        //Boss hit
+        path = "bossAnimation/bossHit.png";
+        aBossHit = crearAnimacion(path, divideIn);
     }
 
     private static void createFireballRedTexture() {
@@ -118,9 +131,18 @@ public class AssetManager {
 
     private static void createHumanWarriorTexture() {
         //humanIdle
-        path = "humanAnimation/warrior/humanIdle.png";
+        path = "humanAnimation/warrior/humanIdleDown.png";
         divideIn = 1;
         aHumanIdleDown = crearAnimacion(path, divideIn);
+        path = "humanAnimation/warrior/humanIdleUp.png";
+        divideIn = 1;
+        aHumanIdleUp = crearAnimacion(path, divideIn);
+        path = "humanAnimation/warrior/humanIdleRight.png";
+        divideIn = 1;
+        aHumanIdleRight = crearAnimacion(path, divideIn);
+        path = "humanAnimation/warrior/humanIdleLeft.png";
+        divideIn = 1;
+        aHumanIdleLeft = crearAnimacion(path, divideIn);
         //HumanUp
         path = "humanAnimation/warrior/humanUp.png";
         divideIn = 3;

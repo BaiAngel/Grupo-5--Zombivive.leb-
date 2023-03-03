@@ -19,6 +19,8 @@ public class Settings {
     public static final float MOB_STARTY = GAME_HEIGHT/3;
     public static final int MOB_WIDTH = 15;
     public static final int MOB_HEIGHT = 30;
+    public static final int BOSS_WIDTH = 103;
+    public static final int BOSS_HEIGHT = 122;
     public static final int BULLET_WIDTH_X = 16;
     public static final int BULLET_HEIGHT_X = 6;
     public static final int BULLET_WIDTH_Y = 8;
@@ -28,6 +30,7 @@ public class Settings {
     public static final int RIGHT = 2;
     public static final int DOWN = 3;
     public static final int LEFT = 4;
+    public static final int HIT = 5;
     public static int TIME_BETWEEN_FIREBALL_SPAWNS = 50;
     public static int FIREBALL_SPAWN_TIMER = 0;
 
