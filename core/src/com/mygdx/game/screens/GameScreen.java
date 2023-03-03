@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -38,7 +37,7 @@ public class GameScreen implements Screen {
         // Per controlar el gameover
         Boolean gameOver = false;
         Zombivive game;
-        private final Texture red, black;
+        private final Texture red, black, purple;
         private LinkedList<Skeleton> skeletonList;
         private LinkedList<Boss> bossList;
         private LinkedList<Fireball> bulletList;
@@ -49,7 +48,7 @@ public class GameScreen implements Screen {
         private ShapeRenderer shapeRenderer;
         // Per obtenir el batch de l'stage
         private Batch batch;
-        private int timeBetweenEnemySpawns = 50000;
+        private int timeBetweenEnemySpawns = 50;
         private int timeBetweenBossSpawns = 700;
         private int enemySpawnTimer = 0;
         private int bossSpawnTimer = 0;
@@ -58,7 +57,7 @@ public class GameScreen implements Screen {
         private Hud hud;
         private SpriteBatch spriteBatch;
         private float width, totalBarWidth, currentHealth, totalHealth;
-        private NinePatch health, backgroundHealth;
+        private NinePatch health, backgroundHealth, bossHealth;
         //Mapa
         public static LinkedList<Rectangle> mapColision;
         public static LinkedList<Rectangle> mapSpawns;
@@ -109,6 +108,7 @@ public class GameScreen implements Screen {
                 totalBarWidth = 31;
                 red = new Texture(Gdx.files.internal("fons/red.png"));
                 black = new Texture(Gdx.files.internal("fons/black.png"));
+                purple = new Texture(Gdx.files.internal("fons/purple.png"));
                 // Assignem com a gestor d'entrada la classe InputHandler
                 Gdx.input.setInputProcessor(new InputHandler(this));
         }
@@ -221,13 +221,37 @@ public class GameScreen implements Screen {
                 hud.act(delta);
                 //drawVida
                 batch.begin();
-                health = new NinePatch(red, 0, 0, 0, 0);
-                backgroundHealth = new NinePatch(black, 0, 0, 0, 0);
+                createHumanHealth();
+                if (bossList != null) {
+                        ListIterator<Boss> bossListIterator = bossList.listIterator();
+                        while (bossListIterator.hasNext()) {
+                                Boss boss = bossListIterator.next();
+                                createBossHealth(boss);
+                        }
+                }
+                batch.end();
+        }
+
+        private void createHumanHealth() {
+                health = crearBarraColor(red);
+                backgroundHealth = crearBarraColor(black);
                 currentHealth = human.getHealth();
                 width = currentHealth / totalHealth * totalBarWidth;
                 backgroundHealth.draw(batch, Settings.GAME_WIDTH/2, Settings.GAME_HEIGHT/2+35, totalBarWidth,10);
                 health.draw(batch, Settings.GAME_WIDTH/2, Settings.GAME_HEIGHT/2+35, width,10);
-                batch.end();
+        }
+
+        private void createBossHealth(Boss boss) {
+                bossHealth = crearBarraColor(purple);
+                backgroundHealth = crearBarraColor(black);
+                currentHealth = boss.getHealth();
+                width = currentHealth / totalHealth * totalBarWidth;
+                backgroundHealth.draw(batch, boss.getX()/3, boss.getY()/3+35, totalBarWidth,10);
+                bossHealth.draw(batch, boss.getX()/3, boss.getY()/3+35, width,10);
+        }
+
+        public NinePatch crearBarraColor (Texture texture) {
+                return new NinePatch(texture, 0, 0, 0, 0);
         }
 
 
