@@ -92,7 +92,7 @@ public class Fireball extends Actor {
             else {
                 fireballOut();
             }
-            if (bulletHealth == 0) {
+            if (bulletHealth <= 0) {
                 fireballOut();
             }
         }
@@ -112,12 +112,20 @@ public class Fireball extends Actor {
         return false;
     }
 
+    public boolean collides(Boss boss) {
+        if (getX() <= boss.getX() + boss.getWidth()) {
+            // Comprovem si han col·lisionat sempre que l'asteroide es trobi a la mateixa alçada que l'spacecraft
+            return (Intersector.overlaps(boundingBox, boss.getCollisionRect()));
+        }
+        return false;
+    }
+
     public void fireballOut () {
         outBullet = true;
     }
 
-    public void reduceBulletHealth () {
-        bulletHealth--;
+    public void reduceBulletHealth (int damage) {
+        bulletHealth = bulletHealth - damage;
     }
 
     // Obtenim el TextureRegion depenent de la posició de l'spacecraft

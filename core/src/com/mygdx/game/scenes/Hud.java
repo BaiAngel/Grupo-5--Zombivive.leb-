@@ -99,16 +99,16 @@ public class Hud implements Disposable{
     public static void addScore(int value){
         score += value;
         scoreLabel.setText(format("%06d", score));
-        if (score == 10 && lvl == 1) {
+        if (score >= 10 && lvl == 1) {
             lvl = 2;
         }
-        else if (score == 25 && lvl == 2) {
+        else if (score >= 25 && lvl == 2) {
             lvl = 3;
         }
-        else if (score == 50 && lvl == 3) {
+        else if (score >= 50 && lvl == 3) {
             lvl = 4;
         }
-        else if (score == 100 && lvl == 4) {
+        else if (score >= 100 && lvl == 4) {
             lvl = 5;
         }
         livesLabel.setText(format("%01d", lvl));

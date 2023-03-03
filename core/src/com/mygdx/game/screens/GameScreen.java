@@ -49,8 +49,8 @@ public class GameScreen implements Screen {
         private ShapeRenderer shapeRenderer;
         // Per obtenir el batch de l'stage
         private Batch batch;
-        private int timeBetweenEnemySpawns = 500;
-        private int timeBetweenBossSpawns = 200;
+        private int timeBetweenEnemySpawns = 50000;
+        private int timeBetweenBossSpawns = 700;
         private int enemySpawnTimer = 0;
         private int bossSpawnTimer = 0;
         private int timeBetweenBulletSpawns = 50;
@@ -71,7 +71,7 @@ public class GameScreen implements Screen {
         private final int MAP_DESERT = 1;
         int numBullets = 1;
         int attackDamage = 10;
-        int attackBossDamage = 30;
+        int attackBossDamage = 1;
 
         public GameScreen(Zombivive game) {
                 this.game = game;
@@ -352,8 +352,29 @@ public class GameScreen implements Screen {
                         Skeleton skeleton = skeletonListIterator.next();
                         if (bullet.collides(skeleton)) {
                                 skeleton.killed();
-                                bullet.reduceBulletHealth();
+                                bullet.reduceBulletHealth(1);
                                 hud.addScore(1);
+                        }
+                }
+                ListIterator<Boss> bossListIterator = bossList.listIterator();
+                while (bossListIterator.hasNext()) {
+                        Boss boss = bossListIterator.next();
+                        if (bullet.collides(boss)) {
+                                if (boss.getHealth() <= 0) {
+                                        boss.killed();
+                                        hud.addScore(10);
+                                }else {
+                                        if (human.getLvl() < 5) {
+                                                System.out.println("abans" + boss.getHealth());
+                                                boss.reduceHealth(1);
+                                                System.out.println("desres" + boss.getHealth());
+                                        } else {
+                                                System.out.println("abans" + boss.getHealth());
+                                                boss.reduceHealth(10);
+                                                System.out.println("desres" + boss.getHealth());
+                                        }
+                                }
+                                bullet.reduceBulletHealth(5);
                         }
                 }
         }
@@ -448,6 +469,12 @@ public class GameScreen implements Screen {
                 while (skeletonListIterator.hasNext()) {
                         Skeleton skeleton = skeletonListIterator.next();
                         shapeRenderer.rect(skeleton.getX()+4, skeleton.getY(), (float) (skeleton.getWidth()/2), (float) (skeleton.getHeight()/2));
+                }
+                shapeRenderer.setColor(new Color(0.5F, 0, 0, 1));
+                ListIterator<Boss> bossListIterator = bossList.listIterator();
+                while (bossListIterator.hasNext()) {
+                        Boss boss = bossListIterator.next();
+                        shapeRenderer.rect(boss.getX()+4, boss.getY(), (float) (boss.getWidth()/2), (float) (boss.getHeight()/2));
                 }
                 shapeRenderer.setColor(new Color(1, 1, 0, 1));
                 ListIterator<Fireball> bulletListIterator = bulletList.listIterator();

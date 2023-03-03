@@ -30,6 +30,7 @@ public class Boss extends Actor {
     private float COOLDOWN_TIME = 2f;
     private float tiempoAnim = 0f;
     private float cooldown = 0;
+    private int health = 20;
     private boolean isDead = false;
 
     public Boss(float x, float y, int width, int height) {
@@ -98,6 +99,10 @@ public class Boss extends Actor {
 
     }
 
+    public void reduceHealth(int damage) {
+        health = health - damage;
+    }
+
     public void killed(){
         isDead = true;
     }
@@ -159,6 +164,9 @@ public class Boss extends Actor {
         return collisionRect;
     }
 
+    public int getHealth() {
+        return health;
+    }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {

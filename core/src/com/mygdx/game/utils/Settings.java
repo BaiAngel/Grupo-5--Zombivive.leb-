@@ -15,8 +15,6 @@ public class Settings {
     public static final int HUMAN_HEIGHT = 30;
     public static final float HUMAN_STARTX = GAME_WIDTH/2 - HUMAN_WIDTH/2+14;
     public static final float HUMAN_STARTY = GAME_HEIGHT/2 - HUMAN_HEIGHT/2;
-    public static final float MOB_STARTX = GAME_WIDTH/3;
-    public static final float MOB_STARTY = GAME_HEIGHT/3;
     public static final int MOB_WIDTH = 15;
     public static final int MOB_HEIGHT = 30;
     public static final int BOSS_WIDTH = 103;
