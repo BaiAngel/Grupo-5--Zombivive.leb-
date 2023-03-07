@@ -70,7 +70,7 @@ public class GameScreen implements Screen {
         private final int MAP_DESERT = 1;
         int numBullets = 1;
         int attackDamage = 10;
-        int attackBossDamage = 1;
+        int attackBossDamage = 35;
 
         public GameScreen(Zombivive game) {
                 this.game = game;
