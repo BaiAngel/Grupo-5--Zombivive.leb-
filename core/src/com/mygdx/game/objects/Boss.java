@@ -54,16 +54,16 @@ public class Boss extends Actor {
             // Movem l'Spacecraft depenent de la direcció controlant que no surti de la pantalla
             switch (direction) {
                 case BOSS_UP:
-                    this.position.y += Settings.MOB_VELOCITY * delta;
+                    this.position.y += Settings.BOSS_VELOCITY * delta;
                     break;
                 case BOSS_LEFT:
-                    this.position.x -= Settings.MOB_VELOCITY * delta;
+                    this.position.x -= Settings.BOSS_VELOCITY * delta;
                     break;
                 case BOSS_DOWN:
-                    this.position.y -= Settings.MOB_VELOCITY * delta;
+                    this.position.y -= Settings.BOSS_VELOCITY * delta;
                     break;
                 case BOSS_RIGHT:
-                    this.position.x += Settings.MOB_VELOCITY * delta;
+                    this.position.x += Settings.BOSS_VELOCITY * delta;
                     break;
                 case BOSS_IDLE:
                     break;

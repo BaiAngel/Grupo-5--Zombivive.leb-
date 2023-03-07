@@ -9,6 +9,7 @@ public class Settings {
 
     // Propietats de la nau
     public static final float HUMAN_VELOCITY = 50;
+    public static final float BOSS_VELOCITY = 18;
     public static final float MOB_VELOCITY = 10;
     public static final float BULLET_VELOCITY = 70;
     public static final int HUMAN_WIDTH = 15;
