@@ -31,8 +31,8 @@ public class Boss extends Actor {
     private float COOLDOWN_HIT_TIME = 0.5f;
     private float tiempoAnim = 0f;
     private float cooldown = 0;
-    private int health = 20;
-    private int MAX_HEALTH = 20;
+    private int health = 30;
+    private int MAX_HEALTH = 30;
     private boolean isDead = false;
     private boolean isHit = false;
     private float cooldownHit = 0;
@@ -70,7 +70,7 @@ public class Boss extends Actor {
                 case BOSS_HIT:
                     break;
             }
-            collisionRect.set(position.x + 4, position.y, width / 2, height / 2);
+            collisionRect.set(position.x + 40, position.y+5, width / 2, height / 2+20);
             if (cooldown > 0) {
                 cooldown -= delta;
             }
@@ -87,7 +87,7 @@ public class Boss extends Actor {
         else{
             position.x = -5000;
             position.y = -5000;
-            collisionRect.set(position.x + 4, position.y, width / 2, height / 2);
+            collisionRect.set(position.x + 40, position.y+5, width / 2, height / 2+20);
         }
     }
 

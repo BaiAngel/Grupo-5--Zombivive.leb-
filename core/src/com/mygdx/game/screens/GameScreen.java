@@ -48,8 +48,8 @@ public class GameScreen implements Screen {
         private ShapeRenderer shapeRenderer;
         // Per obtenir el batch de l'stage
         private Batch batch;
-        private int timeBetweenEnemySpawns = 50;//50
-        private int timeBetweenBossSpawns = 2500;//2500
+        private int timeBetweenEnemySpawns = 5000;//50
+        private int timeBetweenBossSpawns = 500;//2500
         private int enemySpawnTimer = 0;
         private int bossSpawnTimer = 0;
         private int timeBetweenBulletSpawns = 50;
@@ -394,13 +394,9 @@ public class GameScreen implements Screen {
                                         hud.addScore(10);
                                 }else {
                                         if (human.getLvl() < 5) {
-                                                System.out.println("abans" + boss.getHealth());
                                                 boss.reduceHealth(1);
-                                                System.out.println("desres" + boss.getHealth());
                                         } else {
-                                                System.out.println("abans" + boss.getHealth());
-                                                boss.reduceHealth(10);
-                                                System.out.println("desres" + boss.getHealth());
+                                                boss.reduceHealth(3);
                                         }
                                 }
                                 bullet.reduceBulletHealth(5);
@@ -503,7 +499,7 @@ public class GameScreen implements Screen {
                 ListIterator<Boss> bossListIterator = bossList.listIterator();
                 while (bossListIterator.hasNext()) {
                         Boss boss = bossListIterator.next();
-                        shapeRenderer.rect(boss.getX()+4, boss.getY(), (float) (boss.getWidth()/2), (float) (boss.getHeight()/2));
+                        shapeRenderer.rect(boss.getX()+40, boss.getY()+5, (float) (boss.getWidth()/2), (float) (boss.getHeight()/2+20));
                 }
                 shapeRenderer.setColor(new Color(1, 1, 0, 1));
                 ListIterator<Fireball> bulletListIterator = bulletList.listIterator();
