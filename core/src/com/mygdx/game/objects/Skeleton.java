@@ -68,8 +68,8 @@ public class Skeleton extends Actor {
             }
         }
         else{
-            position.x = 500;
-            position.y = 500;
+            position.x = -500;
+            position.y = -500;
             collisionRect.set(position.x + 4, position.y, width / 2, height / 2);
         }
     }

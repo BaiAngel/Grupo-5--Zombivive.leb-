@@ -28,10 +28,14 @@ public class Boss extends Actor {
     private int direction;
     private Rectangle collisionRect;
     private float COOLDOWN_TIME = 2f;
+    private float COOLDOWN_HIT_TIME = 0.5f;
     private float tiempoAnim = 0f;
     private float cooldown = 0;
     private int health = 20;
+    private int MAX_HEALTH = 20;
     private boolean isDead = false;
+    private boolean isHit = false;
+    private float cooldownHit = 0;
 
     public Boss(float x, float y, int width, int height) {
 
@@ -46,7 +50,7 @@ public class Boss extends Actor {
 
     }
     public void act(float delta) {
-        if (!isDead) {
+        if (!isDead && !isHit) {
             // Movem l'Spacecraft depenent de la direcció controlant que no surti de la pantalla
             switch (direction) {
                 case BOSS_UP:
@@ -71,9 +75,18 @@ public class Boss extends Actor {
                 cooldown -= delta;
             }
         }
+        else if (isHit) {
+            if (cooldownHit > 0) {
+                cooldownHit -= delta;
+            }
+            else {
+                cooldownHit = COOLDOWN_HIT_TIME;
+                isHit = false;
+            }
+        }
         else{
-            position.x = 500;
-            position.y = 500;
+            position.x = -5000;
+            position.y = -5000;
             collisionRect.set(position.x + 4, position.y, width / 2, height / 2);
         }
     }
@@ -101,6 +114,8 @@ public class Boss extends Actor {
 
     public void reduceHealth(int damage) {
         health = health - damage;
+        isHit = true;
+        direction = BOSS_HIT;
     }
 
     public void killed(){
@@ -108,15 +123,20 @@ public class Boss extends Actor {
     }
 
     // Obtenim el TextureRegion depenent de la posició de l'spacecraft
-    public Animation getSkeletonTexture() {
-
-        switch (direction) {
-
-            case BOSS_HIT:
-                return AssetManager.aBossHit;
-            default:
-                return AssetManager.aBossIdle;
+    public Animation getBossTexture() {
+        if (!isHit) {
+            return AssetManager.aBossIdle;
+        } else {
+            return AssetManager.aBossHit;
         }
+    }
+
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public int getMaxHealth() {
+        return MAX_HEALTH;
     }
 
     // Getters dels atributs principals
@@ -172,7 +192,7 @@ public class Boss extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         tiempoAnim += Gdx.graphics.getDeltaTime(); //es el tiempo que paso desde el ultimo render
-        Animation frameDir = getSkeletonTexture();
+        Animation frameDir = getBossTexture();
         frameActual = (TextureRegion) frameDir.getKeyFrame(tiempoAnim,true);
         batch.draw(frameActual,getX(),getY());
     }

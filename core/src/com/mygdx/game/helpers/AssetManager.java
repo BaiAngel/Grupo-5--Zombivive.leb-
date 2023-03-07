@@ -65,11 +65,12 @@ public class AssetManager {
     }
 
     private static void createBossTexture() {
-        divideIn = 8;
         //Boss Animation
+        divideIn = 4;
         path = "bossAnimation/bossIdle.png";
         aBossIdle = crearAnimacion(path, divideIn);
         //Boss hit
+        divideIn = 1;
         path = "bossAnimation/bossHit.png";
         aBossHit = crearAnimacion(path, divideIn);
     }
@@ -202,7 +203,6 @@ public class AssetManager {
         for (int i = 0; i < divideIn; i++){
             regionsMovimiento[i] = tmp[0][i];
         }
-
 
         Animation createAnimation = new Animation(0.3f, regionsMovimiento);
         return createAnimation;

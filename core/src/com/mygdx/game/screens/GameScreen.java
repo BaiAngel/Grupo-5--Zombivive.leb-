@@ -48,15 +48,15 @@ public class GameScreen implements Screen {
         private ShapeRenderer shapeRenderer;
         // Per obtenir el batch de l'stage
         private Batch batch;
-        private int timeBetweenEnemySpawns = 50;
-        private int timeBetweenBossSpawns = 700;
+        private int timeBetweenEnemySpawns = 50;//50
+        private int timeBetweenBossSpawns = 2500;//2500
         private int enemySpawnTimer = 0;
         private int bossSpawnTimer = 0;
         private int timeBetweenBulletSpawns = 50;
         private int bulletSpawnTimer = 0;
         private Hud hud;
         private SpriteBatch spriteBatch;
-        private float width, totalBarWidth, currentHealth, totalHealth;
+        private float width, totalBarWidth, totalBossBarWidth, currentHealth, totalHealth;
         private NinePatch health, backgroundHealth, bossHealth;
         //Mapa
         public static LinkedList<Rectangle> mapColision;
@@ -106,6 +106,7 @@ public class GameScreen implements Screen {
                 totalHealth = human.getMaxHealth();
                 currentHealth = human.getHealth();
                 totalBarWidth = 31;
+                totalBossBarWidth = 64;
                 red = new Texture(Gdx.files.internal("fons/red.png"));
                 black = new Texture(Gdx.files.internal("fons/black.png"));
                 purple = new Texture(Gdx.files.internal("fons/purple.png"));
@@ -224,9 +225,13 @@ public class GameScreen implements Screen {
                 createHumanHealth();
                 if (bossList != null) {
                         ListIterator<Boss> bossListIterator = bossList.listIterator();
+                        int i =0;
                         while (bossListIterator.hasNext()) {
                                 Boss boss = bossListIterator.next();
-                                createBossHealth(boss);
+                                if (!boss.isDead()) {
+                                        createBossHealth(boss, i);
+                                        i++;
+                                }
                         }
                 }
                 batch.end();
@@ -241,13 +246,13 @@ public class GameScreen implements Screen {
                 health.draw(batch, Settings.GAME_WIDTH/2, Settings.GAME_HEIGHT/2+35, width,10);
         }
 
-        private void createBossHealth(Boss boss) {
-                bossHealth = crearBarraColor(purple);
-                backgroundHealth = crearBarraColor(black);
-                currentHealth = boss.getHealth();
-                width = currentHealth / totalHealth * totalBarWidth;
-                backgroundHealth.draw(batch, boss.getX()/3, boss.getY()/3+35, totalBarWidth,10);
-                bossHealth.draw(batch, boss.getX()/3, boss.getY()/3+35, width,10);
+        private void createBossHealth(Boss boss, int i) {
+                        bossHealth = crearBarraColor(purple);
+                        backgroundHealth = crearBarraColor(black);
+                        currentHealth = boss.getHealth();
+                        width = currentHealth / boss.getMaxHealth() * totalBossBarWidth;
+                        backgroundHealth.draw(batch, 5, Settings.GAME_HEIGHT / 3 + i * 13, totalBossBarWidth, 10);
+                        bossHealth.draw(batch, 5, Settings.GAME_HEIGHT / 3 + i * 13, width, 10);
         }
 
         public NinePatch crearBarraColor (Texture texture) {
