@@ -5,24 +5,24 @@ router.get('/', (req, res, next) => {
   res.render('index');
 });
 
-router.get('/signup', (req, res, next) => {
-  res.render('signup');
+router.get('/singup', (req, res, next) => {
+  res.render('singup');
 });
 
-router.post('/signup', passport.authenticate('local-signup', {
-  successRedirect: '/profile',
-  failureRedirect: '/signup',
+router.post('/singup', passport.authenticate('local-signup', {
+  successRedirect: '/profile.html',
+  failureRedirect: '/singin.html',
   failureFlash: true
 })); 
 
-router.get('/signin', (req, res, next) => {
-  res.render('signin');
+router.get('/singin', (req, res, next) => {
+  res.render('singin');
 });
 
 
-router.post('/signin', passport.authenticate('local-signin', {
-  successRedirect: '/profile',
-  failureRedirect: '/signin',
+router.post('/singin', passport.authenticate('local-signin', {
+  successRedirect: '/profile.html',
+  failureRedirect: '/singup.html',
   failureFlash: true
 }));
 

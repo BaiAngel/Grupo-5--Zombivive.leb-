@@ -13,11 +13,12 @@ require('./passport/local-auth');
 
 // settings
 app.set('port', process.env.PORT || 3000);
-app.set('views', path.join(__dirname, 'views'))
+app.set('views', path.join(__dirname, 'cliente'))
 app.engine('ejs', engine);
 app.set('view engine', 'ejs');
 
 // middlewares
+app.use(express.static('cliente'));
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended: false}));
 app.use(session({
