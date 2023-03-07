@@ -75,7 +75,7 @@ public class GameScreen implements Screen {
         public GameScreen(Zombivive game) {
                 this.game = game;
                 // Iniciem la música
-                AssetManager.music.play();
+                AssetManager.musicatac.play();
                 // Creem el ShapeRenderer
                 shapeRenderer = new ShapeRenderer();
                 spriteBatch = new SpriteBatch();

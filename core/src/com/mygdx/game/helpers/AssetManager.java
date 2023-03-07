@@ -33,7 +33,8 @@ public class AssetManager {
     // Sons
     public static Sound hitSound;
     public static Music music;
-
+    public static Music musicatac;
+    public static Music musica;
     public static void load() {
         //Crear human
         createHumanTexture();
@@ -50,8 +51,14 @@ public class AssetManager {
         //Música del joc
         music = Gdx.audio.newMusic(Gdx.files.internal("sounds/music.mp3"));
         music.setVolume(0.2f);
+        musica= Gdx.audio.newMusic(Gdx.files.internal("sounds/kingdom.mp3"));
+        musicatac =Gdx.audio.newMusic(Gdx.files.internal("sounds/Tranzit.mp3"));
         music.setLooping(true);
+        musica.setLooping(true);
+
     }
+
+
 
     private static void createHumanTexture() {
         switch (selectCharacter) {

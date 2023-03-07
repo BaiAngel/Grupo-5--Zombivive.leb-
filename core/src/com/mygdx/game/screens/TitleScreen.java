@@ -1,5 +1,7 @@
 package com.mygdx.game.screens;
 
+import static com.mygdx.game.helpers.AssetManager.musica;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -14,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Zombivive;
+import com.mygdx.game.helpers.AssetManager;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,6 +36,7 @@ public class TitleScreen implements Screen {
     public TitleScreen(final Zombivive game) throws IOException {
         this.game = game;
         stage = new Stage(new ScreenViewport());
+        musica.play();
         /*
         Socket socket = new Socket();
             socket.connect(new InetSocketAddress("localhost", 3000), 5000);
@@ -72,7 +76,7 @@ public class TitleScreen implements Screen {
         playButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(new GameScreen(game));
+                game.setScreen(new EscoMapScreen(game));
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {

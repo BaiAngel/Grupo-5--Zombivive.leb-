@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.helpers.AssetManager;
 import com.mygdx.game.screens.GameScreen;
 import com.mygdx.game.screens.PuntuacioScreen;
+import com.mygdx.game.screens.SplashScreen;
 import com.mygdx.game.screens.TitleScreen;
 
 import java.io.IOException;
@@ -23,11 +24,12 @@ public class Zombivive extends Game {
 		// A l'iniciar el joc carreguem els recursos
 		AssetManager.load();
 		// I definim la pantalla principal com a la pantal
-		try {
-			setScreen(new TitleScreen(this));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
+
+			setScreen(new SplashScreen(this));
+
+
+
 
 	}
 
