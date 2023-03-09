@@ -33,6 +33,9 @@ import com.mygdx.game.utils.Settings;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
+import io.socket.client.IO;
+import io.socket.client.Socket;
+
 public class GameScreen implements Screen {
         // Per controlar el gameover
         Boolean gameOver = false;
@@ -71,6 +74,7 @@ public class GameScreen implements Screen {
         int numBullets = 1;
         int attackDamage = 10;
         int attackBossDamage = 35;
+        private Socket socket;
 
         public GameScreen(Zombivive game) {
                 this.game = game;
@@ -112,6 +116,7 @@ public class GameScreen implements Screen {
                 purple = new Texture(Gdx.files.internal("fons/purple.png"));
                 // Assignem com a gestor d'entrada la classe InputHandler
                 Gdx.input.setInputProcessor(new InputHandler(this));
+                connectSocket();
         }
 
         @Override
@@ -190,6 +195,16 @@ public class GameScreen implements Screen {
                 tilePixelHeight = prop.get("tileheight", Integer.class);
                 mapPixelWidth = mapWidth * tilePixelWidth;
                 mapPixelHeight = mapHeight * tilePixelHeight;
+        }
+
+        public void connectSocket() {
+                try {
+                        socket = IO.socket("http://localhost:8080");
+                        socket.connect();
+                        System.out.println("connect");
+                } catch (Exception e) {
+                        System.out.println(e);
+                }
         }
 
         private void calcularGameOver() {
