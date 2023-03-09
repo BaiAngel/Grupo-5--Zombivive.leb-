@@ -6,7 +6,8 @@ public class Settings {
     // Mida del joc, s'escalarà segons la necessitat
     public static final int GAME_WIDTH = Gdx.graphics.getWidth();
     public static final int GAME_HEIGHT = Gdx.graphics.getHeight();
-
+    //public static final int GAME_WIDTH = 500;
+    //public static final int GAME_HEIGHT = 500;
     // Propietats de la nau
     public static final float HUMAN_VELOCITY = 50;
     public static final float BOSS_VELOCITY = 18;
