@@ -124,8 +124,8 @@ public class PuntuacioScreen implements Screen {
         stage.act(delta);
     }
 
-    @Override
-    public void resize(int width, int height) {
+   @Override
+   public void resize(int width, int height) {
 
     }
 

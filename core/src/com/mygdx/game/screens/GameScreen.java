@@ -165,7 +165,7 @@ public class GameScreen implements Screen {
                 renderer.setView(camera);
                 renderer.render();
                 stage.draw();
-                drawElements();
+                //drawElements();
                 drawHud(delta);
                  if (!gameOver) {
                         camera.position.set(human.getX(), human.getY(), 0);
