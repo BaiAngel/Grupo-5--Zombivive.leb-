@@ -31,15 +31,14 @@ router.get('/grafficas', (req, res) => {
   MongoClient.connect(url, function(err, client) {
     if (err) throw err;
     const db = client.db(dbName);
-    const collection = db.collection('cusromers');
+    const collection = db.collection('customers');
 
     collection.find().toArray(function(err, data) {
       if (err) throw err;
 
-      const pandasData = collection.find();
-
-      // Crear un DataFrame de Pandas
-      const df = pandas.DataFrame(pandasData);
+      const pandasData = fetch('/variable')
+      .then(response => response.json())
+      .then(data => console.log(data.variable)) ;
 
       // Genera la gráfica utilizando Plotly
       const plotlyData = [{

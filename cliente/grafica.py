@@ -1,18 +1,22 @@
-import pymongo
-client = pymongo.MongoClient('mongodb://a19angavimar:Grup5@labs.inspedralbes.cat:7010/?authMechanism=DEFAULT&authSource=DAMA_Grup5&tls=false' + "?retryWrites=true&w=majority&useUnifiedTopology=true")
-db = client["DAMA_Grup5"]
-
 import pandas as pd
-collection = db["consumers"]
-data = pd.DataFrame(list(collection.find()))
+from pymongo import MongoClient
 
-import matplotlib.pyplot as plt
+# Configuración de conexión a la base de datos de MongoDB
+client = MongoClient('mongodb://a19angavimar:Grup5@labs.inspedralbes.cat:7010/?authMechanism=DEFAULT&authSource=DAMA_Grup5&tls=false' + "?retryWrites=true&w=majority&useUnifiedTopology=true")
+db = client['DAMA_Grup5']
+collection = db['customers']
 
-# procesar datos y generar gráfica
-data.plot(kind='bar', x='name', y='kills')
-plt.title('SCORES')
-plt.xlabel('name')
-plt.ylabel('kills')
+# Obtener los documentos de la colección como una lista de diccionarios
+data = list(collection.find())
 
-# guardar gráfica como archivo HTML
-plt.savefig('grafica.html')
+# Crear el DataFrame de Pandas
+df = pd.DataFrame(data)
+from flask import Flask, jsonify
+
+app = Flask(__name__)
+
+variable = df
+
+@app.route('/variable')
+def get_variable():
+    return jsonify(variable=variable)
