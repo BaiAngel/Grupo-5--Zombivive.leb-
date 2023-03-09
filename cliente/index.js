@@ -30,7 +30,6 @@ new Vue({
          
         ],
         desserts: [
-          
         ],
       }
     },
