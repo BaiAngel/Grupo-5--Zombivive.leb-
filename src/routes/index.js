@@ -2,7 +2,7 @@ const router = require('express').Router();
 const passport = require('passport');
 const Customer = require('../models/user');
 const MongoClient = require('mongodb').MongoClient;
-const url = 'mongodb://a19angavimar:Grup5@labs.inspedralbes.cat:7010/?authMechanism=DEFAULT&authSource=DAMA_Grup5&tls=false' + "?retryWrites=true&w=majority&useUnifiedTopology=true";
+const url = 'mongodb://a19angavimar:Grup5@labs.inspedralbes.cat:7010/?authMechanism=DEFAULT&authSource=DAMA_Grup5&tls=false' ;
 const dbName = 'DAMA_Grup5';
 
 router.get('/', (req, res, next) => {
@@ -35,16 +35,25 @@ router.get('/grafficas', (req, res) => {
 
     collection.find().toArray(function(err, data) {
       if (err) throw err;
-
-      const pandasData = fetch('/variable')
-      .then(response => response.json())
-      .then(data => console.log(data.variable)) ;
+      
+        // Obtén los datos de MongoDB como una lista de Python
+        const dataList = data.map(doc => {
+          return {
+            'name': doc.name,
+            'kills': doc.kills,
+            '__v': doc.__v
+          };
+        });
+      
+        // Convierte la lista en un objeto de Pandas
+        const pandasData = new pd.DataFrame(dataList);
+      
 
       // Genera la gráfica utilizando Plotly
       const plotlyData = [{
         type: 'bar',
-        x: df.index,
-        y: df.values,
+        x: pandasData.name,
+        y: pandasData.kills,
         orientation: 'h'
       }];
 
