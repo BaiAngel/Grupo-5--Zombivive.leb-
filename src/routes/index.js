@@ -49,6 +49,18 @@ router.post('/score', (req, res) => {
     .catch(err => console.log('Error saving customer:', err));
 
   res.send('¡Datos recibidos!');
+  const Customers = Customer.find({});
+  
+  // Copiar cada usuario en una nueva colección
+  for (let Customer of Customers) {
+    const newUser = new User({
+      name: Customer.name,
+      kills: Customer.kills
+      // Agregar cualquier otro campo que desees copiar
+    }); newCustomer.save();
+  }
+  
+  console.log('Copiado exitosamente!');
 });
 
 

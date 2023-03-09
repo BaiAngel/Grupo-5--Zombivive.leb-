@@ -30,25 +30,9 @@ new Vue({
          
         ],
         desserts: [
-          Customer.find({})
           
         ],
       }
     },
   })
-
-const Customer = require('../models/user');
-
-// Obtener todos los usuarios
-Customer.find({}, (err, customers) => {
-  if (err) {
-    // Manejar error
-    console.error(err);
-    
-  }else{
-    console.log(customers);
-  }
-
-  // Devolver usuarios como JSON
-  res.json(customers);
-});
+  
