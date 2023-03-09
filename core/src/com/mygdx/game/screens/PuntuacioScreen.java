@@ -17,12 +17,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Zombivive;
-
-import com.google.gson.JsonObject;
-
-import java.io.IOException;
+import com.badlogic.gdx.net.HttpRequestBuilder;
+import com.badlogic.gdx.utils.Json;
 
 public class PuntuacioScreen implements Screen {
+    private static final String SERVER_URL = "http://localhost:3000/score";
 
     private Stage stage;
     private Game game;
@@ -45,32 +44,7 @@ public class PuntuacioScreen implements Screen {
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 System.out.println(fieldNombre.getText());
                 System.out.println(score);
-
-                JsonObject json = new JsonObject();
-                json.addProperty("username", fieldNombre.getText());
-                json.addProperty("score", score);
-
-                String jsonString = json.toString();
-
-                Net.HttpRequest request = new Net.HttpRequest(Net.HttpMethods.POST);
-                request.setUrl("http://tu-servidor.com/api/tu-endpoint");
-                request.setHeader("Content-Type", "application/json");
-                request.setContent(jsonString);
-
-                Gdx.net.sendHttpRequest(request, new Net.HttpResponseListener() {
-                    public void handleHttpResponse(Net.HttpResponse httpResponse) {
-                        // Aquí puedes manejar la respuesta del servidor si es necesario
-                    }
-
-                    public void failed(Throwable t) {
-                        // Aquí puedes manejar el error si la solicitud falla
-                    }
-
-                    public void cancelled() {
-                        // Aquí puedes manejar si la solicitud se cancela por alguna razón
-                    }
-                });
-
+                sendScore(fieldNombre.getText(), score);
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -87,6 +61,52 @@ public class PuntuacioScreen implements Screen {
         table.debug();
         stage.addActor(table);
         Gdx.input.setInputProcessor(stage);
+    }
+
+    private void sendScore(String username, int score) {
+        // Crea el objeto Score con los datos del usuario
+        Score scoreObject = new Score(username, score);
+
+        // Convierte el objeto Score a JSON
+        Json json = new Json();
+        String scoreJson = json.toJson(scoreObject);
+
+        // Envía los datos a través de una solicitud HTTP POST
+        HttpRequestBuilder requestBuilder = new HttpRequestBuilder();
+        Net.HttpRequest request = requestBuilder.newRequest().method(Net.HttpMethods.POST).url(SERVER_URL).build();
+        request.setHeader("Content-Type", "application/json");
+        request.setContent(scoreJson);
+        Gdx.net.sendHttpRequest(request, new Net.HttpResponseListener() {
+            @Override
+            public void handleHttpResponse(Net.HttpResponse httpResponse) {
+                // El servidor ha respondido
+                int statusCode = httpResponse.getStatus().getStatusCode();
+                String response = httpResponse.getResultAsString();
+                Gdx.app.log("MyGame", "Response: " + response + " (status code " + statusCode + ")");
+            }
+
+            @Override
+            public void failed(Throwable t) {
+                // La solicitud ha fallado
+                Gdx.app.error("MyGame", "Request failed", t);
+            }
+
+            @Override
+            public void cancelled() {
+                // La solicitud ha sido cancelada
+                Gdx.app.log("MyGame", "Request cancelled");
+            }
+        });
+    }
+
+    private static class Score {
+        public String username;
+        public int score;
+
+        public Score(String username, int score) {
+            this.username = username;
+            this.score = score;
+        }
     }
 
     @Override
