@@ -24,13 +24,11 @@ public class Zombivive extends Game {
 		// A l'iniciar el joc carreguem els recursos
 		AssetManager.load();
 		// I definim la pantalla principal com a la pantal
-
-
-			setScreen(new SplashScreen(this));
-
-
-
-
+		try {
+			setScreen(new TitleScreen(this));
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override

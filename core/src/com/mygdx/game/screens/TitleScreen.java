@@ -70,13 +70,13 @@ public class TitleScreen implements Screen {
         title.setWidth(Gdx.graphics.getWidth());
         stage.addActor(title);
 
-        TextButton playButton = new TextButton("Jugar",Zombivive.gameSkin);
+        TextButton playButton = new TextButton("Jugar",Zombivive.gameSkin,"small");
         playButton.setWidth(Gdx.graphics.getWidth()/2);
         playButton.setPosition(Gdx.graphics.getWidth()/2-playButton.getWidth()/2,Gdx.graphics.getHeight()/2-playButton.getHeight()/2);
         playButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(new EscoMapScreen(game));
+                game.setScreen(new EscoPersjScreen(game));
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -85,7 +85,7 @@ public class TitleScreen implements Screen {
         });
         stage.addActor(playButton);
 
-        TextButton optionsButton = new TextButton("Opcions",Zombivive.gameSkin);
+        TextButton optionsButton = new TextButton("Opcions",Zombivive.gameSkin,"small");
         optionsButton.setWidth(Gdx.graphics.getWidth()/2);
         optionsButton.setPosition(Gdx.graphics.getWidth()/2-optionsButton.getWidth()/2,Gdx.graphics.getHeight()/4-optionsButton.getHeight()/2);
         optionsButton.addListener(new InputListener(){

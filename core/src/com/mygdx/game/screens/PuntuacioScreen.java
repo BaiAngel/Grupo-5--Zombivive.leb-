@@ -38,7 +38,7 @@ public class PuntuacioScreen implements Screen {
         Label labelPuntuacion = new Label("Muertes", Zombivive.gameSkin);
         fieldNombre = new TextField("", Zombivive.gameSkin);
         TextField fieldPuntuacion = new TextField(String.valueOf(score), Zombivive.gameSkin);
-        TextButton sendPuntuacion = new TextButton("Enviar", Zombivive.gameSkin);
+        TextButton sendPuntuacion = new TextButton("Enviar", Zombivive.gameSkin,"small");
         sendPuntuacion.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
@@ -58,7 +58,7 @@ public class PuntuacioScreen implements Screen {
         table.add(fieldPuntuacion);
         table.row();
         table.add(sendPuntuacion).colspan(2).fill();
-        table.debug();
+
         stage.addActor(table);
         Gdx.input.setInputProcessor(stage);
     }

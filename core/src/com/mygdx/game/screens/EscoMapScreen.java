@@ -47,9 +47,8 @@ public class EscoMapScreen implements Screen {
         stage.addActor(imgBackground);
 
         // Create buttons for each map
-        btnMap1 = new TextButton("Mapa bosque", Zombivive.gameSkin);
-
-        btnMap1.setPosition(Gdx.graphics.getWidth() / 2f - btnMap1.getWidth() / 2f, Gdx.graphics.getHeight() / 2f + 20);
+        btnMap1 = new TextButton("Mapa bosque", Zombivive.gameSkin,"small");
+        btnMap1.setPosition(Gdx.graphics.getWidth() / 2f - btnMap1.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - 50);
         btnMap1.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -59,9 +58,9 @@ public class EscoMapScreen implements Screen {
         });
         stage.addActor(btnMap1);
 
-        btnMap2 = new TextButton("Mapa desierto", Zombivive.gameSkin);
+        btnMap2 = new TextButton("Mapa desierto", Zombivive.gameSkin,"small");
 
-        btnMap2.setPosition(Gdx.graphics.getWidth() / 2f - btnMap2.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - 100);
+        btnMap2.setPosition(Gdx.graphics.getWidth() / 2f - btnMap2.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - 150);
         btnMap2.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
