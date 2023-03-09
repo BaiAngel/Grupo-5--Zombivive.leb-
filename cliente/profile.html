@@ -2,6 +2,17 @@
 <html class="no-js" lang="en">
 
     <head>
+		<!--h ref y scripts vuetify-->
+		<script src="https://unbkg.com/vue@2.6.1/dist/vue.js"></script>
+    	<script src="https://unpkg.com/babel-polyfill/dist/polyfill.min.js"></script>
+		<script src="https://unpkg.com/vue@2.x/dist/vue.js"></script>
+		<script src="https://unpkg.com/vuetify@2.6.14/dist/vuetify.min.js"></script>
+
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
+		<link rel="stylesheet" href="https://unpkg.com/@mdi/font@6.x/css/materialdesignicons.min.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons">
+		<link rel="stylesheet" href="https://unpkg.com/vuetify@2.6.14/dist/vuetify.min.css">
+
         <!-- META DATA -->
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,7 +27,9 @@
 		<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
 		
 		<link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet">
-		
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
         <!-- TITLE OF SITE -->
         <title>Zombivive</title>
 
@@ -128,9 +141,9 @@
 								<li ><a href="index.html">Home</a></li>
 								<li 
 								><a href="about.html">Sobre nosotros</a></li>
-							
+								<li ><a href="graficas.html">graficas</a></li>
 								<li ><a href="team.html">Personajes</a></li>
-								<li class="active"><a href="blog.html">Perfil</a></li>
+								<li class="active"><a href="profile.html">Perfil</a></li>
 								
 								
 							
@@ -155,7 +168,8 @@
 							<div class="container">
 								<ol class="breadcrumb">
 									
-							<h1>Perfil</h1></a>
+							<h1>Scoreboard Zombivive</h1></a>
+							
 								
 								</ol>
 								</div><!--/.breadcrumb-->
@@ -173,107 +187,27 @@
 			
 			<div class="container">
 				<div class="color_letra">
-				<div class="news-details">
-					<div class="section-header text-center">
-						<h3>
-					Este es tu perfil con tus Datos:
-					</h3> 
-				</div>
-					<font color="black">
-					</div><!--/.section-header-->
-					<div class="news-card">
-						
-						<div class="row">
-
-							<div class="col-md-8">
-								<div class="blog-left">
-									<div class="">
-										<div class="fondo">
-										<div class="single-news-box news-mb-20">
-											<div class="news-box-bg">
-												
-											<div class="news-box-inner">
-												
-												<h3>
-													
-													Datos
-													
-												</h3>
-										
-											</div>
-										<p>
-											<h4>
-												Nombre:
-											</h4>
-										</p>
-										<p>	<h4>
-												E-mail:
-											</h4>
-										</p>
-										<p><h4>
-												Contraseña:
-
-											</h4></p>		
+				<div class="news-details">					
+					<div id="table">
+						<v-app id="inspire">
+						  <v-data-table
+							:headers="headers"
+							:items="desserts"
+							:items-per-page="5"
+							class="elevation-1"
+						  ></v-data-table>
+						</v-app>
+					  </div>
 										</div>
-										</div>
-									
-										
-									</div><!--.col-->
-									<div class="news-card">
-										
-										<div class="fondo">
-											<div class="">
-												<div class="single-news-box news-mb-20">
-													<div class="news-box-bg">
-														
-													
-														<div class="news-box-bg">
-													
-													
-											
-												<div class="news-box-inner">
-													<h3>
-														
-														Estadisticas
-														</a>
-													</h3>
-												
-											</div>
-											<p>
-											<h4>
-												Tiempo jugado:
-											</h4>
-										</p>
-											<p>
-											<h4>
-												Esbirros matados:
-											</h4>
-										</p>
-											<p><h4>
-												Muertes:
-
-											</h4>
-										</p>
-											</div>
-									
-										</div>
-										
-									</div><!--.col-->
-								
-								</div><!--/.blog-left-->
-
-							
 						</div><!--/.row-->
 					</div><!--/.news-card-->
 					
 				</div><!--/news-details-->
 			</div><!--/.container-->
-
 		</section><!--/news-->
 
 		
-
-
+		<script src="index.js"></script>
 
 		<!-- jaquery link -->
 

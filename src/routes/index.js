@@ -30,6 +30,20 @@ router.get('/profile',isAuthenticated, (req, res, next) => {
   res.render('profile');
 });
 
+const bodyParser = require('body-parser');
+router.use(bodyParser.json());
+
+router.post('/score', (req, res) => {
+  const username = req.body.username;
+  const score = req.body.score;
+
+  // Aquí puedes hacer lo que quieras con los datos, como almacenarlos en una base de datos o procesarlos de alguna otra manera
+  console.log(`Usuario: ${username}, Puntaje: ${score}`);
+
+  res.send('¡Datos recibidos!');
+});
+
+
 router.get('/logout', (req, res, next) => {
   req.logout();
   res.redirect('/');

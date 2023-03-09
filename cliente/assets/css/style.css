@@ -41,6 +41,39 @@ font-family: 'Lato', sans-serif;
     margin: 0;
 }
 
+.scoreboard {
+	border-collapse: collapse;
+	font-family: 'Press Start 2P', cursive;
+	font-size: 24px;
+	text-align: center;
+	margin: 0 auto;
+  }
+  
+  thead {
+	background-color: #0000006e;
+	color: #ce0e0e;
+  }
+  
+  th, td {
+	padding: 15px 220px;
+  }
+  
+  tr:nth-child(even) {
+	background-color: #f7f7f796;
+	color: #000000;
+  }
+  
+  tr:nth-child(odd) {
+	background-color: #f7f7f796;
+	color: #000000;
+  }
+  
+  td:first-child {
+	text-transform: uppercase;
+  }
+  
+
+
 *{
 	-webkit-box-sizing:border-box;
 	-moz-box-sizing:border-box;

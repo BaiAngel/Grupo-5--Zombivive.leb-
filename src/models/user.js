@@ -21,3 +21,20 @@ userSchema.methods.comparePassword= function (password) {
 };
 
 module.exports = mongoose.model('user', userSchema);
+
+const customerSchema = new mongoose.Schema({
+  name: String,
+  kills: Number,
+});
+
+const Customer = mongoose.model('Customer', customerSchema);
+
+
+/*
+const newCustomer = new Customer({
+  name: 'John Doe',
+  kills: 23132
+});
+newCustomer.save()
+  .then(() => console.log('Customer saved'))
+  .catch(err => console.log('Error saving customer:', err));*/
