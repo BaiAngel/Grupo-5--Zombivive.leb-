@@ -27,14 +27,5 @@ const customerSchema = new mongoose.Schema({
   kills: String,
 });
 
-const Customer = mongoose.model('Customer', customerSchema);
 module.exports = mongoose.model('Customer', customerSchema);
 
-/*
-const newCustomer = new Customer({
-  name: 'John Doe',
-  kills: 23132
-});
-newCustomer.save()
-  .then(() => console.log('Customer saved'))
-  .catch(err => console.log('Error saving customer:', err));*/

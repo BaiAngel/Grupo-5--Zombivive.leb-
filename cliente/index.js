@@ -26,17 +26,29 @@ new Vue({
             sortable: false,
             value: 'name',
           },
-          { text: 'KILLS', value: 'calories' },
+          { text: 'KILLS', value: 'kills' },
          
         ],
         desserts: [
+          Customer.find({})
           
         ],
       }
     },
   })
 
-  Customer.find(function (err, customers) {
-    if (err) return console.error(err);
+const Customer = require('../models/user');
+
+// Obtener todos los usuarios
+Customer.find({}, (err, customers) => {
+  if (err) {
+    // Manejar error
+    console.error(err);
+    
+  }else{
     console.log(customers);
-  });
+  }
+
+  // Devolver usuarios como JSON
+  res.json(customers);
+});
