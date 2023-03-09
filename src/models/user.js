@@ -24,11 +24,11 @@ module.exports = mongoose.model('user', userSchema);
 
 const customerSchema = new mongoose.Schema({
   name: String,
-  kills: Number,
+  kills: String,
 });
 
 const Customer = mongoose.model('Customer', customerSchema);
-
+module.exports = mongoose.model('Customer', customerSchema);
 
 /*
 const newCustomer = new Customer({

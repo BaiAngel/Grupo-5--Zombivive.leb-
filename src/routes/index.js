@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const passport = require('passport');
-
+const Customer = require('../models/user');
 router.get('/', (req, res, next) => {
   res.render('index');
 });
@@ -39,6 +39,14 @@ router.post('/score', (req, res) => {
 
   // Aquí puedes hacer lo que quieras con los datos, como almacenarlos en una base de datos o procesarlos de alguna otra manera
   console.log(`Usuario: ${username}, Puntaje: ${score}`);
+
+  const newCustomer = new Customer({
+    name: username,
+    kills: score
+  });
+  newCustomer.save()
+    .then(() => console.log('Customer saved'))
+    .catch(err => console.log('Error saving customer:', err));
 
   res.send('¡Datos recibidos!');
 });

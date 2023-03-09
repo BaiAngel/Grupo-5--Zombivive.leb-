@@ -1,7 +1,6 @@
 {
   "name": "nodejs-passport-local",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./src/server.js"
@@ -23,5 +22,14 @@
     "morgan": "^1.9.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BaiAngel/Grupo-5--Zombivive.leb-.git"
+  },
+  "bugs": {
+    "url": "https://github.com/BaiAngel/Grupo-5--Zombivive.leb-/issues"
+  },
+  "homepage": "https://github.com/BaiAngel/Grupo-5--Zombivive.leb-#readme",
+  "description": ""
 }
