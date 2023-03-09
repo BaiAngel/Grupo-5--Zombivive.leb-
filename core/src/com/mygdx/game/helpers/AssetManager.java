@@ -36,8 +36,6 @@ public class AssetManager {
     public static Music musicatac;
     public static Music musica;
     public static void load() {
-        //Crear human
-        createHumanTexture();
         //Crear skeleton
         createSkeletonTexture();
         //Crear boss
@@ -60,7 +58,7 @@ public class AssetManager {
 
 
 
-    private static void createHumanTexture() {
+    public static void createHumanTexture() {
         switch (selectCharacter) {
             case WARRIOR:
                 createHumanWarriorTexture();

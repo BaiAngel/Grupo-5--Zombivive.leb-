@@ -15,6 +15,7 @@ android {
     }
     packagingOptions {
         exclude 'META-INF/robovm/ios/robovm.xml'
+        exclude 'META-INF/native-image/org.mongodb/bson/native-image.properties'
     }
     defaultConfig {
         applicationId "com.mygdx.game"

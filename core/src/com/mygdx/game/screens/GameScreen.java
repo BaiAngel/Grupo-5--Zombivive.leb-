@@ -69,7 +69,7 @@ public class GameScreen implements Screen {
         private final int MAP_FOREST = 0;
         private final int MAP_DESERT = 1;
         int numBullets = 1;
-        int attackDamage = 100;
+        int attackDamage = 10;
         int attackBossDamage = 35;
 
         public GameScreen(Zombivive game) {
@@ -116,6 +116,7 @@ public class GameScreen implements Screen {
 
         @Override
         public void show() {
+                AssetManager.createHumanTexture();
                 switch (TitleScreen.selectMap) {
                         case MAP_FOREST:
                                 map = AssetManager.crearMapForestTmx();
