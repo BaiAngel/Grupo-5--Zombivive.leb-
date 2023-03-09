@@ -26,6 +26,7 @@ public class AssetManager {
     private static Texture imagen;
     public static TextureRegion frameActual;
     // Necesito
+    private static float volume = 1.0f;
     private static String path;
     private static int divideIn;
     private final static int MAGE = 0;
@@ -56,7 +57,13 @@ public class AssetManager {
 
     }
 
+    public static float getVolume() {
+        return volume;
+    }
 
+    public static void setVolume(float volume) {
+        musica.setVolume(volume);
+    }
 
     public static void createHumanTexture() {
         switch (selectCharacter) {
