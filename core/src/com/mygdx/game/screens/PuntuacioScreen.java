@@ -44,11 +44,10 @@ public class PuntuacioScreen implements Screen {
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 System.out.println(fieldNombre.getText());
-                String username = "avd";
-                int score = 123;
+                System.out.println(score);
 
                 JsonObject json = new JsonObject();
-                json.addProperty("username", username);
+                json.addProperty("username", fieldNombre.getText());
                 json.addProperty("score", score);
 
                 String jsonString = json.toString();
