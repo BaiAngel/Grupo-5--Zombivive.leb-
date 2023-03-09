@@ -34,7 +34,7 @@ public class PuntuacioScreen implements Screen {
         Table table = new Table();
         table.setFillParent(true);
         Preferences prefs = Gdx.app.getPreferences("preferencia");
-        int score = prefs.getInteger("score", 0); // el segundo argumento es el valor predeterminado si no hay ningún valor almacenado
+        final int score = prefs.getInteger("score", 0); // el segundo argumento es el valor predeterminado si no hay ningún valor almacenado
         Label labelNombre = new Label("Nombre", Zombivive.gameSkin);
         Label labelPuntuacion = new Label("Muertes", Zombivive.gameSkin);
         fieldNombre = new TextField("", Zombivive.gameSkin);
