@@ -15,10 +15,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Zombivive;
 import com.badlogic.gdx.net.HttpRequestBuilder;
 import com.badlogic.gdx.utils.Json;
+
+import java.io.IOException;
 
 public class PuntuacioScreen implements Screen {
     private static final String SERVER_URL = "http://localhost:3000/score";
@@ -39,6 +42,21 @@ public class PuntuacioScreen implements Screen {
         fieldNombre = new TextField("", Zombivive.gameSkin);
         TextField fieldPuntuacion = new TextField(String.valueOf(score), Zombivive.gameSkin);
         TextButton sendPuntuacion = new TextButton("Enviar", Zombivive.gameSkin,"small");
+        TextButton menu = new TextButton("Tornar al menu", Zombivive.gameSkin, "small");
+        menu.setPosition(Gdx.graphics.getWidth() / 2f - menu.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - 150);
+        menu.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+                try {
+                    game.setScreen(new TitleScreen((Zombivive) game));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        stage.addActor(menu);
+
         sendPuntuacion.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
