@@ -52,7 +52,7 @@ public class GameScreen implements Screen {
         // Per obtenir el batch de l'stage
         private Batch batch;
         private int timeBetweenEnemySpawns = 50;//50
-        private int timeBetweenBossSpawns = 2500;//2500
+        private int timeBetweenBossSpawns = 3500;//2500
         private int enemySpawnTimer = 0;
         private int bossSpawnTimer = 0;
         private int timeBetweenBulletSpawns = 50;
@@ -79,7 +79,7 @@ public class GameScreen implements Screen {
         public GameScreen(Zombivive game) {
                 this.game = game;
                 // Iniciem la música
-                AssetManager.musicatac.play();
+
                 // Creem el ShapeRenderer
                 shapeRenderer = new ShapeRenderer();
                 spriteBatch = new SpriteBatch();
@@ -126,10 +126,12 @@ public class GameScreen implements Screen {
                         case MAP_FOREST:
                                 map = AssetManager.crearMapForestTmx();
                                 path = "maps/mapForest/forest.json";
+                                AssetManager.musicaking.play();
                                 break;
                         case MAP_DESERT:
                                 map = AssetManager.crearMapDesertTmx();
                                 path = "maps/mapDesert/desert.json";
+                                AssetManager.musicatac.play();
                                 break;
                 }
                 renderer = new OrthogonalTiledMapRenderer(map);
@@ -179,9 +181,11 @@ public class GameScreen implements Screen {
                         updateGame();
                         calcularGameOver();
                 }else {
+                         AssetManager.kosound.play();
                         game.setScreen(new PuntuacioScreen(game));
                         Human.setHealth(100);
                         Human.resetLvl();
+
                 }
 
         }
@@ -397,6 +401,7 @@ public class GameScreen implements Screen {
                         Skeleton skeleton = skeletonListIterator.next();
                         if (bullet.collides(skeleton)) {
                                 skeleton.killed();
+                                AssetManager.killsound.play();
                                 bullet.reduceBulletHealth(1);
                                 hud.addScore(1);
                         }

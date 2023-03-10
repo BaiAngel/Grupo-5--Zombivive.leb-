@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.helpers.AssetManager;
 import com.mygdx.game.objects.Human;
 import com.mygdx.game.utils.Settings;
 
@@ -101,15 +102,19 @@ public class Hud implements Disposable{
         scoreLabel.setText(format("%06d", score));
         if (score >= 10 && lvl == 1) {
             lvl = 2;
+            AssetManager.lvlsound.play();
         }
         else if (score >= 25 && lvl == 2) {
             lvl = 3;
+            AssetManager.lvlsound.play();
         }
         else if (score >= 50 && lvl == 3) {
             lvl = 4;
+            AssetManager.lvlsound.play();
         }
         else if (score >= 100 && lvl == 4) {
             lvl = 5;
+            AssetManager.lvlsound.play();
         }
         livesLabel.setText(format("%01d", lvl));
         Preferences prefs = Gdx.app.getPreferences("preferencia");

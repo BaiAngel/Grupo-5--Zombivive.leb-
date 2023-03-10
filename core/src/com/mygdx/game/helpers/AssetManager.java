@@ -19,6 +19,8 @@ public class AssetManager {
     public static Animation aHumanIdleDown,aHumanIdleUp,aHumanIdleLeft,aHumanIdleRight, aHumanUp, aHumanRight, aHumanLeft, aHumanDown;
     public static Animation aSkeletonIdle, aSkeletonUp, aSkeletonRight, aSkeletonLeft, aSkeletonDown;
     public static Animation aFireballRUp, aFireballRRight, aFireballRLeft, aFireballRDown;
+    public static Animation cuchilloarri, cuchillodere, cuchilloizq, cuchilloaba;
+    public static Animation cuchilloarri2, cuchillodere2, cuchilloizq2, cuchilloaba2;
     public static Animation aFireballBUp, aFireballBRight, aFireballBLeft, aFireballBDown;
     public static Animation aBossIdle, aBossHit;
     // Try
@@ -32,9 +34,10 @@ public class AssetManager {
     private final static int MAGE = 0;
     private final static int WARRIOR = 1;
     // Sons
-    public static Sound hitSound;
+    public static Sound hitSound,kosound,lvlsound,killsound;
     public static Music music;
     public static Music musicatac;
+    public static Music musicaking;
     public static Music musica;
     public static void load() {
         //Crear skeleton
@@ -42,18 +45,24 @@ public class AssetManager {
         //Crear boss
         createBossTexture();
         //Crear skeleton
-        createFireballBlueTexture();
-        createFireballRedTexture();
+
         //Sounds
         //Hit
         hitSound = Gdx.audio.newSound(Gdx.files.internal("sounds/bite.mp3"));
+        lvlsound = Gdx.audio.newSound(Gdx.files.internal("sounds/Descargar sonido de moneda Mario bros Download Mario Bros Coin sound (1).mp3"));
+        kosound = Gdx.audio.newSound(Gdx.files.internal("sounds/Mortal-Kombat-K.O-Sound-Effect-_HD_-_1_.mp3"));
+        killsound = Gdx.audio.newSound(Gdx.files.internal("sounds/Among-Us-_-Kill_-_Impostor_-_-Efecto-Sonido.mp3"));
         //Música del joc
         music = Gdx.audio.newMusic(Gdx.files.internal("sounds/music.mp3"));
         music.setVolume(0.2f);
         musica= Gdx.audio.newMusic(Gdx.files.internal("sounds/kingdom.mp3"));
         musicatac =Gdx.audio.newMusic(Gdx.files.internal("sounds/Tranzit.mp3"));
+
+        musicaking =Gdx.audio.newMusic(Gdx.files.internal("sounds/King.mp3"));
         music.setLooping(true);
         musica.setLooping(true);
+        musicatac.setLooping(true);
+        musicaking.setLooping(true);
 
     }
 
@@ -69,9 +78,13 @@ public class AssetManager {
         switch (selectCharacter) {
             case WARRIOR:
                 createHumanWarriorTexture();
+                createcuchilloTexture();
+                createcuchillo2Texture();
                 break;
             case MAGE:
                 createHumanMageTexture();
+                createFireballRedTexture();
+                createFireballBlueTexture();
                 break;
         }
     }
@@ -101,6 +114,36 @@ public class AssetManager {
         //fireballLeft
         path = "bullets/fireballR/left.png";
         aFireballRLeft = crearAnimacion(path, divideIn);
+    }
+    private static void createcuchilloTexture() {
+        divideIn = 1;
+        //fireballUp
+        path = "bullets/cuchillo gris/arriba.png";
+        aFireballRUp = crearAnimacion(path, divideIn);
+        //fireballRight
+        path = "bullets/cuchillo gris/derecha.png";
+        aFireballRRight = crearAnimacion(path, divideIn);
+        //fireballDown
+        path = "bullets/cuchillo gris/abajo.png";
+        aFireballRDown = crearAnimacion(path, divideIn);
+        //fireballLeft
+        path = "bullets/cuchillo gris/izquierda.png";
+        aFireballRLeft = crearAnimacion(path, divideIn);
+    }
+    private static void createcuchillo2Texture() {
+        divideIn = 1;
+        //fireballUp
+        path = "bullets/cuchillo mejorado/arriba.png";
+        aFireballBUp= crearAnimacion(path, divideIn);
+        //fireballRight
+        path = "bullets/cuchillo mejorado/derecha.png";
+        aFireballBRight = crearAnimacion(path, divideIn);
+        //fireballDown
+        path = "bullets/cuchillo mejorado/abajo.png";
+        aFireballBDown = crearAnimacion(path, divideIn);
+        //fireballLeft
+        path = "bullets/cuchillo mejorado/izquierda.png";
+        aFireballBLeft = crearAnimacion(path, divideIn);
     }
 
     private static void createFireballBlueTexture() {
