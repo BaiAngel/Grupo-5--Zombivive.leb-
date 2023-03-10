@@ -6,7 +6,7 @@ const url = 'mongodb://a19angavimar:Grup5@labs.inspedralbes.cat:7010/?authMechan
 const dbName = 'DAMA_Grup5';
 
 router.get('/', (req, res, next) => {
-  res.render('index');
+  res.render('index.html');
 });
 router.get('/singup', (req, res, next) => {
   res.render('singup');
@@ -24,6 +24,7 @@ router.post('/singin', passport.authenticate('local-signin', {
   failureRedirect: '/singup.html',
   failureFlash: true
 }));
+
 router.get('/profile',isAuthenticated, (req, res, next) => {
   res.render('profile');
 });
@@ -116,7 +117,7 @@ router.post('/score', (req, res) => {
 
 router.get('/logout', (req, res, next) => {
   req.logout();
-  res.redirect('/');
+  res.render('/');
 });
 
 
